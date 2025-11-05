@@ -26,4 +26,14 @@ public class ClienteController {
         List<Cliente> clientes = service.buscarPorNome(nome);
         return ResponseEntity.ok(clientes);
     }
+
+    @DeleteMapping
+    public ResponseEntity<String> deletarClientePorId(@RequestParam Integer id) {
+        try {
+            service.deletarClientePorId(id);
+            return ResponseEntity.ok("Cliente deletado com sucesso.");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

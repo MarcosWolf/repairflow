@@ -15,28 +15,32 @@ import java.util.List;
 public class ClienteController {
     private final ClienteService service;
 
+    // Create
     @PostMapping
     public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
         service.salvarCliente(cliente);
         return ResponseEntity.ok(cliente);
     }
 
+    // Read
     @GetMapping
     public ResponseEntity<List<Cliente>> buscarPorNome(@RequestParam String nome) {
         List<Cliente> clientes = service.buscarPorNome(nome);
         return ResponseEntity.ok(clientes);
     }
 
+    // Update
     @PutMapping
     public ResponseEntity<Cliente> atualizarCliente(@RequestParam Integer id, @RequestBody Cliente cliente) {
-        Cliente clienteAtualizado = service.atualizarCliente(id, cliente);
-        return ResponseEntity.ok(clienteAtualizado);
+        Cliente novoCliente = service.atualizarCliente(id, cliente);
+        return ResponseEntity.ok(novoCliente);
     }
 
+    // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarClientePorId(@RequestParam Integer id) {
+    public ResponseEntity<String> deletarCliente(@RequestParam Integer id) {
         try {
-            service.deletarClientePorId(id);
+            service.deletarCliente(id);
             return ResponseEntity.ok("Cliente deletado com sucesso.");
         } catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());

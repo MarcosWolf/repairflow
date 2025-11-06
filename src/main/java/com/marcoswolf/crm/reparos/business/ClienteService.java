@@ -18,10 +18,12 @@ public class ClienteService {
         this.reparoRepository = reparoRepository;
     }
 
+    // Create
     public void salvarCliente(Cliente cliente) {
         clienteRepository.saveAndFlush(cliente);
     }
 
+    // Read
     public List<Cliente> buscarPorNome(String nome) {
         var clientes = clienteRepository.findByNomeContainingIgnoreCase(nome);
 
@@ -32,21 +34,22 @@ public class ClienteService {
         return clientes;
     }
 
-    public Cliente atualizarCliente(Integer id, Cliente clienteAtualizado) {
+    // Update
+    public Cliente atualizarCliente(Integer id, Cliente novoCliente) {
         var cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encotrado"));
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 
-        cliente.setNome(clienteAtualizado.getNome());
-        cliente.setTelefone(clienteAtualizado.getTelefone());
-        cliente.setEmail(clienteAtualizado.getEmail());
+        cliente.setNome(novoCliente.getNome());
+        cliente.setTelefone(novoCliente.getTelefone());
+        cliente.setEmail(novoCliente.getEmail());
 
-        if (clienteAtualizado.getEndereco() != null) {
+        if (novoCliente.getEndereco() != null) {
             if (cliente.getEndereco() != null) {
                 cliente.setEndereco(new Endereco());
             }
 
             var endereco = cliente.getEndereco();
-            var novoEndereco = clienteAtualizado.getEndereco();
+            var novoEndereco = novoCliente.getEndereco();
 
             endereco.setCidade(novoEndereco.getCidade());
             endereco.setEstado(novoEndereco.getEstado());
@@ -59,14 +62,15 @@ public class ClienteService {
         return clienteRepository.saveAndFlush(cliente);
     }
 
-    public void deletarClientePorId(Integer id) {
+    // Delete
+    public void deletarCliente(Integer id) {
         var cliente = clienteRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+            .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 
         boolean possuiReparos = !reparoRepository.findByEquipamento_Cliente_Id(id).isEmpty();
 
         if (possuiReparos) {
-            throw new RuntimeException("Não é possível excluir o cliente: existem reparos associados");
+            throw new RuntimeException("Não é possível excluir o cliente: existem reparos associados.");
         }
 
         clienteRepository.delete(cliente);

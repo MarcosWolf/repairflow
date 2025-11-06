@@ -15,15 +15,35 @@ import java.util.List;
 public class EquipamentoController {
     private final EquipamentoService service;
 
+    // Create
     @PostMapping
     public ResponseEntity<Equipamento> salvarEquipamento(@RequestBody Equipamento equipamento) {
         service.salvarEquipamento(equipamento);
         return ResponseEntity.ok(equipamento);
     }
 
+    // Read
     @GetMapping
     public ResponseEntity<List<Equipamento>> buscarPorNumeroSerie(@RequestParam String numeroSerie) {
         List<Equipamento> equipamentos = service.buscarPorNumeroSerie(numeroSerie);
         return ResponseEntity.ok(equipamentos);
+    }
+
+    // Update
+    @PutMapping
+    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestParam Integer id, @RequestBody Equipamento equipamento) {
+        Equipamento novoEquipamento = service.atualizarEquipamento(id, equipamento);
+        return ResponseEntity.ok(novoEquipamento);
+    }
+
+    // Delete
+    @DeleteMapping
+    public ResponseEntity<String> deletarEquipamento(@RequestParam Integer id) {
+        try {
+            service.deletarEquipamento(id);
+            return ResponseEntity.ok("Equipamento deletado com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

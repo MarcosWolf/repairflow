@@ -9,4 +9,6 @@ public interface ReparoRepository extends JpaRepository<Reparo, Integer> {
     List<Reparo> findByStatus_NomeContainingIgnoreCase(String nomeStatus);
 
     List<Reparo> findByEquipamento_Cliente_Id(Integer id);
+
+    List<Reparo> findByEquipamento_Id(Integer id);
 }

@@ -31,14 +31,14 @@ public class TipoEquipamentoController {
 
     // Update
     @PutMapping
-    public ResponseEntity<TipoEquipamento> atualizarTipoEquipamento(@RequestParam Integer id, @RequestBody TipoEquipamento tipoEquipamento) {
+    public ResponseEntity<TipoEquipamento> atualizarTipoEquipamento(@RequestParam Long id, @RequestBody TipoEquipamento tipoEquipamento) {
         TipoEquipamento novoTipoEquipamento = service.atualizarTipoEquipamento(id, tipoEquipamento);
         return ResponseEntity.ok(novoTipoEquipamento);
     }
 
     // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarTipoEquipamento(@RequestParam Integer id) {
+    public ResponseEntity<String> deletarTipoEquipamento(@RequestParam Long id) {
         try {
             service.deletarTipoEquipamento(id);
             return ResponseEntity.ok("Tipo de equipamento deletado com sucesso.");

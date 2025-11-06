@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootPane" prefHeight="500" prefWidth="800" style="-fx-background-color: #F0F0F0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marcoswolf.crm.reparos.ui.controller.ClienteFormController">
+<AnchorPane fx:id="rootPane" prefHeight="500" prefWidth="800" style="-fx-background-color: #F0F0F0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marcoswolf.crm.reparos.ui.controller.cliente.ClienteFormController">
     <children>
         <VBox layoutX="30" layoutY="20" prefWidth="740" spacing="15">
 

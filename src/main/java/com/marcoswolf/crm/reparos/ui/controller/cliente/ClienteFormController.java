@@ -1,7 +1,6 @@
-package com.marcoswolf.crm.reparos.ui.controller;
+package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
 import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
-import static com.marcoswolf.crm.reparos.ui.utils.FormValidator.*;
 
 import com.marcoswolf.crm.reparos.business.ClienteService;
 import com.marcoswolf.crm.reparos.business.EstadoService;
@@ -9,7 +8,6 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import com.marcoswolf.crm.reparos.ui.utils.FormValidator;
-import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
@@ -29,35 +27,17 @@ public class ClienteFormController {
     private final EstadoService estadoService;
     private final ClienteService clienteService;
 
-    @FXML
-    private TextField txtNome;
+    @FXML private TextField txtNome;
+    @FXML private TextField txtTelefone;
+    @FXML private TextField txtEmail;
+    @FXML private TextField txtCidade;
+    @FXML private ComboBox<Estado> comboEstado;
+    @FXML private TextField txtBairro;
+    @FXML private TextField txtCep;
+    @FXML private TextField txtLogradouro;
+    @FXML private TextField txtNumero;
 
-    @FXML
-    private TextField txtTelefone;
-
-    @FXML
-    private TextField txtEmail;
-
-    @FXML
-    private TextField txtCidade;
-
-    @FXML
-    private ComboBox<Estado> comboEstado;
-
-    @FXML
-    private TextField txtBairro;
-
-    @FXML
-    private TextField txtCep;
-
-    @FXML
-    private TextField txtLogradouro;
-
-    @FXML
-    private TextField txtNumero;
-
-    @FXML
-    private AnchorPane rootPane;
+    @FXML private AnchorPane rootPane;
 
     @FXML
     private void initialize() {

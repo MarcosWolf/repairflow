@@ -31,14 +31,14 @@ public class ReparoController {
 
     // Update
     @PutMapping
-    public ResponseEntity<Reparo> atualizarReparo(@RequestParam Integer id, @RequestBody Reparo reparo) {
+    public ResponseEntity<Reparo> atualizarReparo(@RequestParam Long id, @RequestBody Reparo reparo) {
         Reparo novoReparo = service.atualizarReparo(id, reparo);
         return ResponseEntity.ok(novoReparo);
     }
 
     // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarReparo(@RequestParam Integer id) {
+    public ResponseEntity<String> deletarReparo(@RequestParam Long id) {
         try {
             service.deletarReparo(id);
             return ResponseEntity.ok("Reparo deletado com sucesso.");

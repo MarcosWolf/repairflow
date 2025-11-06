@@ -33,7 +33,7 @@ public class ReparoService {
     }
 
     // Update
-    public Reparo atualizarReparo(Integer id, Reparo novoReparo) {
+    public Reparo atualizarReparo(Long id, Reparo novoReparo) {
         var reparo = reparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 
@@ -74,7 +74,7 @@ public class ReparoService {
     }
 
     // Delete
-    public void deletarReparo(Integer id) {
+    public void deletarReparo(Long id) {
         var reparo = reparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 

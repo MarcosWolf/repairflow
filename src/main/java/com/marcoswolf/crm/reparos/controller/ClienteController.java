@@ -31,14 +31,14 @@ public class ClienteController {
 
     // Update
     @PutMapping
-    public ResponseEntity<Cliente> atualizarCliente(@RequestParam Integer id, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizarCliente(@RequestParam Long id, @RequestBody Cliente cliente) {
         Cliente novoCliente = service.atualizarCliente(id, cliente);
         return ResponseEntity.ok(novoCliente);
     }
 
     // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarCliente(@RequestParam Integer id) {
+    public ResponseEntity<String> deletarCliente(@RequestParam Long id) {
         try {
             service.deletarCliente(id);
             return ResponseEntity.ok("Cliente deletado com sucesso.");

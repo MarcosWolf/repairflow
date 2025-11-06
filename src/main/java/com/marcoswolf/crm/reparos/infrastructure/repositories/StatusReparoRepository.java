@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface StatusReparoRepository extends JpaRepository<StatusReparo, Integer> {
+public interface StatusReparoRepository extends JpaRepository<StatusReparo, Long> {
     // StatusReparo
     List<StatusReparo> findByNomeContainingIgnoreCase(String nome);
 }

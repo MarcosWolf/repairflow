@@ -34,7 +34,7 @@ public class EquipamentoService {
     }
 
     // Update
-    public Equipamento atualizarEquipamento(Integer id, Equipamento novoEquipamento) {
+    public Equipamento atualizarEquipamento(Long id, Equipamento novoEquipamento) {
         var equipamento = equipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado."));
 
@@ -49,7 +49,7 @@ public class EquipamentoService {
     }
 
     // Delete
-    public void deletarEquipamento(Integer id) {
+    public void deletarEquipamento(Long id) {
         var equipamento = equipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipamento não encontrado."));
 

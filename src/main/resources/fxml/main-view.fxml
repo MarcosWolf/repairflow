@@ -59,7 +59,7 @@
             <Menu mnemonicParsing="false" text="Clientes">
                <items>
                   <MenuItem fx:id="menuCadastrarCliente" mnemonicParsing="false" text="Cadastrar Cliente" />
-                  <MenuItem mnemonicParsing="false" text="Gerenciar Clientes" />
+                  <MenuItem fx:id="menuGerenciarCliente" mnemonicParsing="false" text="Gerenciar Clientes" />
                </items>
             </Menu>
         <Menu mnemonicParsing="false" text="Equipamentos">

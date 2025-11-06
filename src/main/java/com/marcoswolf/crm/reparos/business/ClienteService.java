@@ -35,7 +35,7 @@ public class ClienteService {
     }
 
     // Update
-    public Cliente atualizarCliente(Integer id, Cliente novoCliente) {
+    public Cliente atualizarCliente(Long id, Cliente novoCliente) {
         var cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 
@@ -63,7 +63,7 @@ public class ClienteService {
     }
 
     // Delete
-    public void deletarCliente(Integer id) {
+    public void deletarCliente(Long id) {
         var cliente = clienteRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 

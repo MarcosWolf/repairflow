@@ -34,7 +34,7 @@ public class TipoEquipamentoService {
     }
 
     // Update
-    public TipoEquipamento atualizarTipoEquipamento(Integer id, TipoEquipamento novoTipoEquipamento) {
+    public TipoEquipamento atualizarTipoEquipamento(Long id, TipoEquipamento novoTipoEquipamento) {
         var tipoEquipamento = tipoEquipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tipo de equipamento não encontrado."));
 
@@ -44,7 +44,7 @@ public class TipoEquipamentoService {
     }
 
     // Delete
-    public void deletarTipoEquipamento(Integer id) {
+    public void deletarTipoEquipamento(Long id) {
         var tipoEquipamento = tipoEquipamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tipo de equipamento não encontrado."));
 

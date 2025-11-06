@@ -34,7 +34,7 @@ public class StatusReparoService {
     }
 
     // Update
-    public StatusReparo atualizarStatusReparo(Integer id, StatusReparo novoStatusReparo) {
+    public StatusReparo atualizarStatusReparo(Long id, StatusReparo novoStatusReparo) {
         var statusReparo = statusReparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Status de Reparo não encontrado."));
 
@@ -44,7 +44,7 @@ public class StatusReparoService {
     }
 
     // Delete
-    public void deletarStatusReparo(Integer id) {
+    public void deletarStatusReparo(Long id) {
         var statusReparo = statusReparoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Status de Reparo não encontrado."));
 

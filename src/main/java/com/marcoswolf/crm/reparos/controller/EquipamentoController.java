@@ -31,14 +31,14 @@ public class EquipamentoController {
 
     // Update
     @PutMapping
-    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestParam Integer id, @RequestBody Equipamento equipamento) {
+    public ResponseEntity<Equipamento> atualizarEquipamento(@RequestParam Long id, @RequestBody Equipamento equipamento) {
         Equipamento novoEquipamento = service.atualizarEquipamento(id, equipamento);
         return ResponseEntity.ok(novoEquipamento);
     }
 
     // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarEquipamento(@RequestParam Integer id) {
+    public ResponseEntity<String> deletarEquipamento(@RequestParam Long id) {
         try {
             service.deletarEquipamento(id);
             return ResponseEntity.ok("Equipamento deletado com sucesso.");

@@ -17,30 +17,33 @@ import java.io.IOException;
 public class MainViewController {
     private final SpringFXMLLoader fxmlLoader;
 
-    @FXML
-    private VBox rootVbox;
+    @FXML private VBox rootVbox;
+    @FXML private AnchorPane contentArea;
 
-    @FXML
-    private AnchorPane contentArea;
-
-    @FXML
-    private MenuItem menuCadastrarCliente;
+    // Cliente
+    @FXML private MenuItem menuCadastrarCliente;
+    @FXML private MenuItem menuGerenciarCliente;
 
     @FXML
     public void initialize() {
-        menuCadastrarCliente.setOnAction(e -> abrirCadastroCliente());
+        menuCadastrarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-form.fxml"));
+        menuGerenciarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-gerenciar.fxml"));
     }
 
-    private void abrirCadastroCliente() {
-        Pane telaCliente = fxmlLoader.load(
-                getClass().getResource("/fxml/cliente/cliente-form.fxml")
-        );
+    private void abrirTela(String caminhoFXML) {
+        try {
+            Pane novaTela = fxmlLoader.load(getClass().getResource(caminhoFXML));
+            estruturarTela(novaTela);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        contentArea.getChildren().setAll(telaCliente);
-
-        AnchorPane.setTopAnchor(telaCliente, 0.0);
-        AnchorPane.setRightAnchor(telaCliente, 0.0);
-        AnchorPane.setBottomAnchor(telaCliente, 0.0);
-        AnchorPane.setLeftAnchor(telaCliente, 0.0);
+    private void estruturarTela(Pane novaTela) {
+        contentArea.getChildren().setAll(novaTela);
+        AnchorPane.setTopAnchor(novaTela, 0.0);
+        AnchorPane.setRightAnchor(novaTela, 0.0);
+        AnchorPane.setBottomAnchor(novaTela, 0.0);
+        AnchorPane.setLeftAnchor(novaTela, 0.0);
     }
 }

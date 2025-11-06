@@ -3,11 +3,13 @@ package com.marcoswolf.crm.reparos.ui.controller.cliente;
 import com.marcoswolf.crm.reparos.business.ClienteService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
+import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ClienteGerenciarController {
     private final ClienteService clienteService;
     private final SpringFXMLLoader fxmlLoader;
+    private final MainViewController mainViewController;
 
     @FXML private TextField txtBuscar;
     @FXML private TableView<Cliente> tabelaClientes;
@@ -42,8 +45,19 @@ public class ClienteGerenciarController {
             return new SimpleStringProperty(nomeEstado);
         });
 
-        adicionarColunaAcoes();
         carregarClientes();
+
+        tabelaClientes.setRowFactory(tv -> {
+            TableRow<Cliente> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Cliente clienteSelecionado = row.getItem();
+                    System.out.println("Editando o usuário " + row.getItem());
+                    //abrirTelaEdicao(clienteSelecionado);
+                }
+            });
+            return row;
+        });
     }
 
     private void carregarClientes() {
@@ -64,46 +78,9 @@ public class ClienteGerenciarController {
 
     @FXML
     public void onNovo(ActionEvent actionEvent) {
-
-    }
-
-    private void adicionarColunaAcoes() {
-        colAcoes.setCellFactory(col -> new TableCell<>() {
-            private final Button btnEditar = new Button("Editar");
-            private final Button btnExcluir = new Button("Excluir");
-            private final HBox box = new HBox(5, btnEditar, btnExcluir);
-
-            {
-                btnEditar.setOnAction(e -> editarCliente(getTableView().getItems().get(getIndex())));
-                btnExcluir.setOnAction(e -> excluirCliente(getTableView().getItems().get(getIndex())));
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) setGraphic(null);
-                else setGraphic(box);
-            }
-        });
+        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml");
     }
 
     private void editarCliente(Cliente cliente) {
-        // Aqui você pode abrir o cliente-form.fxml com o cliente selecionado
-        // e preencher os campos (modo edição)
-    }
-
-    private void excluirCliente(Cliente cliente) {
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Deseja realmente excluir " + cliente.getNome() + "?",
-                ButtonType.YES, ButtonType.NO);
-        confirm.showAndWait().ifPresent(res -> {
-            if (res == ButtonType.YES) {
-                try {
-                    clienteService.deletarCliente(cliente.getId());
-                    carregarClientes();
-                } catch (Exception e) {
-                    new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-                }
-            }
-        });
     }
 }

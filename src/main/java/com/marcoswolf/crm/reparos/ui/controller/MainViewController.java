@@ -30,20 +30,17 @@ public class MainViewController {
         menuGerenciarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-gerenciar.fxml"));
     }
 
-    private void abrirTela(String caminhoFXML) {
+    public void abrirTela(String caminhoFXML) {
         try {
             Pane novaTela = fxmlLoader.load(getClass().getResource(caminhoFXML));
-            estruturarTela(novaTela);
+
+            contentArea.getChildren().setAll(novaTela);
+            AnchorPane.setTopAnchor(novaTela, 0.0);
+            AnchorPane.setRightAnchor(novaTela, 0.0);
+            AnchorPane.setBottomAnchor(novaTela, 0.0);
+            AnchorPane.setLeftAnchor(novaTela, 0.0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void estruturarTela(Pane novaTela) {
-        contentArea.getChildren().setAll(novaTela);
-        AnchorPane.setTopAnchor(novaTela, 0.0);
-        AnchorPane.setRightAnchor(novaTela, 0.0);
-        AnchorPane.setBottomAnchor(novaTela, 0.0);
-        AnchorPane.setLeftAnchor(novaTela, 0.0);
     }
 }

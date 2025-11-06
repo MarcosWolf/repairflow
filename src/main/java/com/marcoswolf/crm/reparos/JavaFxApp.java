@@ -21,7 +21,7 @@ public class JavaFxApp extends Application {
         FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("/fxml/main-view.fxml"));
         fxmLoader.setControllerFactory(springContext::getBean);
 
-        Scene scene = new Scene(fxmLoader.load(), 1200, 800);
+        Scene scene = new Scene(fxmLoader.load(), 860, 600);
         stage.setScene(scene);
         stage.setTitle("crm-reparos");
         stage.show();

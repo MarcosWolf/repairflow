@@ -15,15 +15,35 @@ import java.util.List;
 public class ReparoController {
     private final ReparoService service;
 
+    // Create
     @PostMapping
     public ResponseEntity<Reparo> salvarReparo(@RequestBody Reparo reparo) {
         service.salvarReparo(reparo);
         return ResponseEntity.ok(reparo);
     }
 
+    // Read
     @GetMapping
     public ResponseEntity<List<Reparo>> buscarPorStatus(@RequestParam String status) {
         List<Reparo> reparos = service.buscarPorStatus(status);
         return ResponseEntity.ok(reparos);
+    }
+
+    // Update
+    @PutMapping
+    public ResponseEntity<Reparo> atualizarReparo(@RequestParam Integer id, @RequestBody Reparo reparo) {
+        Reparo novoReparo = service.atualizarReparo(id, reparo);
+        return ResponseEntity.ok(novoReparo);
+    }
+
+    // Delete
+    @DeleteMapping
+    public ResponseEntity<String> deletarReparo(@RequestParam Integer id) {
+        try {
+            service.deletarReparo(id);
+            return ResponseEntity.ok("Reparo deletado com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

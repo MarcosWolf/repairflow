@@ -37,6 +37,4 @@ public class Reparo {
     @JoinColumn(name = "pagamento_id")
     @JsonManagedReference
     private Pagamento pagamento;
-
-
 }

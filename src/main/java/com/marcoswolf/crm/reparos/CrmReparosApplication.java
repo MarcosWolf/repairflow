@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CrmReparosApplication {
 	public static void main(String[] args) {
         Application.launch(JavaFxApp.class, args);
-		//SpringApplication.run(CrmReparosApplication.class, args);
 	}
 
 }

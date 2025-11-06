@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/24.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.marcoswolf.crm.reparos.ui.controller.MainViewController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Arquivo">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Importar banco de dados" />
+            <MenuItem mnemonicParsing="false" text="Exportar banco de dados" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferências" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Fechar" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Clientes">
+               <items>
+                  <MenuItem fx:id="menuCadastrarCliente" mnemonicParsing="false" text="Cadastrar Cliente" />
+                  <MenuItem mnemonicParsing="false" text="Gerenciar Clientes" />
+               </items>
+            </Menu>
+        <Menu mnemonicParsing="false" text="Equipamentos">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Cadastrar Equipamento" />
+            <MenuItem mnemonicParsing="false" text="Gererenciar Equipamentos" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cadastrar Tipo de Equipamento" />
+            <MenuItem mnemonicParsing="false" text="Gerenciar Tipos de Equipamento" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Reparos">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Cadastrar Reparo" />
+                  <MenuItem mnemonicParsing="false" text="Gerenciar Reparos" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Cadastrar Status de Reparo" />
+                  <MenuItem mnemonicParsing="false" text="Gerenciar Status de Reparo" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Financeiro">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Pagamentos" />
+                  <MenuItem mnemonicParsing="false" text="Exportar Relatórios" />
+               </items>
+            </Menu>
+        <Menu mnemonicParsing="false" text="Ajuda">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Sobre" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane fx:id="contentArea" maxHeight="-1.0" maxWidth="-1.0" prefHeight="261.0" prefWidth="535.0" style="-fx-background-color: #2b2b2b;" VBox.vgrow="ALWAYS">
+         <children>
+            <Pane style="-fx-background-color: #2b2b2b;" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

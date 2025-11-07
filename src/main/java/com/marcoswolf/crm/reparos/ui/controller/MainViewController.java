@@ -40,17 +40,22 @@ public class MainViewController {
 
             Object controller = loader.getController();
 
-            if (controller != null && parametro != null) {
+            if (controller != null) {
                 try {
-                    controller.getClass()
-                            .getMethod("setData", parametro.getClass())
-                            .invoke(controller, parametro);
-                } catch(NoSuchMethodException e1) {
-                    try {
+                    if (parametro != null) {
                         controller.getClass()
-                                .getMethod("setData", Object.class)
+                                .getMethod("setData", parametro.getClass())
                                 .invoke(controller, parametro);
-                    } catch (NoSuchMethodException ignored) {}
+                    } else {
+                        try
+                        {
+                            controller.getClass()
+                                    .getMethod("setData", Object.class)
+                                    .invoke(controller, new Object[]{null});
+                        } catch (NoSuchMethodException ignored) {}
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
 

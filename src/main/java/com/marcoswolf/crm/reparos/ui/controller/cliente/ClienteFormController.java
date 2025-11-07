@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteFormController {
     private final EstadoService estadoService;
@@ -44,6 +46,8 @@ public class ClienteFormController {
     @FXML
     private void initialize() {
         aplicarFiltros();
+        limparFormulario();
+        clienteEditando = null;
     }
 
     private void carregarEstados() {
@@ -88,6 +92,7 @@ public class ClienteFormController {
 
     @FXML
     private void onVoltar() {
+        limparFormulario();
         ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
     }
 
@@ -110,7 +115,6 @@ public class ClienteFormController {
                     ok.setHeaderText(null);
                     ok.setContentText("Cliente removido com sucesso!");
                     ok.showAndWait();
-
                     limparFormulario();
                     ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
                 } catch (Exception e) {
@@ -169,7 +173,6 @@ public class ClienteFormController {
             alert.setHeaderText(null);
             alert.setContentText("Cliente salvo com sucesso!");
             alert.showAndWait();
-
             limparFormulario();
             ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
         } catch (Exception e) {

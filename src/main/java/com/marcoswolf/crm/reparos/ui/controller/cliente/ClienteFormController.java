@@ -111,6 +111,7 @@ public class ClienteFormController {
                     ok.setContentText("Cliente removido com sucesso!");
                     ok.showAndWait();
 
+                    limparFormulario();
                     ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
                 } catch (Exception e) {
                     e.printStackTrace();

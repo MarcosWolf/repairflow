@@ -10,6 +10,36 @@
     -fx-text-fill: #333;
 }
 
+/* ---------- MenuBar ---------- */
+.menu-bar {
+    -fx-background-color: #f4f4f4; /* fundo do menu */
+    -fx-border-color: #d1d1d1;
+}
+
+.menu {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+}
+
+.menu:hover {
+    -fx-background-color: #e0e0e0; /* cinza leve, sem azul */
+}
+
+/* ---------- MenuItem ---------- */
+.menu-item {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333;
+}
+
+.menu-item:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #000;
+}
+
+.menu:disabled, .menu-item:disabled {
+    -fx-opacity: 0.6;
+}
+
 /* ---------- Cabeçalhos ---------- */
 .label {
     -fx-text-fill: #333;
@@ -33,11 +63,32 @@
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-padding: 6px 8px;
+    -fx-text-fill: #333;
 }
 
 .text-field:focused, .combo-box:focused {
     -fx-border-color: #4a90e2;
     -fx-background-color: #ffffff;
+    -fx-text-fill: #333;
+}
+
+.combo-box:hover, .text-field:hover {
+    -fx-background-color: #f9f9f9;
+    -fx-text-fill: #000;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #333;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #000;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #000;
 }
 
 /* ---------- Botões ---------- */

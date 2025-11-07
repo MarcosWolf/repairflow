@@ -1,0 +1,153 @@
+/* ==============================
+   LIGHT THEME - CRM Reparos
+   ============================== */
+
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+    -fx-font-size: 13px;
+    -fx-base: #f4f4f4;
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #333;
+}
+
+/* ---------- Cabeçalhos ---------- */
+.label {
+    -fx-text-fill: #333;
+}
+
+.label.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b2b2b;
+}
+
+.titulo-principal {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- TextFields e ComboBox ---------- */
+.text-field, .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #d1d1d1;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 6px 8px;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #4a90e2;
+    -fx-background-color: #ffffff;
+}
+
+/* ---------- Botões ---------- */
+.button {
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+    -fx-padding: 8px 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+    -fx-border-width: 0;
+}
+
+/* Botão padrão (Salvar) */
+.button.salvar {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #43A047);
+    -fx-text-fill: white;
+}
+
+.button.salvar:hover {
+    -fx-background-color: linear-gradient(to bottom, #45a049, #388E3C);
+}
+
+/* Botão Cancelar (cinza neutro) */
+.button.cancelar {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333;
+}
+
+.button.cancelar:hover {
+    -fx-background-color: #d5d5d5;
+}
+
+/* Botão Excluir (vermelho) */
+.button.excluir {
+    -fx-background-color: linear-gradient(to bottom, #e53935, #c62828);
+    -fx-text-fill: white;
+}
+
+.button.excluir:hover {
+    -fx-background-color: linear-gradient(to bottom, #d32f2f, #b71c1c);
+}
+
+/* Botão Voltar */
+.btn-voltar {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 6 12 6 12;
+    -fx-cursor: hand;
+    -fx-background-radius: 6;
+}
+
+.btn-voltar:hover {
+    -fx-background-color: rgba(0,0,0,0.05);
+    -fx-text-fill: #0078d7;
+}
+
+.btn-voltar:pressed {
+    -fx-background-color: rgba(0,0,0,0.15);
+}
+
+/* ---------- ComboBox dropdown ---------- */
+.combo-box-popup .list-cell {
+    -fx-padding: 6px;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+/* ---------- Alert Dialogs ---------- */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f7f7f7;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #333;
+}
+
+/* ---------- TableView ---------- */
+.table-view {
+    -fx-border-color: #d1d1d1;
+    -fx-background-color: #fff;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #eaeaea;
+}
+
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+}
+
+/* ---------- Scrollbars ---------- */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #b3b3b3;
+}

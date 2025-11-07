@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MainViewController {
     private final SpringFXMLLoader fxmlLoader;
+    private final ApplicationContext context;
 
     @FXML private VBox rootVbox;
     @FXML private AnchorPane contentArea;
@@ -26,13 +28,31 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
-        menuCadastrarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-form.fxml"));
-        menuGerenciarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-gerenciar.fxml"));
+        menuCadastrarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-form.fxml", null));
+        menuGerenciarCliente.setOnAction(e -> abrirTela("/fxml/cliente/cliente-gerenciar.fxml", null));
     }
 
-    public void abrirTela(String caminhoFXML) {
+    public void abrirTela(String caminhoFXML, Object parametro) {
         try {
-            Pane novaTela = fxmlLoader.load(getClass().getResource(caminhoFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoFXML));
+            loader.setControllerFactory(clazz -> context.getBean(clazz));
+            Pane novaTela = loader.load();
+
+            Object controller = loader.getController();
+
+            if (controller != null && parametro != null) {
+                try {
+                    controller.getClass()
+                            .getMethod("setData", parametro.getClass())
+                            .invoke(controller, parametro);
+                } catch(NoSuchMethodException e1) {
+                    try {
+                        controller.getClass()
+                                .getMethod("setData", Object.class)
+                                .invoke(controller, parametro);
+                    } catch (NoSuchMethodException ignored) {}
+                }
+            }
 
             contentArea.getChildren().setAll(novaTela);
             AnchorPane.setTopAnchor(novaTela, 0.0);

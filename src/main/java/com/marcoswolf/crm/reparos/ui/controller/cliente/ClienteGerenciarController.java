@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,8 @@ public class ClienteGerenciarController {
     private final ClienteService clienteService;
     private final SpringFXMLLoader fxmlLoader;
     private final MainViewController mainViewController;
+
+    @FXML private AnchorPane rootPane;
 
     @FXML private TextField txtBuscar;
     @FXML private TableView<Cliente> tabelaClientes;
@@ -53,11 +56,16 @@ public class ClienteGerenciarController {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     Cliente clienteSelecionado = row.getItem();
                     System.out.println("Editando o usuário " + row.getItem());
-                    //abrirTelaEdicao(clienteSelecionado);
+                    abrirTelaEdicao(clienteSelecionado);
                 }
             });
             return row;
         });
+    }
+
+    @FXML
+    private void onVoltar() {
+        ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
     }
 
     private void carregarClientes() {
@@ -78,9 +86,13 @@ public class ClienteGerenciarController {
 
     @FXML
     public void onNovo(ActionEvent actionEvent) {
-        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml");
+        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml", null);
     }
 
-    private void editarCliente(Cliente cliente) {
+    @FXML
+    public void abrirTelaEdicao(Cliente cliente) {
+        mainViewController.abrirTela("/fxml/cliente/cliente-form.fxml", cliente);
     }
+
+
 }

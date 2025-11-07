@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.net.URL;
+
 public class JavaFxApp extends Application {
     private ConfigurableApplicationContext springContext;
 
@@ -22,6 +24,13 @@ public class JavaFxApp extends Application {
         fxmLoader.setControllerFactory(springContext::getBean);
 
         Scene scene = new Scene(fxmLoader.load(), 860, 600);
+
+        URL cssUrl = getClass().getResource("/css/light-theme.css");
+        if (cssUrl != null) {
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.err.println("CSS não encontrado");
+        }
         stage.setScene(scene);
         stage.setTitle("crm-reparos");
         stage.show();

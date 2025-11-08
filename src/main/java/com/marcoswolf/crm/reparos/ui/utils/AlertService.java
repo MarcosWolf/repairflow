@@ -12,6 +12,10 @@ public class AlertService {
         show(Alert.AlertType.INFORMATION, title, message);
     }
 
+    public void warn(String title, String message) {
+        show(Alert.AlertType.WARNING, title, message);
+    }
+
     public void error(String title, String message) {
         show(Alert.AlertType.ERROR, title, message);
     }

@@ -9,32 +9,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ClienteFormMapper {
-    public Cliente toEntity(TextField txtNome, TextField txtTelefone, TextField txtEmail,
-                            TextField txtCidade, TextField txtBairro, TextField txtCep,
-                            TextField txtLogradouro, TextField txtNumero, ComboBox<Estado> comboEstado) {
+    public Cliente toEntity(String nome, String telefone, String email,
+                            String cidade, String bairro, String cep,
+                            String logradouro, Integer numero, Estado estado) {
 
-        Endereco endereco = Endereco.builder()
-                .cidade(txtCidade.getText())
-                .bairro(txtBairro.getText())
-                .logradouro(txtLogradouro.getText())
-                .numero(parseInt(txtNumero))
-                .cep(txtCep.getText())
-                .estado(comboEstado.getValue())
-                .build();
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setTelefone(telefone);
+        cliente.setEmail(email);
 
-        return Cliente.builder()
-                .nome(txtNome.getText())
-                .telefone(txtTelefone.getText())
-                .email(txtEmail.getText())
-                .endereco(endereco)
-                .build();
-    }
+        var endereco = new Endereco();
+        endereco.setCidade(cidade);
+        endereco.setBairro(bairro);
+        endereco.setCep(cep);
+        endereco.setLogradouro(logradouro);
+        endereco.setNumero(numero);
+        endereco.setEstado(estado);
 
-    private Integer parseInt(TextField field) {
-        try {
-            return Integer.parseInt(field.getText());
-        } catch (Exception e) {
-            return null;
-        }
+        cliente.setEndereco(endereco);
+        return cliente;
     }
 }

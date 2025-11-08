@@ -1,10 +1,12 @@
 package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
+import com.marcoswolf.crm.reparos.business.cliente.ClienteFiltro;
 import com.marcoswolf.crm.reparos.business.cliente.ClienteService;
+import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
-import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,15 +19,14 @@ import javafx.util.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class ClienteGerenciarController {
-    private final ClienteService clienteService;
-    private final SpringFXMLLoader fxmlLoader;
+    private final IClienteConsultaService clienteConsultaService;
+
     private final MainViewController mainViewController;
     private final ViewNavigator navigator;
+    private final AlertService alertService;
 
     @FXML private AnchorPane rootPane;
 
@@ -46,27 +47,40 @@ public class ClienteGerenciarController {
 
     @FXML
     private void initialize() {
-        colNome.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getNome()));
-        colTelefone.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getTelefone()));
-        colCidade.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
-                c.getValue().getEndereco() != null ? c.getValue().getEndereco().getCidade() : ""));
+        configurarTabela();
+        carregarClientes();
+        configurarDuploClique();
+    }
+
+    private void carregarClientes() {
+        try {
+            var clientes = clienteConsultaService.buscarPorNome("");
+            tabelaClientes.setItems(FXCollections.observableList(clientes));
+        } catch (Exception e) {
+            alertService.error("Erro", "Não foi possível carregar os clientes.");
+        }
+    }
+
+    private void configurarTabela() {
+        colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
+        colTelefone.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTelefone()));
+        colCidade.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getEndereco() != null ? c.getValue().getEndereco().getCidade() : "")
+        );
         colEstado.setCellValueFactory(c -> {
             var endereco = c.getValue().getEndereco();
-            var nomeEstado = (endereco != null && endereco.getEstado() != null)
-                    ? endereco.getEstado().getNome()
-                    : "";
-            return new SimpleStringProperty(nomeEstado);
+            return new SimpleStringProperty(
+                    endereco != null && endereco.getEstado() != null ? endereco.getEstado().getNome() : ""
+            );
         });
+    }
 
-        carregarClientes();
-
+    private void configurarDuploClique() {
         tabelaClientes.setRowFactory(tv -> {
             TableRow<Cliente> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    Cliente clienteSelecionado = row.getItem();
-                    System.out.println("Editando o usuário " + row.getItem());
-                    abrirTelaEdicao(clienteSelecionado);
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    abrirTelaEdicao(row.getItem());
                 }
             });
             return row;
@@ -75,23 +89,30 @@ public class ClienteGerenciarController {
 
     @FXML
     private void onVoltar() {
-        ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
-    }
-
-    private void carregarClientes() {
-        List<Cliente> clientes = clienteService.buscarPorNome("");
-        tabelaClientes.setItems(FXCollections.observableList(clientes));
+        navigator.closeCurrentView(rootPane);
     }
 
     @FXML
     public void onBuscar() {
-        String nome = txtBuscar.getText();
         try {
-            List<Cliente> clientes = clienteService.buscarPorNome(nome);
+            var nome = txtBuscar.getText();
+            var clientes = clienteConsultaService.buscarPorNome(nome);
             tabelaClientes.setItems(FXCollections.observableList(clientes));
         } catch (Exception e) {
-            tabelaClientes.getItems().clear();
+            alertService.error("Erro", "Falha ao buscar clientes.");
         }
+    }
+
+    @FXML
+    public void onNovo() {
+        navigator.openView("/fxml/cliente/cliente-form.fxml",
+                mainViewController.getContentArea(), null);
+    }
+
+    @FXML
+    public void abrirTelaEdicao(Cliente cliente) {
+        navigator.openView("/fxml/cliente/cliente-form.fxml",
+                mainViewController.getContentArea(), cliente);
     }
 
     @FXML
@@ -132,19 +153,19 @@ public class ClienteGerenciarController {
     @FXML
     public void onAplicarFiltros() {
         try {
-            var filtro = new com.marcoswolf.crm.reparos.business.cliente.ClienteFiltro();
+            var filtro = new ClienteFiltro();
             filtro.setNome(txtBuscar.getText());
             filtro.setPendentes(chkPendentes.isSelected());
             filtro.setComReparos(chkReparosAberto.isSelected());
             filtro.setInativos(chkInativos.isSelected());
             filtro.setRecentes(chkRecentes.isSelected());
 
-            var clientesFiltrados = clienteService.filtrarClientes(filtro);
-            tabelaClientes.setItems(FXCollections.observableList(clientesFiltrados));
+            var clientes = clienteConsultaService.filtrarClientes(filtro);
+            tabelaClientes.setItems(FXCollections.observableList(clientes));
             onToggleFiltros();
+
         } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Erro ao aplicar filtros: " + e.getMessage()).showAndWait();
+            alertService.error("Erro", "Falha ao aplicar filtros: " + e.getMessage());
         }
     }
 
@@ -156,19 +177,5 @@ public class ClienteGerenciarController {
         chkInativos.setSelected(false);
         txtBuscar.clear();
         carregarClientes();
-    }
-
-    @FXML
-    public void onNovo() {
-        navigator.openView("/fxml/cliente/cliente-form.fxml",
-                mainViewController.getContentArea(),
-                null);
-    }
-
-    @FXML
-    public void abrirTelaEdicao(Cliente cliente) {
-        navigator.openView("/fxml/cliente/cliente-form.fxml",
-                mainViewController.getContentArea(),
-                cliente);
     }
 }

@@ -1,6 +1,5 @@
 package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
-import com.marcoswolf.crm.reparos.business.estado.EstadoService;
 import com.marcoswolf.crm.reparos.business.cliente.IClienteComandoService;
 import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.estado.IEstadoConsultaService;
@@ -34,12 +33,12 @@ import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
 @Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteFormController implements DataReceiver<Cliente> {
-    private final EstadoService estadoService;
     private final ClienteFormMapper formMapper;
     private final AlertService alertService;
     @Autowired
     private final ViewNavigator navigator;
 
+    @FXML private MainViewController mainViewController;
     @FXML private AnchorPane rootPane;
 
     private final IClienteComandoService clienteComandoService;
@@ -117,7 +116,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
 
     @FXML
     private void onVoltar() {
-        navigator.openView("/fxml/cliente/cliente-gerenciar.fxml", rootPane, null);
+        navigator.openViewRootPane("/fxml/cliente/cliente-gerenciar.fxml", rootPane, null);
     }
 
     private void preencherFormulario(Cliente cliente) {

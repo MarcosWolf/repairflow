@@ -16,6 +16,7 @@ public class ViewNavigator {
 
     public <T> void openView(String fxmlPath, AnchorPane targetArea, T data) {
         try {
+            targetArea.getChildren().clear();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             loader.setControllerFactory(context::getBean);
             Pane newView = loader.load();
@@ -31,11 +32,29 @@ public class ViewNavigator {
         }
     }
 
+    public <T> void openViewRootPane(String fxmlPath, AnchorPane currentRoot, T data) {
+        try {
+            var parent = currentRoot.getParent();
+            if (parent instanceof AnchorPane anchorPane) {
+                openView(fxmlPath, anchorPane, data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setAnchors(AnchorPane contentArea, Pane view) {
         contentArea.getChildren().setAll(view);
         AnchorPane.setTopAnchor(view, 0.0);
         AnchorPane.setRightAnchor(view, 0.0);
         AnchorPane.setBottomAnchor(view, 0.0);
         AnchorPane.setLeftAnchor(view, 0.0);
+    }
+
+    public void closeCurrentView(AnchorPane view) {
+        var parent = view.getParent();
+        if (parent instanceof AnchorPane anchorPane) {
+            anchorPane.getChildren().remove(view);
+        }
     }
 }

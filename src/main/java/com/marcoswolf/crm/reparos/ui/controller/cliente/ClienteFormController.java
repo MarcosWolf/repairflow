@@ -28,6 +28,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
+
 @Component
 @Scope("prototype")
 @RequiredArgsConstructor
@@ -37,12 +39,10 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     private final AlertService alertService;
     @Autowired
     private final ViewNavigator navigator;
-    private final MainViewController mainViewController;
 
     @FXML private AnchorPane rootPane;
 
     private final IClienteComandoService clienteComandoService;
-    private final IClienteConsultaService clienteConsultaService;
     private final IEstadoConsultaService estadoConsultaService;
 
     private Cliente clienteEditando;
@@ -55,8 +55,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     @FXML
     private void initialize() {
         carregarEstados();
-        //limparFormulario(); // se você tiver esse método
-        //clienteEditando = null;
+        aplicarFiltros();
     }
 
     @Override
@@ -90,8 +89,8 @@ public class ClienteFormController implements DataReceiver<Cliente> {
             }
 
             alertService.info("Sucesso", "Cliente salvo com sucesso!");
-            //limparFormulario();
-            //voltarTela();
+            limparFormulario();
+            onVoltar();
         } catch (Exception e) {
             alertService.error("Erro ao salvar", e.getMessage());
         }
@@ -109,8 +108,8 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         try {
             clienteComandoService.deletarCliente(clienteEditando.getId());
             alertService.info("Sucesso", "Cliente removido com sucesso!");
-            //limparFormulario();
-            //voltarTela();
+            limparFormulario();
+            onVoltar();
         } catch (Exception e) {
             alertService.error("Erro ao excluir", e.getMessage());
         }
@@ -191,5 +190,32 @@ public class ClienteFormController implements DataReceiver<Cliente> {
                         .orElse(null);
             }
         });
+    }
+
+    private void aplicarFiltros() {
+        aplicarLimite(txtNome, 50);
+        aplicarMascaraTelefone(txtTelefone);
+        aplicarLimite(txtEmail, 80);
+        aplicarLimite(txtCidade, 50);
+        aplicarLimite(txtBairro, 50);
+        aplicarMascaraCEP(txtCep);
+        aplicarLimite(txtLogradouro, 80);
+        aplicarLimite(txtNumero, 8);
+        carregarEstados();
+    }
+
+    private void limparFormulario() {
+        txtNome.clear();
+        txtTelefone.clear();
+        txtEmail.clear();
+        txtCidade.clear();
+        txtBairro.clear();
+        txtCep.clear();
+        txtLogradouro.clear();
+        txtNumero.clear();
+        comboEstado.getSelectionModel().selectFirst();
+        lblTitulo.setText("Cadastrar Cliente");
+        btnExcluir.setVisible(false);
+        clienteEditando = null;
     }
 }

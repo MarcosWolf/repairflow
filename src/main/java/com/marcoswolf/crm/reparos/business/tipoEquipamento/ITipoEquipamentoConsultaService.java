@@ -5,6 +5,6 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import java.util.List;
 
 public interface ITipoEquipamentoConsultaService {
-    List<TipoEquipamento> buscarPorNome(String nome);
-    List<TipoEquipamento> filtrarTipoEquipamentos(TipoEquipamentoFiltro tipoEquipamentoFiltro);
+    List<TipoEquipamento> listarTodos();
+    //List<TipoEquipamento> filtrarTipoEquipamentos(TipoEquipamentoFiltro tipoEquipamentoFiltro);
 }

@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business.tipoEquipamento;
+package com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro;
 
 import lombok.Data;
 

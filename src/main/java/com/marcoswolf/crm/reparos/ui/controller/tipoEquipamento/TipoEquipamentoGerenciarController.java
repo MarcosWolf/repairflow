@@ -4,6 +4,8 @@ import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoServic
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.ClienteBuscarAction;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -27,6 +29,8 @@ public class TipoEquipamentoGerenciarController {
     private final ViewNavigator navigator;
 
     @FXML private AnchorPane rootPane;
+
+    private final TipoEquipamentoBuscarAction buscarAction;
 
     @FXML private TextField txtBuscar;
     @FXML private TableView<TipoEquipamento> tabelaTipoEquipamento;
@@ -57,19 +61,15 @@ public class TipoEquipamentoGerenciarController {
     }
 
     private void carregarTipoEquipamentos() {
-        List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoService.buscarPorNome("");
+        List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoService.listarTodos();
         tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
     }
 
     @FXML
-    public void onBuscar(ActionEvent actionEvent) {
-        String nome = txtBuscar.getText();
-        try {
-            List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoService.buscarPorNome(nome);
-            tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
-        } catch (Exception e) {
-            tabelaTipoEquipamento.getItems().clear();
-        }
+    public void onBuscar() {
+        var nome = txtBuscar.getText();
+        var tipoEquipamentos = buscarAction.executar(nome);
+        tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
     }
 
     @FXML

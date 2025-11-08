@@ -1,20 +1,32 @@
 package com.marcoswolf.crm.reparos.business.tipoEquipamento;
 
+import com.marcoswolf.crm.reparos.business.cliente.filtro.strategy.*;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.TipoEquipamentoFiltro;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.FiltroNome;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.filtro.strategy.TipoEquipamentoFiltroStrategy;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
+import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
+import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TipoEquipamentoService {
+public class TipoEquipamentoService implements ITipoEquipamentoConsultaService, ITipoEquipamentoComandoService {
     private final TipoEquipamentoRepository tipoEquipamentoRepository;
     private final EquipamentoRepository equipamentoRepository;
+    private final ReparoRepository reparoRepository;
+    private final ClienteRepository clienteRepository;
 
-    public TipoEquipamentoService(TipoEquipamentoRepository tipoEquipamentoRepository, EquipamentoRepository equipamentoRepository) {
+    public TipoEquipamentoService(TipoEquipamentoRepository tipoEquipamentoRepository, EquipamentoRepository equipamentoRepository, ReparoRepository reparoRepository, ClienteRepository clienteRepository) {
         this.tipoEquipamentoRepository = tipoEquipamentoRepository;
         this.equipamentoRepository = equipamentoRepository;
+        this.reparoRepository = reparoRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     // Create
@@ -23,14 +35,8 @@ public class TipoEquipamentoService {
     }
 
     // Read
-    public List<TipoEquipamento> buscarPorNome(String nome) {
-        var tipoEquipamentos = tipoEquipamentoRepository.findByNomeContainingIgnoreCase(nome);
-
-        if (tipoEquipamentos.isEmpty()) {
-            throw new RuntimeException("Tipo de equipamento não encontrado.");
-        }
-
-        return tipoEquipamentos;
+    public List<TipoEquipamento> listarTodos() {
+        return tipoEquipamentoRepository.findAll();
     }
 
     // Update

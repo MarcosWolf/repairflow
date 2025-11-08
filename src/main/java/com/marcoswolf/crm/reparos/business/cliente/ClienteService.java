@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.business;
+package com.marcoswolf.crm.reparos.business.cliente;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
@@ -6,7 +6,9 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -25,13 +27,33 @@ public class ClienteService {
 
     // Read
     public List<Cliente> buscarPorNome(String nome) {
-        var clientes = clienteRepository.findByNomeContainingIgnoreCase(nome);
+        return clienteRepository.findByNomeContainingIgnoreCase(nome);
+    }
 
-        if (clientes.isEmpty()) {
-            throw new RuntimeException("Cliente não encontrado.");
-        }
+    public List<Cliente> filtrarClientes(ClienteFiltro filtro) {
+        var clientes = clienteRepository.findAll();
 
-        return clientes;
+        return clientes.stream()
+                .filter(c -> {
+                    if (filtro.getNome() == null || filtro.getNome().isBlank()) return true;
+                    return c.getNome() != null && c.getNome().toLowerCase().contains(filtro.getNome().toLowerCase().trim());
+                })
+
+                .filter(c -> !filtro.isPendentes()
+                        || reparoRepository.existsByEquipamento_Cliente_IdAndPagamento_PagoFalse(c.getId()))
+
+                .filter(c -> !filtro.isInativos()
+                        || !reparoRepository.existsByEquipamento_Cliente_IdAndDataEntradaAfter(
+                        c.getId(), LocalDate.now().minusDays(90)))
+
+                .filter(c -> !filtro.isRecentes()
+                        || reparoRepository.existsByEquipamento_Cliente_IdAndDataEntradaAfter(
+                        c.getId(), LocalDate.now().minusDays(30)))
+
+                .filter(c -> !filtro.isComReparos()
+                        || reparoRepository.existsByEquipamento_Cliente_IdAndConcluidoFalse(c.getId()))
+
+                .collect(Collectors.toList());
     }
 
     // Update

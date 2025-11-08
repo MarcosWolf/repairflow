@@ -2,11 +2,12 @@ package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
 import static com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils.*;
 
-import com.marcoswolf.crm.reparos.business.ClienteService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteService;
 import com.marcoswolf.crm.reparos.business.EstadoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
+import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.utils.FormValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class ClienteFormController {
     private final EstadoService estadoService;
     private final ClienteService clienteService;
+
+    private final MainViewController mainViewController;
 
     private Cliente clienteEditando;
 
@@ -93,7 +96,7 @@ public class ClienteFormController {
     @FXML
     private void onVoltar() {
         limparFormulario();
-        ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
+        mainViewController.abrirTela("/fxml/cliente/cliente-gerenciar.fxml", null);
     }
 
     @FXML
@@ -116,7 +119,7 @@ public class ClienteFormController {
                     ok.setContentText("Cliente removido com sucesso!");
                     ok.showAndWait();
                     limparFormulario();
-                    ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
+                    mainViewController.abrirTela("/fxml/cliente/cliente-gerenciar.fxml", null);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -174,7 +177,7 @@ public class ClienteFormController {
             alert.setContentText("Cliente salvo com sucesso!");
             alert.showAndWait();
             limparFormulario();
-            ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
+            mainViewController.abrirTela("/fxml/cliente/cliente-gerenciar.fxml", null);
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -210,6 +213,10 @@ public class ClienteFormController {
             lblTitulo.setText("Cadastrar Cliente");
             btnExcluir.setVisible(false);
         }
+    }
+
+    public Cliente getData() {
+        return clienteEditando;
     }
 
     private void limparFormulario() {

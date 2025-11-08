@@ -64,11 +64,11 @@
             </Menu>
         <Menu mnemonicParsing="false" text="Equipamentos">
           <items>
-            <MenuItem mnemonicParsing="false" text="Cadastrar Equipamento" />
-            <MenuItem mnemonicParsing="false" text="Gererenciar Equipamentos" />
+            <MenuItem fx:id="menuCadastrarEquipamento" mnemonicParsing="false" text="Cadastrar Equipamento" />
+            <MenuItem fx:id="menuGerenciarEquipamento" mnemonicParsing="false" text="Gererenciar Equipamentos" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cadastrar Tipo de Equipamento" />
-            <MenuItem mnemonicParsing="false" text="Gerenciar Tipos de Equipamento" />
+            <MenuItem fx:id="menuCadastrarTipoEquipamento" mnemonicParsing="false" text="Cadastrar Tipo de Equipamento" />
+            <MenuItem fx:id="menuGerenciarTipoEquipamento" mnemonicParsing="false" text="Gerenciar Tipos de Equipamento" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Reparos">

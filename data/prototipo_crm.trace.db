@@ -1,3 +1,0 @@
-2025-11-06 14:59:18.431868-03:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]ESTADO"; expected "EXPLAIN, EXECUTE"; SQL statement:
-ESTADO [42001-232]

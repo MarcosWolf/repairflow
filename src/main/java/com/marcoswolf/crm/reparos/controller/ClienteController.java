@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
-import com.marcoswolf.crm.reparos.business.ClienteService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

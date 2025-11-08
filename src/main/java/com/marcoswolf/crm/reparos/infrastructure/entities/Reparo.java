@@ -22,6 +22,7 @@ public class Reparo {
 
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
+    private Boolean concluido;
     private String descricaoProblema;
     private String servicoExecutado;
 

@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.statusReparo;
 
-public record FiltroDTO(
+public record StatusReparoFiltroDTO(
         String nome
 ) {
 }

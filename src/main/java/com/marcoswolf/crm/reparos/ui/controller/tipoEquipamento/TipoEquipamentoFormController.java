@@ -23,12 +23,14 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
     private final ViewNavigator navigator;
     private final TipoEquipamentoSalvarAction salvarAction;
     private final TipoEquipamentoExcluirAction excluirAction;
-    private TipoEquipamento tipoEquipamentoEditando;
+    private TipoEquipamento novoTipoEquipamento;
 
     @FXML private AnchorPane rootPane;
     @FXML private Label lblTitulo;
     @FXML private TextField txtNome;
     @FXML private Button btnExcluir;
+
+    public static final String GERENCIAR_PATH = "/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml";
 
     @FXML
     public void initialize() {
@@ -41,7 +43,7 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
 
     @Override
     public void setData(TipoEquipamento tipoEquipamento) {
-        this.tipoEquipamentoEditando = tipoEquipamento;
+        this.novoTipoEquipamento = tipoEquipamento;
         preencherFormulario(tipoEquipamento);
     }
 
@@ -60,24 +62,24 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
     }
 
     @FXML
-    private void onSalvar() {
+    private void salvar() {
         var data = new TipoEquipamentoFormData(
                 txtNome.getText()
         );
 
-        boolean sucesso = salvarAction.execute(tipoEquipamentoEditando, data);
-        if (sucesso) onVoltar();
+        boolean sucesso = salvarAction.execute(novoTipoEquipamento, data);
+        if (sucesso) voltar();
     }
 
     @FXML
-    private void onExcluir() {
-        boolean sucesso = excluirAction.execute(tipoEquipamentoEditando, null);
-        if (sucesso) onVoltar();
+    private void excluir() {
+        boolean sucesso = excluirAction.execute(novoTipoEquipamento, null);
+        if (sucesso) voltar();
     }
 
     @FXML
-    private void onVoltar() {
-        navigator.openViewRootPane("/fxml/tipoEquipamento/tipoEquipamento-gerenciar.fxml", rootPane, null);
+    private void voltar() {
+        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
     }
 
     private void limparCampos() {

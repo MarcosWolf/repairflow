@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SalvarAction implements Action {
-    private final FormNormalizer normalizer;
+public class StatusReparoSalvarAction implements StatusReparoAction {
+    private final StatusReparoFormNormalizer normalizer;
     private final StatusReparoComandoService statusReparoComandoServicer;
-    private final FormToEntityMapper mapper;
-    private final Validator validator;
+    private final StatusReparoFormToEntityMapper mapper;
+    private final StatusReparoValidator validator;
     private final AlertService alertService;
 
     @Override
-    public boolean execute(StatusReparo novoStatusReparo, FormData data) {
+    public boolean execute(StatusReparo novoStatusReparo, StatusReparoFormData data) {
         try {
-            FormData normalized = normalizer.normalize(data);
+            StatusReparoFormData normalized = normalizer.normalize(data);
             validator.validar(normalized, novoStatusReparo);
 
             StatusReparo statusReparo = mapper.map(normalized, novoStatusReparo);

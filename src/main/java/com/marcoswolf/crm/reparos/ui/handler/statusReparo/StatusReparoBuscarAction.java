@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class BuscarAction {
+public class StatusReparoBuscarAction {
     private final FiltroService statusReparoFiltroService;
 
     public List<StatusReparo> executar(String nome) {

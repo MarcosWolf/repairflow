@@ -1,9 +1,9 @@
 package com.marcoswolf.crm.reparos.ui.controller.statusReparo;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.ExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.FormData;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.SalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
@@ -19,16 +19,18 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @RequiredArgsConstructor
-public class FormController implements DataReceiver<StatusReparo> {
+public class StatusReparoFormController implements DataReceiver<StatusReparo> {
     private final ViewNavigator navigator;
-    private final SalvarAction salvarAction;
-    private final ExcluirAction excluirAction;
+    private final StatusReparoSalvarAction salvarAction;
+    private final StatusReparoExcluirAction excluirAction;
     private StatusReparo novoStatusReparo;
 
     @FXML private AnchorPane rootPane;
     @FXML private Label lblTitulo;
     @FXML private TextField txtNome;
     @FXML private Button btnExcluir;
+
+    public static final String GERENCIAR_PATH = "/fxml/statusReparo/statusReparo-gerenciar.fxml";
 
     @FXML
     public void initialize() {
@@ -61,7 +63,7 @@ public class FormController implements DataReceiver<StatusReparo> {
 
     @FXML
     private void salvar() {
-        var data = new FormData(
+        var data = new StatusReparoFormData(
                 txtNome.getText()
         );
 
@@ -77,7 +79,7 @@ public class FormController implements DataReceiver<StatusReparo> {
 
     @FXML
     private void voltar() {
-        navigator.openViewRootPane("/fxml/statusReparo/statusReparo-gerenciar.fxml", rootPane, null);
+        navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
     }
 
     private void limparCampos() {

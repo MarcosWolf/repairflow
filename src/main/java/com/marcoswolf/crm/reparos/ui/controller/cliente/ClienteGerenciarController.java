@@ -33,7 +33,7 @@ public class ClienteGerenciarController {
     @FXML private AnchorPane rootPane;
     @FXML private VBox filtroPane;
     @FXML private TextField txtBuscar;
-    @FXML private TableView<Cliente> tabelaClientes;
+    @FXML private TableView<Cliente> tabela;
     @FXML private TableColumn<Cliente, String> colNome;
     @FXML private TableColumn<Cliente, String> colTelefone;
     @FXML private TableColumn<Cliente, String> colCidade;
@@ -48,9 +48,6 @@ public class ClienteGerenciarController {
     @FXML
     private void initialize() {
         configurarTabela();
-        carregarClientesIniciais();
-        configurarDuploClique();
-        centralizarColunas();
     }
 
     private void configurarTabela() {
@@ -65,23 +62,19 @@ public class ClienteGerenciarController {
                     endereco != null && endereco.getEstado() != null ? endereco.getEstado().getNome() : ""
             );
         });
-    }
 
-    private void configurarDuploClique() {
-        tabelaClientes.setRowFactory(tv -> {
-            TableRow<Cliente> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    abrirTelaEdicao(row.getItem());
-                }
-            });
-            return row;
+        carregarClientesIniciais();
+
+        TableUtils.setDoubleClickAction(tabela, statusSelecionado -> {
+            editar(statusSelecionado);
         });
+
+        centralizarColunas();
     }
 
     private void carregarClientesIniciais() {
         var clientes = buscarAction.executar("");
-        tabelaClientes.setItems(FXCollections.observableList(clientes));
+        tabela.setItems(FXCollections.observableList(clientes));
     }
 
     private void centralizarColunas() {
@@ -91,30 +84,30 @@ public class ClienteGerenciarController {
     }
 
     @FXML
-    private void onVoltar() {
+    private void voltar() {
         navigator.closeCurrentView(rootPane);
     }
 
     @FXML
-    public void onBuscar() {
+    public void buscar() {
         var nome = txtBuscar.getText();
         var clientes = buscarAction.executar(nome);
-        tabelaClientes.setItems(FXCollections.observableList(clientes));
+        tabela.setItems(FXCollections.observableList(clientes));
     }
 
     @FXML
-    public void onNovo() {
+    public void cadastrar() {
         navigator.openView("/fxml/cliente/cliente-form.fxml",
                 mainViewController.getContentArea(), null);
     }
 
     @FXML
-    public void onToggleFiltros() {
+    public void toggleFiltros() {
         filtrosVisiveis = toggleFiltrosAction.executar(filtrosVisiveis, filtroPane);
     }
 
     @FXML
-    public void onAplicarFiltros() {
+    public void aplicarFiltros() {
         var filtro = new ClienteFiltroDTO(
                 txtBuscar.getText(),
                 chkPendentes.isSelected(),
@@ -125,17 +118,17 @@ public class ClienteGerenciarController {
         );
 
         var clientes = filtrarAction.executar(filtro);
-        tabelaClientes.setItems(FXCollections.observableList(clientes));
+        tabela.setItems(FXCollections.observableList(clientes));
         filtrosVisiveis = toggleFiltrosAction.executar(filtrosVisiveis, filtroPane);
     }
 
     @FXML
-    public void onLimparFiltros() {
-        limparFiltrosAction.executar(chkPendentes, chkReparosAberto, chkInativos, chkRecentes, txtBuscar, tabelaClientes);
+    public void limparFiltros() {
+        limparFiltrosAction.executar(chkPendentes, chkReparosAberto, chkInativos, chkRecentes, txtBuscar, tabela);
         carregarClientesIniciais();
     }
 
-    private void abrirTelaEdicao(Cliente cliente) {
+    private void editar(Cliente cliente) {
         navigator.openView("/fxml/cliente/cliente-form.fxml",
                 mainViewController.getContentArea(), cliente);
     }

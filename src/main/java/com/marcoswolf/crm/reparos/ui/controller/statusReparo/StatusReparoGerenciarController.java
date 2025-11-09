@@ -2,10 +2,8 @@ package com.marcoswolf.crm.reparos.ui.controller.statusReparo;
 
 import com.marcoswolf.crm.reparos.business.statusReparo.StatusReparoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
-import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
-import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
-import com.marcoswolf.crm.reparos.ui.handler.statusReparo.BuscarAction;
+import com.marcoswolf.crm.reparos.ui.handler.statusReparo.StatusReparoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleLongProperty;
@@ -13,11 +11,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import jdk.jshell.Snippet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,14 +22,14 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class GerenciarController {
+public class StatusReparoGerenciarController {
     private final StatusReparoService statusReparoService;
     private final MainViewController mainViewController;
     private final ViewNavigator navigator;
 
     @FXML private AnchorPane rootPane;
 
-    private final BuscarAction buscarAction;
+    private final StatusReparoBuscarAction buscarAction;
 
     @FXML private TextField txtBuscar;
     @FXML private TableView<StatusReparo> tabela;
@@ -45,18 +41,25 @@ public class GerenciarController {
 
     @FXML
     private void initialize() {
+        configurarTabela();
+    }
+
+    private void configurarTabela() {
+        instanciarTabela();
+        alimentarTabela();
+
+        TableUtils.setDoubleClickAction(tabela, itemSelecionado -> {
+            editar(itemSelecionado);
+        });
+
+        centralizarColunas();
+    }
+
+    private void instanciarTabela() {
         colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
         colTotalReparos.setCellValueFactory(c -> new SimpleLongProperty(
                 Optional.ofNullable(c.getValue().getTotalReparos()).orElse(0L)
         ));
-
-        carregarStatusReparos();
-
-        TableUtils.setDoubleClickAction(tabela, statusSelecionado -> {
-            editar(statusSelecionado);
-        });
-
-        centralizarColunas();
     }
 
     @FXML
@@ -64,7 +67,7 @@ public class GerenciarController {
         ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
     }
 
-    private void carregarStatusReparos() {
+    private void alimentarTabela() {
         List<StatusReparo> statusReparos = statusReparoService.listarTodos();
 
         statusReparos.forEach(t -> {

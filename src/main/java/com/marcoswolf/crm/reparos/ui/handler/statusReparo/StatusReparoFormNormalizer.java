@@ -4,14 +4,14 @@ import com.marcoswolf.crm.reparos.ui.handler.shared.IFormNormalizer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FormNormalizer implements IFormNormalizer<FormData> {
+public class StatusReparoFormNormalizer implements IFormNormalizer<StatusReparoFormData> {
 
     @Override
-    public FormData normalize(FormData data) {
+    public StatusReparoFormData normalize(StatusReparoFormData data) {
         if (data == null) return null;
 
         String nome = data.nome() == null ? null : data.nome().trim();
 
-        return new FormData(nome);
+        return new StatusReparoFormData(nome);
     }
 }

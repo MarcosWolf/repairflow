@@ -28,7 +28,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     private final ViewNavigator navigator;
     private final ClienteSalvarAction salvarAction;
     private final ClienteExcluirAction excluirAction;
-    private Cliente clienteEditando;
+    private Cliente novoCliente;
     private final IEstadoConsultaService estadoConsultaService;
 
     @FXML private AnchorPane rootPane;
@@ -56,7 +56,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
 
     @Override
     public void setData(Cliente cliente) {
-        this.clienteEditando = cliente;
+        this.novoCliente = cliente;
         preencherFormulario(cliente);
     }
 
@@ -90,25 +90,25 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     }
 
     @FXML
-    private void onSalvar() {
+    private void salvar() {
         var data = new ClienteFormData(
                 txtNome.getText(), txtTelefone.getText(), txtEmail.getText(),
                 txtCidade.getText(), txtBairro.getText(), txtCep.getText(),
                 txtLogradouro.getText(), parseInteger(txtNumero), comboEstado.getValue()
         );
 
-        boolean sucesso = salvarAction.execute(clienteEditando, data);
-        if (sucesso) onVoltar();
+        boolean sucesso = salvarAction.execute(novoCliente, data);
+        if (sucesso) voltar();
     }
 
     @FXML
-    private void onExcluir() {
-        boolean sucesso = excluirAction.execute(clienteEditando, null);
-        if (sucesso) onVoltar();
+    private void excluir() {
+        boolean sucesso = excluirAction.execute(novoCliente, null);
+        if (sucesso) voltar();
     }
 
     @FXML
-    private void onVoltar() {
+    private void voltar() {
         navigator.openViewRootPane("/fxml/cliente/cliente-gerenciar.fxml", rootPane, null);
     }
 

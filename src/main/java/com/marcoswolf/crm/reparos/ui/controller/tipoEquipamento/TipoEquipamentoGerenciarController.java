@@ -2,7 +2,6 @@ package com.marcoswolf.crm.reparos.ui.controller.tipoEquipamento;
 
 import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
-import com.marcoswolf.crm.reparos.ui.config.SpringFXMLLoader;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
 import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
@@ -10,7 +9,6 @@ import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -35,15 +33,32 @@ public class TipoEquipamentoGerenciarController {
     private final TipoEquipamentoBuscarAction buscarAction;
 
     @FXML private TextField txtBuscar;
-    @FXML private TableView<TipoEquipamento> tabelaTipoEquipamento;
+    @FXML private TableView<TipoEquipamento> tabela;
 
     @FXML private TableColumn<TipoEquipamento, String> colNome;
     @FXML private TableColumn<TipoEquipamento, Number> colTotalClientes;
     @FXML private TableColumn<TipoEquipamento, Number> colTotalEquipamentos;
     @FXML private TableColumn<TipoEquipamento, Number> colTotalReparos;
 
+    public static final String FORM_PATH = "/fxml/tipoEquipamento/tipoEquipamento-form.fxml";
+
     @FXML
     private void initialize() {
+        configurarTabela();
+    }
+
+    private void configurarTabela() {
+        instanciarTabela();
+        alimentarTabela();
+
+        TableUtils.setDoubleClickAction(tabela, itemSelecionado -> {
+            editar(itemSelecionado);
+        });
+
+        centralizarColunas();
+    }
+
+    private void instanciarTabela() {
         colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
         colTotalClientes.setCellValueFactory(c -> new SimpleLongProperty(
                 Optional.ofNullable(c.getValue().getTotalClientes()).orElse(0L)
@@ -54,29 +69,14 @@ public class TipoEquipamentoGerenciarController {
         colTotalReparos.setCellValueFactory(c -> new SimpleLongProperty(
                 Optional.ofNullable(c.getValue().getTotalReparos()).orElse(0L)
         ));
-
-        carregarTipoEquipamentos();
-
-        tabelaTipoEquipamento.setRowFactory(tv -> {
-            TableRow<TipoEquipamento> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    TipoEquipamento tipoEquipamentoSelecionado = row.getItem();
-                    abrirTelaEdicao(tipoEquipamentoSelecionado);
-                }
-            });
-            return row;
-        });
-
-        centralizarColunas();
     }
 
     @FXML
-    private void onVoltar() {
+    private void voltar() {
         ((AnchorPane) rootPane.getParent()).getChildren().remove(rootPane);
     }
 
-    private void carregarTipoEquipamentos() {
+    private void alimentarTabela() {
         List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoService.listarTodos();
 
         tipoEquipamentos.forEach(t -> {
@@ -85,7 +85,7 @@ public class TipoEquipamentoGerenciarController {
             t.setTotalReparos(tipoEquipamentoService.contarReparosPorTipo(t.getId()));
         });
 
-        tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
+        tabela.setItems(FXCollections.observableList(tipoEquipamentos));
     }
 
     private void centralizarColunas() {
@@ -95,23 +95,19 @@ public class TipoEquipamentoGerenciarController {
     }
 
     @FXML
-    public void onBuscar() {
+    public void buscar() {
         var nome = txtBuscar.getText();
         var tipoEquipamentos = buscarAction.executar(nome);
-        tabelaTipoEquipamento.setItems(FXCollections.observableList(tipoEquipamentos));
+        tabela.setItems(FXCollections.observableList(tipoEquipamentos));
     }
 
     @FXML
-    public void onNovo() {
-        navigator.openView("/fxml/tipoEquipamento/tipoEquipamento-form.fxml",
-                mainViewController.getContentArea(),
-                null);
+    public void cadastrar() {
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), null);
     }
 
     @FXML
-    public void abrirTelaEdicao(TipoEquipamento tipoEquipamento) {
-        navigator.openView("/fxml/tipoEquipamento/tipoEquipamento-form.fxml",
-                mainViewController.getContentArea(),
-                tipoEquipamento);
+    public void editar(TipoEquipamento tipoEquipamento) {
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), tipoEquipamento);
     }
 }

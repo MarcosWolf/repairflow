@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
 @Component
-public class CamposObrigatoriosValidator implements Validator {
+public class StatusReparoCamposObrigatoriosValidator implements StatusReparoValidator {
 
     private final StatusReparoRepository statusReparoRepository;
 
-    public CamposObrigatoriosValidator(StatusReparoRepository statusReparoRepository) {
+    public StatusReparoCamposObrigatoriosValidator(StatusReparoRepository statusReparoRepository) {
         this.statusReparoRepository = statusReparoRepository;
     }
 
     @Override
-    public void validar(FormData data, StatusReparo novoStatusReparo) {
+    public void validar(StatusReparoFormData data, StatusReparo novoStatusReparo) {
         if (isEmpty(data.nome())) {
             throw new IllegalArgumentException("O campo nome é obrigatório.");
         }

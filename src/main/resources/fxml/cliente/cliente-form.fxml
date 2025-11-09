@@ -25,7 +25,7 @@
                 <Button fx:id="btnVoltar"
                         text="← Voltar"
                         styleClass="btn-voltar"
-                        onAction="#onVoltar"
+                        onAction="#voltar"
                         minWidth="80"
                         prefHeight="32"/>
             </HBox>
@@ -96,8 +96,8 @@
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnExcluir" text="Excluir" onAction="#onExcluir" styleClass="excluir" visible="false"/>
-                <Button fx:id="btnSalvar" text="Salvar" onAction="#onSalvar" styleClass="salvar"/>
+                <Button fx:id="btnExcluir" text="Excluir" onAction="#excluir" styleClass="excluir" visible="false"/>
+                <Button fx:id="btnSalvar" text="Salvar" onAction="#salvar" styleClass="salvar"/>
             </HBox>
 
         </VBox>

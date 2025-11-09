@@ -25,7 +25,7 @@
                 <Button fx:id="btnVoltar"
                         text="← Voltar"
                         styleClass="btn-voltar"
-                        onAction="#onVoltar"
+                        onAction="#voltar"
                         minWidth="80"
                         prefHeight="32"/>
             </HBox>
@@ -35,13 +35,13 @@
             <VBox spacing="15" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <TextField fx:id="txtBuscar" promptText="Buscar por nome..." prefWidth="250" HBox.hgrow="ALWAYS" />
-                    <Button fx:id="btnBuscar" onAction="#onBuscar"
+                    <Button fx:id="btnBuscar" onAction="#buscar"
                             style="-fx-background-color: #1976D2; -fx-text-fill: white;"
                             text="Buscar" />
                     <Button fx:id="btnFiltros"
                             style="-fx-background-color: #E0E0E0; -fx-text-fill: #333;"
                             text="Filtros" />
-                    <Button fx:id="btnNovo" onAction="#onNovo"
+                    <Button fx:id="btnNovo" onAction="#cadastrar"
                             style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
                             text="Cadastrar" />
                 </HBox>
@@ -62,7 +62,7 @@
                     </HBox>
                 </VBox>
 
-                <TableView fx:id="tabelaTipoEquipamento" prefHeight="380">
+                <TableView fx:id="tabela" prefHeight="380">
                     <columns>
                         <TableColumn fx:id="colNome" prefWidth="250" text="Nome" />
                         <TableColumn fx:id="colTotalClientes" prefWidth="160" text="Clientes" />

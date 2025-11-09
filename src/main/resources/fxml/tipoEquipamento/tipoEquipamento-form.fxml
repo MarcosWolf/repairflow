@@ -21,7 +21,7 @@
                        styleClass="titulo-principal"
                        HBox.hgrow="ALWAYS"/>
                 <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="btnVoltar" minWidth="80" onAction="#onVoltar" prefHeight="32" styleClass="btn-voltar" text="← Voltar" />
+                <Button fx:id="btnVoltar" minWidth="80" onAction="#voltar" prefHeight="32" styleClass="btn-voltar" text="← Voltar" />
             </HBox>
             <Separator />
 
@@ -46,8 +46,8 @@
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnExcluir" styleClass="excluir" onAction="#onExcluir" text="Excluir" visible="false" />
-                <Button fx:id="btnSalvar" styleClass="salvar" onAction="#onSalvar" text="Salvar" />
+                <Button fx:id="btnExcluir" styleClass="excluir" onAction="#excluir" text="Excluir" visible="false" />
+                <Button fx:id="btnSalvar" styleClass="salvar" onAction="#salvar" text="Salvar" />
             </HBox>
 
         </VBox>

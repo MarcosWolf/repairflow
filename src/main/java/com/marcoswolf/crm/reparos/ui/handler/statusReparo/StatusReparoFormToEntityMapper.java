@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class FormToEntityMapper {
+public class StatusReparoFormToEntityMapper {
     private final StatusReparoFormMapper delegate;
 
-    public StatusReparo map(FormData data, StatusReparo novoStatusReparo) {
+    public StatusReparo map(StatusReparoFormData data, StatusReparo novoStatusReparo) {
         StatusReparo statusReparo = delegate.toEntity(
                 data.nome()
         );

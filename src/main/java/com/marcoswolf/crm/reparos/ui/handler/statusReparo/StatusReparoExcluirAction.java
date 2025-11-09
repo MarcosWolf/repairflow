@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ExcluirAction implements Action {
+public class StatusReparoExcluirAction implements StatusReparoAction {
     private final StatusReparoComandoService statusReparoComandoService;
     private final AlertService alertService;
 
     @Override
-    public boolean execute(StatusReparo statusReparo, FormData data) {
+    public boolean execute(StatusReparo statusReparo, StatusReparoFormData data) {
         if (statusReparo == null) return false;
 
         boolean confirmar = alertService.confirm(

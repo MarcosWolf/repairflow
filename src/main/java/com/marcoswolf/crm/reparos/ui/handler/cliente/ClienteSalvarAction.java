@@ -10,18 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ClienteSalvarAction implements ClienteAction {
-
     private final IClienteComandoService clienteComandoService;
     private final ClienteFormToEntityMapper mapper;
     private final ClienteValidator validator;
     private final AlertService alertService;
 
     @Override
-    public boolean execute(Cliente clienteEditando, ClienteFormData data) {
+    public boolean execute(Cliente novoCliente, ClienteFormData data) {
         try {
             validator.validar(data);
 
-            Cliente cliente = mapper.map(data, clienteEditando);
+            Cliente cliente = mapper.map(data, novoCliente);
             clienteComandoService.salvarCliente(cliente);
 
             alertService.info("Sucesso", "Cliente salvo com sucesso!");

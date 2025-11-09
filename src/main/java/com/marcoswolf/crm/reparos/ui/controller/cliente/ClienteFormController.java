@@ -98,14 +98,13 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         );
 
         boolean sucesso = salvarAction.execute(clienteEditando, data);
-
         if (sucesso) onVoltar();
     }
 
     @FXML
     private void onExcluir() {
-        excluirAction.execute(clienteEditando, null);
-        onVoltar();
+        boolean sucesso = excluirAction.execute(clienteEditando, null);
+        if (sucesso) onVoltar();
     }
 
     @FXML

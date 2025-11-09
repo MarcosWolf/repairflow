@@ -43,7 +43,7 @@
                             text="Filtros" />
                     <Button fx:id="btnNovo" onAction="#onNovo"
                             style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                            text="Novo Cliente" />
+                            text="Cadastrar" />
                 </HBox>
 
                 <VBox fx:id="filtroPane" visible="false" managed="false" opacity="0"

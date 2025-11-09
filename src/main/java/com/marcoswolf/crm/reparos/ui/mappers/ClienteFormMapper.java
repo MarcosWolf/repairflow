@@ -3,8 +3,6 @@ package com.marcoswolf.crm.reparos.ui.mappers;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
 @Component

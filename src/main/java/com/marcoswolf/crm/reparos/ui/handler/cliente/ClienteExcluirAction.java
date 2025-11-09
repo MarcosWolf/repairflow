@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ClienteExcluirAction implements ClienteAction {
-
     private final IClienteComandoService clienteComandoService;
     private final AlertService alertService;
 
     @Override
-    public boolean execute(Cliente clienteEditando, ClienteFormData data) {
-        if (clienteEditando == null) return false;
+    public boolean execute(Cliente cliente, ClienteFormData data) {
+        if (cliente == null) return false;
 
         boolean confirmar = alertService.confirm(
                 "Confirmar exclusão",
@@ -24,7 +23,7 @@ public class ClienteExcluirAction implements ClienteAction {
         if (!confirmar) return false;
 
         try {
-            clienteComandoService.deletarCliente(clienteEditando.getId());
+            clienteComandoService.deletarCliente(cliente.getId());
             alertService.info("Sucesso", "Cliente removido com sucesso!");
             return true;
         } catch (Exception e) {

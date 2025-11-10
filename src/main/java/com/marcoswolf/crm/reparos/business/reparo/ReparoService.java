@@ -3,6 +3,7 @@ package com.marcoswolf.crm.reparos.business.reparo;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Pagamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Reparo;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,18 +18,27 @@ public class ReparoService implements ReparoConsultaService, ReparoComandoServic
     }
 
     // Create
+    @Transactional
     public void salvar(Reparo reparo) {
         reparoRepository.saveAndFlush(reparo);
     }
 
     // Read
+    @Transactional
     public List<Reparo> listarTodos() {
-        return reparoRepository.findAll();
+        return reparoRepository.findAllCompletos();
+    }
+
+    @Transactional
+    public Reparo buscarPorIdComPagamentoEPecas(Long id) {
+        return reparoRepository.findByIdComPagamentoEPecas(id)
+                .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
     }
 
     // Update
+    @Transactional
     public Reparo atualizar(Long id, Reparo novoReparo) {
-        var reparo = reparoRepository.findById(id)
+        var reparo = reparoRepository.findByIdComPagamentoEPecas(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 
         reparo.setDataEntrada(novoReparo.getDataEntrada());
@@ -67,8 +77,9 @@ public class ReparoService implements ReparoConsultaService, ReparoComandoServic
     }
 
     // Delete
+    @Transactional
     public void deletar(Long id) {
-        var reparo = reparoRepository.findById(id)
+        var reparo = reparoRepository.findByIdComPagamentoEPecas(id)
                 .orElseThrow(() -> new RuntimeException("Reparo não encontrado."));
 
         reparoRepository.delete(reparo);

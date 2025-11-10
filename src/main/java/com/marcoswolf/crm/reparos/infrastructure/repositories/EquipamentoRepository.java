@@ -30,4 +30,7 @@ public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> 
         )) LIKE LOWER(CONCAT('%', :termo, '%'))
     """)
     List<Equipamento> buscarPorTermo(@Param("termo") String termo);
+
+    // Reparo
+    List<Equipamento> findByCliente_Id(Long clienteId);
 }

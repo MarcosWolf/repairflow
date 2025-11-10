@@ -29,4 +29,31 @@ public class TextFieldUtils {
             return null;
         }));
     }
+
+    public static void aplicarMascaraNumerica(TextField textField) {
+        textField.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue == null || newValue.isBlank()) return;
+
+            String valor = newValue.replace(",", ".");
+
+            if (!valor.matches("[0-9]*\\.?[0-9]*")) {
+                valor = valor.replaceAll("[^0-9.]", "");
+            }
+
+            if (valor.chars().filter(ch -> ch == '.').count() > 1) {
+                valor = oldValue != null ? oldValue : "";
+            }
+
+            if (valor.contains(".")) {
+                int index = valor.indexOf(".");
+                if (valor.length() > index + 3) {
+                    valor = valor.substring(0, index + 3);
+                }
+            }
+
+            if (!valor.equals(newValue)) {
+                textField.setText(valor);
+            }
+        });
+    }
 }

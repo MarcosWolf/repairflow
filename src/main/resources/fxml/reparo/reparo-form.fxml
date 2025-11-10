@@ -41,23 +41,29 @@
                         <ColumnConstraints percentWidth="35" />
                     </columnConstraints>
 
-                    <Label text="Equipamento:" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="comboEquipamento" prefHeight="24.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label text="Cliente:" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="comboCliente" prefHeight="24.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label text="Status:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="comboStatus" prefHeight="24.0" prefWidth="263.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <Label text="Equipamento:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                    <ComboBox fx:id="comboEquipamento" prefHeight="24.0" prefWidth="263.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                    <Label text="Data Entrada:" GridPane.rowIndex="2" />
-                    <DatePicker fx:id="dateEntrada" prefHeight="24.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label text="Status:" GridPane.rowIndex="2" />
+                    <ComboBox fx:id="comboStatus" prefHeight="24.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                    <Label text="Data Saída:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                    <DatePicker fx:id="dateSaida" prefHeight="24.0" prefWidth="261.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <Label text="Número Série:" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                    <TextField fx:id="txtNumeroSerie" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
-                    <Label text="Defeito:" GridPane.rowIndex="3" />
-                    <TextArea fx:id="txtDescricaoProblema" prefRowCount="2" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                    <Label text="Data Entrada:" GridPane.rowIndex="3" />
+                    <DatePicker fx:id="dateEntrada" prefHeight="24.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                    <Label text="Reparo:" GridPane.rowIndex="4" />
-                    <TextArea fx:id="txtServicoExecutado" prefRowCount="2" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                    <Label text="Data Saída:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <DatePicker fx:id="dateSaida" prefHeight="24.0" prefWidth="261.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+
+                    <Label text="Defeito:" GridPane.rowIndex="4" />
+                    <TextArea fx:id="txtDescricaoProblema" prefRowCount="2" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+
+                    <Label text="Reparo:" GridPane.rowIndex="5" />
+                    <TextArea fx:id="txtServicoExecutado" prefRowCount="2" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
 
                     <rowConstraints>
                         <RowConstraints />
@@ -102,7 +108,7 @@
                             <Button fx:id="btnAdicionarPeca" onAction="#adicionarPeca" text="Adicionar" />
                         </HBox>
 
-                        <TableView fx:id="tabelaPecas" prefHeight="196.0" prefWidth="649.0">
+                        <TableView fx:id="tabela" prefHeight="196.0" prefWidth="649.0">
                             <columns>
                                 <TableColumn fx:id="colDescricao" prefWidth="250" text="Descrição" />
                                 <TableColumn fx:id="colQuantidade" prefWidth="100" text="Quantidade" />

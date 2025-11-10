@@ -20,20 +20,19 @@ public class ParseUtils {
         }
     }
 
-    public static Double parseDouble(TextField campo) {
-        if (campo == null || campo.getText() == null) {
-            return null;
+    public static Double parseDouble(TextField field) {
+        if (field == null || field.getText() == null || field.getText().isBlank()) {
+            return 0.0;
         }
-
-        String texto = campo.getText().trim().replace(",", ".");
-        if (texto.isEmpty()) {
-            return null;
-        }
-
         try {
-            return Double.parseDouble(texto);
+            return Double.parseDouble(field.getText().replace(",", "."));
         } catch (NumberFormatException e) {
-            return null;
+            return 0.0;
         }
+    }
+
+    private static String limparTexto(TextField campo) {
+        if (campo == null || campo.getText() == null) return "";
+        return campo.getText().trim();
     }
 }

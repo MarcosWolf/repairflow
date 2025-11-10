@@ -27,6 +27,11 @@ public class EquipamentoService implements EquipamentoConsultaService, Equipamen
         return equipamentoRepository.findAll();
     }
 
+    public List<Equipamento> listarPorClienteId(Long clienteId) {
+        if (clienteId == null) return List.of();
+        return equipamentoRepository.findByCliente_Id(clienteId);
+    }
+
     public List<Equipamento> buscarPorNumeroSerie(String numeroSerie) {
         var equipamentos = equipamentoRepository.findByNumeroSerieContainingIgnoreCase(numeroSerie);
 

@@ -3,6 +3,7 @@ package com.marcoswolf.crm.reparos.ui.mappers;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class ReparoFormMapper {
     public Reparo toEntity(Equipamento equipamento, LocalDate dataEntrada, LocalDate dataSaida,
                            String descricaoProblema, String servicoExecutado, StatusReparo status,
-                           Double valorServico, Double desconto, LocalDate dataPagamento, List<PecaPagamento> pecas) {
+                           BigDecimal valorServico, BigDecimal desconto, LocalDate dataPagamento, List<PecaPagamento> pecas) {
 
         Reparo reparo = new Reparo();
         reparo.setEquipamento(equipamento);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class Pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double valorServico;
-    private Double desconto;
+    private BigDecimal valorServico;
+    private BigDecimal desconto;
     private LocalDate dataPagamento;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -36,19 +37,24 @@ public class Pagamento {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Transient
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
-    public Double getValorTotal() {
-        double totalPecas = 0.0;
+    public BigDecimal getValorTotal() {
+        BigDecimal totalPecas = BigDecimal.ZERO;
 
         if (pecas != null) {
-            totalPecas = pecas.stream()
-                    .mapToDouble(p -> p.getValor() * p.getQuantidade())
-                    .sum();
+            for (PecaPagamento p : pecas) {
+                BigDecimal quantidade = new BigDecimal(p.getQuantidade());
+                totalPecas = totalPecas.add(p.getValor().multiply(quantidade));
+            }
         }
 
-        double total = (valorServico != null ? valorServico : 0.0) + totalPecas;
-        if (desconto != null) total -= desconto;
+        BigDecimal total = (valorServico != null ? valorServico : BigDecimal.ZERO)
+                .add(totalPecas);
+
+        if (desconto != null) {
+            total = total.subtract(desconto);
+        }
 
         return total;
     }

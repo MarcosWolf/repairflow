@@ -5,6 +5,7 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.PecaPagamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
 import com.marcoswolf.crm.reparos.ui.handler.shared.IFormData;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public record ReparoFormData(
         String descricaoProblema,
         String servicoExecutado,
         StatusReparo status,
-        Double valorServico,
-        Double desconto,
+        BigDecimal valorServico,
+        BigDecimal desconto,
         LocalDate dataPagamento,
         List<PecaPagamento> pecas
 ) implements IFormData {}

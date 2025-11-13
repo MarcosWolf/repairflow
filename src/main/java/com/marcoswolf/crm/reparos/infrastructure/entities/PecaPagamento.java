@@ -3,6 +3,7 @@ package com.marcoswolf.crm.reparos.infrastructure.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +21,6 @@ public class PecaPagamento {
     private Long id;
 
     private String nome;
-    private Double valor;
+    private BigDecimal valor;
     private Integer quantidade;
 }

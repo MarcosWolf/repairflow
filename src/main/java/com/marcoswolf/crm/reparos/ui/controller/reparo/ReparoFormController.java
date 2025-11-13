@@ -26,7 +26,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Locale;
 
 @Component
 @Scope("prototype")
@@ -55,9 +58,12 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     @FXML private TableView<PecaPagamento> tabela;
     @FXML private TableColumn<PecaPagamento, String> colDescricao;
     @FXML private TableColumn<PecaPagamento, Integer> colQuantidade;
-    @FXML private TableColumn<PecaPagamento, Double> colValorUnitario;
-    @FXML private TableColumn<PecaPagamento, Double> colValorTotalLinha;
+    @FXML private TableColumn<PecaPagamento, String> colValorUnitario;
+    @FXML private TableColumn<PecaPagamento, String> colValorTotalLinha;
     @FXML private TableColumn<PecaPagamento, Void> colRemover;
+
+    private static final NumberFormat FORMATADOR_MOEDA =
+            NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
     private static final String GERENCIAR_PATH = "/fxml/reparo/reparo-gerenciar.fxml";
 
@@ -185,10 +191,16 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private void configurarTabelaPecas() {
         colDescricao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
         colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        colValorUnitario.setCellValueFactory(new PropertyValueFactory<>("valorUnitario"));
-        colValorTotalLinha.setCellValueFactory(c ->
-                new SimpleDoubleProperty(c.getValue().getValor() * c.getValue().getQuantidade()).asObject()
+        colValorUnitario.setCellValueFactory(c ->
+                new SimpleStringProperty(FORMATADOR_MOEDA.format(c.getValue().getValor()))
         );
+
+        colValorTotalLinha.setCellValueFactory(c -> {
+            BigDecimal valorUnitario = c.getValue().getValor();
+            BigDecimal quantidade = new BigDecimal(c.getValue().getQuantidade());
+            BigDecimal totalLinha = valorUnitario.multiply(quantidade);
+            return new SimpleStringProperty(FORMATADOR_MOEDA.format(totalLinha));
+        });
 
         colRemover.setCellFactory(criarBotaoRemover());
         tabela.setItems(pecas);
@@ -221,14 +233,14 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void recalcularTotal() {
-        double valorServico = ParseUtils.parseDouble(txtValorServico);
-        double desconto = ParseUtils.parseDouble(txtDesconto);
-        double totalPecas = pecas.stream()
-                .mapToDouble(p -> p.getValor() * p.getQuantidade())
-                .sum();
+        BigDecimal valorServico = ParseUtils.parseBigDecimal(txtValorServico);
+        BigDecimal desconto = ParseUtils.parseBigDecimal(txtDesconto);
+        BigDecimal totalPecas = pecas.stream()
+                .map(p -> p.getValor().multiply(new BigDecimal(p.getQuantidade())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        double total = valorServico + totalPecas - desconto;
-        txtValorTotal.setText(String.format("%.2f", total));
+        BigDecimal total = valorServico.add(totalPecas).subtract(desconto);
+        txtValorTotal.setText(total.toString());
     }
 
     @FXML
@@ -238,7 +250,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         try {
             String descricao = txtPecaDescricao.getText();
             int quantidade = Integer.parseInt(txtPecaQuantidade.getText());
-            double valorUnitario = ParseUtils.parseDouble(txtPecaValorUnitario);
+            BigDecimal valorUnitario = ParseUtils.parseBigDecimal(txtPecaValorUnitario);
 
             PecaPagamento nova = new PecaPagamento();
             nova.setNome(descricao);
@@ -305,8 +317,8 @@ public class ReparoFormController implements DataReceiver<Reparo> {
                 txtDescricaoProblema.getText(),
                 txtServicoExecutado.getText(),
                 comboStatus.getValue(),
-                ParseUtils.parseDouble(txtValorServico),
-                ParseUtils.parseDouble(txtDesconto),
+                ParseUtils.parseBigDecimal(txtValorServico),
+                ParseUtils.parseBigDecimal(txtDesconto),
                 datePagamento.getValue(),
                 pecas
         );

@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
 import com.marcoswolf.crm.reparos.ui.handler.shared.IFormNormalizer;
 import org.springframework.stereotype.Component;
 

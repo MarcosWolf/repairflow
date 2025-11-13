@@ -1,18 +1,19 @@
-package com.marcoswolf.crm.reparos.ui.handler.cliente;
+package com.marcoswolf.crm.reparos.ui.handler.cliente.validator;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
+import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClienteCamposObrigatoriosValidator implements ClienteValidator {
+public class ClienteFormValidator implements ClienteValidator {
 
     private final ClienteRepository clienteRepository;
 
-    public ClienteCamposObrigatoriosValidator(ClienteRepository clienteRepository) {
+    public ClienteFormValidator(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 

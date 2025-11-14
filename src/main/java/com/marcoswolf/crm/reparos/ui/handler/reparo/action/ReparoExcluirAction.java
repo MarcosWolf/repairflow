@@ -1,16 +1,29 @@
-package com.marcoswolf.crm.reparos.ui.handler.reparo;
+package com.marcoswolf.crm.reparos.ui.handler.reparo.action;
 
 import com.marcoswolf.crm.reparos.business.reparo.ReparoComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Reparo;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.validator.ReparoExcluirValidator;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class ReparoExcluirAction implements ReparoAction {
     private final ReparoComandoService reparoComandoService;
+    private final ReparoExcluirValidator validator;
     private final AlertService alertService;
+
+    public ReparoExcluirAction(
+            ReparoComandoService reparoComandoService,
+            @Qualifier("reparoExcluirValidator") ReparoExcluirValidator validator,
+            AlertService alertService
+    ) {
+        this.reparoComandoService = reparoComandoService;
+        this.validator = validator;
+        this.alertService = alertService;
+    }
 
     @Override
     public boolean execute(Reparo reparo, ReparoFormData data) {
@@ -23,6 +36,7 @@ public class ReparoExcluirAction implements ReparoAction {
         if (!confirmar) return false;
 
         try {
+            validator.validar(data, reparo);
             reparoComandoService.deletar(reparo.getId());
             alertService.info("Sucesso", "Reparo removido com sucesso!");
             return true;

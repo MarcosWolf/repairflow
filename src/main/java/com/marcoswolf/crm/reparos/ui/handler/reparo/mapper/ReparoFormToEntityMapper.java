@@ -1,6 +1,7 @@
-package com.marcoswolf.crm.reparos.ui.handler.reparo;
+package com.marcoswolf.crm.reparos.ui.handler.reparo.mapper;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Reparo;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
 import com.marcoswolf.crm.reparos.ui.mappers.ReparoFormMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

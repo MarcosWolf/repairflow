@@ -24,10 +24,11 @@ import static com.marcoswolf.crm.reparos.ui.utils.ParseUtils.parseInteger;
 @RequiredArgsConstructor
 public class ClienteFormController implements DataReceiver<Cliente> {
     private final ViewNavigator navigator;
-    private final ClienteSalvarAction salvarAction;
-    private final ClienteExcluirAction excluirAction;
 
     private final EstadoConsultaService estadoConsultaService;
+
+    private final ClienteSalvarAction salvarAction;
+    private final ClienteExcluirAction excluirAction;
 
     private Cliente novoCliente;
 

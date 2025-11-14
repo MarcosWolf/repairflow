@@ -4,11 +4,12 @@ import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoConsultaService;
 import com.marcoswolf.crm.reparos.business.statusReparo.StatusReparoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
-import com.marcoswolf.crm.reparos.ui.handler.reparo.ReparoExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.reparo.ReparoFormData;
-import com.marcoswolf.crm.reparos.ui.handler.reparo.ReparoSalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.tables.PecaPagamentoTableView;
 import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
 import com.marcoswolf.crm.reparos.ui.utils.ParseUtils;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
@@ -19,27 +20,25 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.util.Locale;
 
 @Component
 @RequiredArgsConstructor
 public class ReparoFormController implements DataReceiver<Reparo> {
     private final ViewNavigator navigator;
-    private final ReparoSalvarAction salvarAction;
-    private final ReparoExcluirAction excluirAction;
+
     private final ClienteConsultaService clienteConsultaService;
     private final EquipamentoConsultaService equipamentoConsultaService;
     private final StatusReparoConsultaService statusReparoConsultaService;
 
-    private Reparo reparoAtual;
+    private final ReparoSalvarAction salvarAction;
+    private final ReparoExcluirAction excluirAction;
+
+    private Reparo novoReparo;
     private final ObservableList<PecaPagamento> pecas = FXCollections.observableArrayList();
 
     @FXML private AnchorPane rootPane;
@@ -59,19 +58,15 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     @FXML private TableColumn<PecaPagamento, String> colValorTotalLinha;
     @FXML private TableColumn<PecaPagamento, Void> colRemover;
 
-    private static final NumberFormat FORMATADOR_MOEDA =
-            NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-
     private static final String GERENCIAR_PATH = "/fxml/reparo/reparo-gerenciar.fxml";
 
     @FXML
     public void initialize() {
         configurarCampos();
-        alimentarCombos();
-        configurarTabelaPecas();
+        configurarTabela();
         configurarRecalculo();
-        configurarListenerCliente();
-        configurarListenerEquipamento();
+        alimentarCombos();
+        configurarListeners();
     }
 
     private void configurarCampos() {
@@ -80,148 +75,13 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         txtValorTotal.setEditable(false);
     }
 
-    private void alimentarCombos() {
-        ComboBoxUtils.carregarCombo(
-                comboCliente,
-                clienteConsultaService.listarTodos(),
-                Cliente::getNome,
-                () -> {
-                    Cliente c = new Cliente();
-                    c.setId(0L);
-                    c.setNome("Selecione");
-                    return c;
-                }
-        );
-
-        ComboBoxUtils.carregarCombo(
-                comboEquipamento,
-                FXCollections.observableArrayList(), // vazio
-                eq -> eq.getModelo() != null ? eq.getModelo() : "Sem modelo",
-                () -> {
-                    Equipamento e = new Equipamento();
-                    e.setId(0L);
-                    e.setModelo("Selecione");
-                    return e;
-                }
-        );
-        comboEquipamento.setDisable(true);
-
-        ComboBoxUtils.carregarCombo(
-                comboStatus,
-                statusReparoConsultaService.listarTodos(),
-                StatusReparo::getNome,
-                () -> {
-                    StatusReparo s = new StatusReparo();
-                    s.setId(0L);
-                    s.setNome("Selecione");
-                    return s;
-                }
-        );
-
-        configurarAcaoComboCliente();
-    }
-
-    private void configurarAcaoComboCliente() {
-        comboCliente.valueProperty().addListener((obs, antigo, novoCliente) -> {
-            if (novoCliente == null || novoCliente.getId() == 0) {
-                comboEquipamento.getItems().clear();
-                comboEquipamento.getSelectionModel().clearSelection();
-                comboEquipamento.setDisable(true);
-                return;
-            }
-
-            var equipamentos = equipamentoConsultaService.listarPorClienteId(novoCliente.getId());
-
-            if (equipamentos == null || equipamentos.isEmpty()) {
-                comboEquipamento.getItems().clear();
-                comboEquipamento.setDisable(true);
-                return;
-            }
-
-            comboEquipamento.setDisable(false);
-            ComboBoxUtils.carregarCombo(
-                    comboEquipamento,
-                    equipamentos,
-                    eq -> eq.getModelo() != null ? eq.getModelo() : "Sem modelo",
-                    () -> {
-                        Equipamento e = new Equipamento();
-                        e.setId(0L);
-                        e.setModelo("Selecione");
-                        return e;
-                    }
-            );
-            comboEquipamento.getSelectionModel().selectFirst();
-        });
-    }
-
-    private void configurarListenerCliente() {
-        comboCliente.valueProperty().addListener((obs, oldCliente, novoCliente) -> {
-            if (novoCliente != null && novoCliente.getId() != null && novoCliente.getId() > 0) {
-                var equipamentosDoCliente = equipamentoConsultaService.listarPorClienteId(novoCliente.getId());
-                ComboBoxUtils.carregarCombo(
-                        comboEquipamento,
-                        equipamentosDoCliente,
-                        eq -> eq.getModelo() != null ? eq.getModelo() : "Sem modelo",
-                        () -> {
-                            Equipamento e = new Equipamento();
-                            e.setId(0L);
-                            e.setModelo("Selecione");
-                            return e;
-                        }
-                );
-            } else {
-                comboEquipamento.getItems().clear();
-            }
-        });
-    }
-
-    private void configurarListenerEquipamento() {
-        comboEquipamento.valueProperty().addListener((obs, antigo, novoEquipamento) -> {
-            if (novoEquipamento == null || novoEquipamento.getId() == null || novoEquipamento.getId() == 0) {
-                txtNumeroSerie.clear();
-            } else {
-                txtNumeroSerie.setText(novoEquipamento.getNumeroSerie() != null ? novoEquipamento.getNumeroSerie() : "");
-            }
-        });
-    }
-
-    private void configurarTabelaPecas() {
+    private void configurarTabela() {
         colDescricao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
         colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        colValorUnitario.setCellValueFactory(c ->
-                new SimpleStringProperty(FORMATADOR_MOEDA.format(c.getValue().getValor()))
-        );
-
-        colValorTotalLinha.setCellValueFactory(c -> {
-            BigDecimal valorUnitario = c.getValue().getValor();
-            BigDecimal quantidade = new BigDecimal(c.getValue().getQuantidade());
-            BigDecimal totalLinha = valorUnitario.multiply(quantidade);
-            return new SimpleStringProperty(FORMATADOR_MOEDA.format(totalLinha));
-        });
-
-        colRemover.setCellFactory(criarBotaoRemover());
+        colValorUnitario.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getValorFormatado()));
+        colValorTotalLinha.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTotalLinhaFormatado()));
+        colRemover.setCellFactory(PecaPagamentoTableView.criarBotaoRemover(pecas, p -> recalcularTotal()));
         tabela.setItems(pecas);
-    }
-
-    private Callback<TableColumn<PecaPagamento, Void>, TableCell<PecaPagamento, Void>> criarBotaoRemover() {
-        return col -> new TableCell<>() {
-            private final Button btn = new Button("X");
-
-            {
-                btn.setStyle("-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;");
-                btn.setOnAction(e -> {
-                    PecaPagamento p = getTableView().getItems().get(getIndex());
-                    pecas.remove(p);
-                    recalcularTotal();
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : new HBox(btn));
-            }
-        };
     }
 
     private void configurarRecalculo() {
@@ -229,15 +89,48 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         txtDesconto.textProperty().addListener((obs, oldV, newV) -> recalcularTotal());
     }
 
-    private void recalcularTotal() {
-        BigDecimal valorServico = ParseUtils.parseBigDecimal(txtValorServico);
-        BigDecimal desconto = ParseUtils.parseBigDecimal(txtDesconto);
-        BigDecimal totalPecas = pecas.stream()
-                .map(p -> p.getValor().multiply(new BigDecimal(p.getQuantidade())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    private void alimentarCombos() {
+        ComboBoxUtils.carregarCombo(comboCliente, clienteConsultaService.listarTodos(), Cliente::getNome, this::clientePlaceholder);
+        ComboBoxUtils.carregarCombo(comboEquipamento, FXCollections.observableArrayList(), eq -> eq.getModelo() != null ? eq.getModelo() : "Sem modelo", this::equipamentoPlaceholder);
+        comboEquipamento.setDisable(true);
+        ComboBoxUtils.carregarCombo(comboStatus, statusReparoConsultaService.listarTodos(), StatusReparo::getNome, this::statusPlaceholder);
+    }
 
-        BigDecimal total = valorServico.add(totalPecas).subtract(desconto);
-        txtValorTotal.setText(total.toString());
+    private Cliente clientePlaceholder() {
+        return placeholder(new Cliente(), "nome", "Selecione");
+    }
+
+    private Equipamento equipamentoPlaceholder() {
+        return placeholder(new Equipamento(), "modelo", "Selecione");
+    }
+
+    private StatusReparo statusPlaceholder() {
+        return placeholder(new StatusReparo(), "nome", "Selecione");
+    }
+
+    private <T> T placeholder(T obj, String field, String value) {
+        try {
+            var f = obj.getClass().getDeclaredField(field);
+            f.setAccessible(true);
+            f.set(obj, value);
+        } catch (Exception ignored) {}
+        return obj;
+    }
+
+    private void configurarListeners() {
+        comboCliente.valueProperty().addListener((obs, old, novo) -> atualizarComboEquipamento(novo));
+        comboEquipamento.valueProperty().addListener((obs, old, novo) -> txtNumeroSerie.setText(novo != null ? novo.getNumeroSerie() : ""));
+    }
+
+    private void atualizarComboEquipamento(Cliente cliente) {
+        comboEquipamento.getItems().clear();
+        if (cliente == null || cliente.getId() == 0) {
+            comboEquipamento.setDisable(true);
+            return;
+        }
+        var equipamentos = equipamentoConsultaService.listarPorClienteId(cliente.getId());
+        comboEquipamento.setDisable(equipamentos.isEmpty());
+        ComboBoxUtils.carregarCombo(comboEquipamento, equipamentos, Equipamento::getModelo, this::equipamentoPlaceholder);
     }
 
     @FXML
@@ -245,20 +138,15 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         if (txtPecaDescricao.getText().isBlank()) return;
 
         try {
-            String descricao = txtPecaDescricao.getText();
-            int quantidade = Integer.parseInt(txtPecaQuantidade.getText());
-            BigDecimal valorUnitario = ParseUtils.parseBigDecimal(txtPecaValorUnitario);
-
             PecaPagamento nova = new PecaPagamento();
-            nova.setNome(descricao);
-            nova.setQuantidade(quantidade);
-            nova.setValor(valorUnitario);
-
+            nova.setNome(txtPecaDescricao.getText());
+            nova.setQuantidade(Integer.parseInt(txtPecaQuantidade.getText()));
+            nova.setValor(ParseUtils.parseBigDecimal(txtPecaValorUnitario));
             pecas.add(nova);
-            tabela.refresh();
             limparCamposPeca();
+            tabela.refresh();
             recalcularTotal();
-        } catch (NumberFormatException ex) {
+        } catch (Exception ex) {
             new Alert(Alert.AlertType.WARNING, "Quantidade e valor devem ser numéricos.").showAndWait();
         }
     }
@@ -269,9 +157,16 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         txtPecaValorUnitario.clear();
     }
 
+    private void recalcularTotal() {
+        BigDecimal valorServico = ParseUtils.parseBigDecimal(txtValorServico);
+        BigDecimal desconto = ParseUtils.parseBigDecimal(txtDesconto);
+        BigDecimal totalPecas = pecas.stream().map(PecaPagamento::getTotalLinha).reduce(BigDecimal.ZERO, BigDecimal::add);
+        txtValorTotal.setText(valorServico.add(totalPecas).subtract(desconto).toString());
+    }
+
     @Override
     public void setData(Reparo reparo) {
-        this.reparoAtual = reparo;
+        this.novoReparo = reparo;
         preencherFormulario(reparo);
     }
 
@@ -289,20 +184,40 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         var cliente = reparo.getEquipamento().getCliente();
         comboCliente.setValue(cliente);
 
-        var equipamentosDoCliente = equipamentoConsultaService.listarPorClienteId(cliente.getId());
-        comboEquipamento.setItems(FXCollections.observableArrayList(equipamentosDoCliente));
+        var equipamentos = equipamentoConsultaService.listarPorClienteId(cliente.getId());
+        comboEquipamento.setItems(FXCollections.observableArrayList(equipamentos));
 
         comboEquipamento.setValue(reparo.getEquipamento());
         comboStatus.setValue(reparo.getStatus());
+
         dateEntrada.setValue(reparo.getDataEntrada());
         dateSaida.setValue(reparo.getDataSaida());
-        datePagamento.setValue(reparo.getPagamento() != null ? reparo.getPagamento().getDataPagamento() : null);
+        datePagamento.setValue(reparo.getPagamento().getDataPagamento());
+
         txtDescricaoProblema.setText(reparo.getDescricaoProblema());
         txtServicoExecutado.setText(reparo.getServicoExecutado());
+
         txtValorServico.setText(String.valueOf(reparo.getPagamento().getValorServico()));
         txtDesconto.setText(String.valueOf(reparo.getPagamento().getDesconto()));
-        pecas.setAll(reparo.getPagamento().getPecas() != null ? reparo.getPagamento().getPecas() : FXCollections.observableArrayList());
+
+        pecas.setAll(reparo.getPagamento().getPecas());
         recalcularTotal();
+    }
+
+    private void limparFormulario() {
+        comboCliente.getSelectionModel().clearSelection();
+        comboEquipamento.getItems().clear();
+        comboStatus.getSelectionModel().selectFirst();
+        dateEntrada.setValue(LocalDate.now());
+        dateSaida.setValue(null);
+        datePagamento.setValue(null);
+        txtNumeroSerie.clear();
+        txtDescricaoProblema.clear();
+        txtServicoExecutado.clear();
+        txtValorServico.clear();
+        txtDesconto.clear();
+        txtValorTotal.clear();
+        pecas.clear();
     }
 
     @FXML
@@ -320,32 +235,18 @@ public class ReparoFormController implements DataReceiver<Reparo> {
                 pecas
         );
 
-        boolean sucesso = salvarAction.execute(reparoAtual, data);
+        boolean sucesso = salvarAction.execute(novoReparo, data);
         if (sucesso) voltar();
     }
 
     @FXML
     private void excluir() {
-        boolean sucesso = excluirAction.execute(reparoAtual, null);
+        boolean sucesso = excluirAction.execute(novoReparo, null);
         if (sucesso) voltar();
     }
 
     @FXML
     private void voltar() {
         navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
-    }
-
-    private void limparFormulario() {
-        comboEquipamento.getSelectionModel().selectFirst();
-        comboStatus.getSelectionModel().selectFirst();
-        dateEntrada.setValue(LocalDate.now());
-        dateSaida.setValue(null);
-        datePagamento.setValue(null);
-        txtDescricaoProblema.clear();
-        txtServicoExecutado.clear();
-        txtValorServico.clear();
-        txtDesconto.clear();
-        txtValorTotal.clear();
-        pecas.clear();
     }
 }

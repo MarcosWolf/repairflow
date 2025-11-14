@@ -4,6 +4,7 @@ import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoConsultaService;
 import com.marcoswolf.crm.reparos.business.statusReparo.StatusReparoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
+import com.marcoswolf.crm.reparos.ui.handler.pecaPagamento.validator.PecaPagamentoSalvarValidator;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoExcluirAction;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.dto.ReparoFormData;
 import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoSalvarAction;
@@ -34,6 +35,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private final ClienteConsultaService clienteConsultaService;
     private final EquipamentoConsultaService equipamentoConsultaService;
     private final StatusReparoConsultaService statusReparoConsultaService;
+    private final PecaPagamentoSalvarValidator pecaValidator;
 
     private final ReparoSalvarAction salvarAction;
     private final ReparoExcluirAction excluirAction;
@@ -135,19 +137,23 @@ public class ReparoFormController implements DataReceiver<Reparo> {
 
     @FXML
     private void adicionarPeca() {
-        if (txtPecaDescricao.getText().isBlank()) return;
+        String descricao = txtPecaDescricao.getText();
+        Integer quantidade = ParseUtils.parseInteger(txtPecaQuantidade);
+        BigDecimal valorUnit = ParseUtils.parseBigDecimal(txtPecaValorUnitario);
 
         try {
+            pecaValidator.validar(descricao, quantidade, valorUnit);
+
             PecaPagamento nova = new PecaPagamento();
-            nova.setNome(txtPecaDescricao.getText());
-            nova.setQuantidade(Integer.parseInt(txtPecaQuantidade.getText()));
-            nova.setValor(ParseUtils.parseBigDecimal(txtPecaValorUnitario));
+            nova.setNome(descricao);
+            nova.setQuantidade(quantidade);
+            nova.setValor(valorUnit);
             pecas.add(nova);
             limparCamposPeca();
             tabela.refresh();
             recalcularTotal();
-        } catch (Exception ex) {
-            new Alert(Alert.AlertType.WARNING, "Quantidade e valor devem ser numéricos.").showAndWait();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
         }
     }
 

@@ -18,32 +18,22 @@ public class TipoEquipamentoController {
     private final TipoEquipamentoService tipoEquipamentoService;
     private final TipoEquipamentoFiltroService tipoEquipamentoFiltroService;
 
-    // Create
     @PostMapping
-    public ResponseEntity<TipoEquipamento> salvarTipoEquipamento(@RequestBody TipoEquipamento tipoEquipamento) {
-        tipoEquipamentoService.salvarTipoEquipamento(tipoEquipamento);
+    public ResponseEntity<TipoEquipamento> salvar(@RequestBody TipoEquipamento tipoEquipamento) {
+        tipoEquipamentoService.salvar(tipoEquipamento);
         return ResponseEntity.ok(tipoEquipamento);
     }
 
-    // Read
     @GetMapping("/filtrar")
-    public ResponseEntity<List<TipoEquipamento>> filtrarTipoEquipamento(TipoEquipamentoFiltro filtro) {
+    public ResponseEntity<List<TipoEquipamento>> filtrar(TipoEquipamentoFiltro filtro) {
         List<TipoEquipamento> tipoEquipamentos = tipoEquipamentoFiltroService.aplicarFiltros(filtro);
         return ResponseEntity.ok(tipoEquipamentos);
     }
 
-    // Update
-    @PutMapping
-    public ResponseEntity<TipoEquipamento> atualizarTipoEquipamento(@RequestParam Long id, @RequestBody TipoEquipamento tipoEquipamento) {
-        TipoEquipamento novoTipoEquipamento = tipoEquipamentoService.atualizarTipoEquipamento(id, tipoEquipamento);
-        return ResponseEntity.ok(novoTipoEquipamento);
-    }
-
-    // Delete
     @DeleteMapping
-    public ResponseEntity<String> deletarTipoEquipamento(@RequestParam Long id) {
+    public ResponseEntity<String> deletar(@RequestParam Long id) {
         try {
-            tipoEquipamentoService.deletarTipoEquipamento(id);
+            tipoEquipamentoService.deletar(id);
             return ResponseEntity.ok("Tipo de equipamento deletado com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

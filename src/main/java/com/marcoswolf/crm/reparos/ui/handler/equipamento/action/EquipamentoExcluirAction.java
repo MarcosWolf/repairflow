@@ -1,16 +1,29 @@
-package com.marcoswolf.crm.reparos.ui.handler.equipamento;
+package com.marcoswolf.crm.reparos.ui.handler.equipamento.action;
 
 import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.dto.EquipamentoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.validator.EquipamentoValidator;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class EquipamentoExcluirAction implements EquipamentoAction {
     private final EquipamentoComandoService equipamentoComandoService;
+    private final EquipamentoValidator validator;
     private final AlertService alertService;
+
+    public EquipamentoExcluirAction(
+            EquipamentoComandoService equipamentoComandoService,
+            @Qualifier("equipamentoExcluirValidator") EquipamentoValidator validator,
+            AlertService alertService
+    ) {
+        this.equipamentoComandoService = equipamentoComandoService;
+        this.validator = validator;
+        this.alertService = alertService;
+    }
 
     @Override
     public boolean execute(Equipamento equipamento, EquipamentoFormData data) {
@@ -23,6 +36,7 @@ public class EquipamentoExcluirAction implements EquipamentoAction {
         if (!confirmar) return false;
 
         try {
+            validator.validar(data, equipamento);
             equipamentoComandoService.deletar(equipamento.getId());
             alertService.info("Sucesso", "Equipamento removido com sucesso!");
             return true;

@@ -1,8 +1,9 @@
-package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
+package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.mapper;
 
 import static com.marcoswolf.crm.reparos.ui.utils.StringUtils.*;
 
 import com.marcoswolf.crm.reparos.ui.handler.shared.IFormNormalizer;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.dto.TipoEquipamentoFormData;
 import org.springframework.stereotype.Component;
 
 @Component

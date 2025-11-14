@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TipoEquipamentoFiltroService implements ITipoEquipamentoFiltroService {
+public class TipoEquipamentoFiltroService implements TipoEquipamentoFiltroServiceImpl {
     private final TipoEquipamentoRepository tipoEquipamentoRepository;
 
     public TipoEquipamentoFiltroService(TipoEquipamentoRepository tipoEquipamentoRepository) {

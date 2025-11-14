@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
-import com.marcoswolf.crm.reparos.business.estado.IEstadoConsultaService;
+import com.marcoswolf.crm.reparos.business.estado.EstadoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteExcluirAction;
@@ -28,20 +28,16 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     private final ViewNavigator navigator;
     private final ClienteSalvarAction salvarAction;
     private final ClienteExcluirAction excluirAction;
-    private final IEstadoConsultaService estadoConsultaService;
+
+    private final EstadoConsultaService estadoConsultaService;
 
     private Cliente novoCliente;
 
-    @FXML
-    private AnchorPane rootPane;
-    @FXML
-    private Label lblTitulo;
-    @FXML
-    private TextField txtNome, txtTelefone, txtEmail, txtCidade, txtBairro, txtCep, txtLogradouro, txtNumero;
-    @FXML
-    private ComboBox<Estado> comboEstado;
-    @FXML
-    private Button btnExcluir;
+    @FXML private AnchorPane rootPane;
+    @FXML private Label lblTitulo;
+    @FXML private TextField txtNome, txtTelefone, txtEmail, txtCidade, txtBairro, txtCep, txtLogradouro, txtNumero;
+    @FXML private ComboBox<Estado> comboEstado;
+    @FXML private Button btnExcluir;
 
     private static final String GERENCIAR_PATH = "/fxml/cliente/cliente-gerenciar.fxml";
 

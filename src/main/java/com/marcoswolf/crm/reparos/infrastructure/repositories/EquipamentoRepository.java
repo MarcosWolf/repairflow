@@ -6,16 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> {
     // Cliente
-    boolean existsByClienteId(Long clienteId);
+    boolean existsByClienteId(Long id);
 
-    // Equipamento
-    List<Equipamento> findByNumeroSerieContainingIgnoreCase(String numeroSerie);
-    // TipoEquipamento
-    List<Equipamento> findByTipoEquipamento_Id(Long id);
+    // Tipo Equipamento
+    boolean existsByTipoEquipamentoId(Long id);
 
     @Query("""
         SELECT COUNT(e)
@@ -24,6 +21,7 @@ public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> 
     """)
     Long countByTipoEquipamentoId(@Param("tipoId") Long tipoId);
 
+    // Termo
     @Query("""
         SELECT e FROM Equipamento e
         WHERE LOWER(CONCAT(

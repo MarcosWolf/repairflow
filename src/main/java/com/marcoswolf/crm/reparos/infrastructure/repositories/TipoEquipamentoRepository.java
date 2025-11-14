@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TipoEquipamentoRepository extends JpaRepository<TipoEquipamento, Long> {
-    // TipoEquipamento
-    List<TipoEquipamento> findByNomeContainingIgnoreCase(String nome);
-
     @Query("""
         SELECT COUNT(c) > 0 
         FROM TipoEquipamento c 

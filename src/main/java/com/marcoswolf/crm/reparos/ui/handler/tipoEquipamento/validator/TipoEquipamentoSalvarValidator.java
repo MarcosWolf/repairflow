@@ -1,16 +1,17 @@
-package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
+package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.validator;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.dto.TipoEquipamentoFormData;
 import org.springframework.stereotype.Component;
 
 import static com.marcoswolf.crm.reparos.ui.utils.ValidationUtils.isEmpty;
 
 @Component
-public class TipoEquipamentoCamposObrigatoriosValidator implements TipoEquipamentoValidator {
+public class TipoEquipamentoSalvarValidator implements TipoEquipamentoValidator {
     private final TipoEquipamentoRepository tipoEquipamentoRepository;
 
-    public TipoEquipamentoCamposObrigatoriosValidator(TipoEquipamentoRepository tipoEquipamentoRepository) {
+    public TipoEquipamentoSalvarValidator(TipoEquipamentoRepository tipoEquipamentoRepository) {
         this.tipoEquipamentoRepository = tipoEquipamentoRepository;
     }
 

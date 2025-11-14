@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.controller.reparo;
 
-import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.equipamento.EquipamentoConsultaService;
 import com.marcoswolf.crm.reparos.business.statusReparo.StatusReparoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
@@ -12,7 +12,6 @@ import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
 import com.marcoswolf.crm.reparos.ui.utils.ParseUtils;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,7 +37,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private final ViewNavigator navigator;
     private final ReparoSalvarAction salvarAction;
     private final ReparoExcluirAction excluirAction;
-    private final IClienteConsultaService clienteConsultaService;
+    private final ClienteConsultaService clienteConsultaService;
     private final EquipamentoConsultaService equipamentoConsultaService;
     private final StatusReparoConsultaService statusReparoConsultaService;
 

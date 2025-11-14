@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.ui.tables.cliente;
+package com.marcoswolf.crm.reparos.ui.tables;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.utils.TableUtils;

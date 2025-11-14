@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ClienteService implements IClienteConsultaService, IClienteComandoService {
+public class ClienteService implements ClienteConsultaService, ClienteComandoService {
     private final ClienteRepository clienteRepository;
     private final ReparoRepository reparoRepository;
     private final EquipamentoRepository equipamentoRepository;
@@ -24,11 +24,11 @@ public class ClienteService implements IClienteConsultaService, IClienteComandoS
         return clienteRepository.findAll();
     }
 
-    public void salvarCliente(Cliente cliente) {
+    public void salvar(Cliente cliente) {
         clienteRepository.saveAndFlush(cliente);
     }
 
-    public void deletarCliente(Long id) {
+    public void deletar(Long id) {
         var cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
 

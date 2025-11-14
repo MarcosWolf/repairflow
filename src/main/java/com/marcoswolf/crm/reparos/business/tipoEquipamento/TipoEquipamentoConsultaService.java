@@ -4,6 +4,6 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 
 import java.util.List;
 
-public interface ITipoEquipamentoConsultaService {
+public interface TipoEquipamentoConsultaService {
     List<TipoEquipamento> listarTodos();
 }

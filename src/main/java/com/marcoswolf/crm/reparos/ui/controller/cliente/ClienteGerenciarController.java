@@ -9,9 +9,7 @@ import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteLimparFiltros
 import com.marcoswolf.crm.reparos.ui.handler.cliente.action.ClienteToggleFiltrosAction;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFiltroDTO;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
-import com.marcoswolf.crm.reparos.ui.tables.cliente.ClienteTableView;
-import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
-import javafx.beans.property.SimpleStringProperty;
+import com.marcoswolf.crm.reparos.ui.tables.ClienteTableView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,7 +25,6 @@ import java.time.LocalDate;
 @Scope("prototype")
 @RequiredArgsConstructor
 public class ClienteGerenciarController {
-
     private final MainViewController mainViewController;
     private final ViewNavigator navigator;
 
@@ -77,6 +74,10 @@ public class ClienteGerenciarController {
         navigator.openView(FORM_PATH, mainViewController.getContentArea(), null);
     }
 
+    private void editar(Cliente cliente) {
+        navigator.openView(FORM_PATH, mainViewController.getContentArea(), cliente);
+    }
+
     @FXML
     public void toggleFiltros() {
         filtrosVisiveis = toggleFiltrosAction.executar(filtrosVisiveis, filtroPane);
@@ -102,7 +103,5 @@ public class ClienteGerenciarController {
         alimentarTabela();
     }
 
-    private void editar(Cliente cliente) {
-        navigator.openView(FORM_PATH, mainViewController.getContentArea(), cliente);
-    }
+
 }

@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente.action;
 
-import com.marcoswolf.crm.reparos.business.cliente.IClienteComandoService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteComandoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
 import com.marcoswolf.crm.reparos.ui.handler.cliente.validator.ClienteValidator;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ClienteExcluirAction implements ClienteAction {
-    private final IClienteComandoService clienteComandoService;
+    private final ClienteComandoService clienteComandoService;
     private final ClienteValidator validator;
     private final AlertService alertService;
 
     public ClienteExcluirAction(
-            IClienteComandoService clienteComandoService,
+            ClienteComandoService clienteComandoService,
             @Qualifier("clienteExcluirValidator") ClienteValidator validator,
             AlertService alertService
     ) {
@@ -36,7 +36,7 @@ public class ClienteExcluirAction implements ClienteAction {
 
         try {
             validator.validar(data, cliente);
-            clienteComandoService.deletarCliente(cliente.getId());
+            clienteComandoService.deletar(cliente.getId());
             alertService.info("Sucesso", "Cliente removido com sucesso!");
             return true;
         } catch (Exception e) {

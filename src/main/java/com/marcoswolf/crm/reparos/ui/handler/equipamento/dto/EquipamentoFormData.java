@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.ui.handler.equipamento;
+package com.marcoswolf.crm.reparos.ui.handler.equipamento.dto;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;

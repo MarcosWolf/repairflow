@@ -1,7 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.business.cliente.ClienteService;
-import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.business.cliente.filtro.ClienteFiltro;
 import com.marcoswolf.crm.reparos.business.cliente.filtro.ClienteFiltroService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
@@ -17,12 +17,12 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteService clienteService;
-    private final IClienteConsultaService clienteConsultaService;
+    private final ClienteConsultaService clienteConsultaService;
     private final ClienteFiltroService clienteFiltroService;
 
     @PostMapping
-    public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
-        clienteService.salvarCliente(cliente);
+    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
+        clienteService.salvar(cliente);
         return ResponseEntity.ok(cliente);
     }
 
@@ -39,9 +39,9 @@ public class ClienteController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deletarCliente(@RequestParam Long id) {
+    public ResponseEntity<String> deletar(@RequestParam Long id) {
         try {
-            clienteService.deletarCliente(id);
+            clienteService.deletar(id);
             return ResponseEntity.ok("Cliente deletado com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

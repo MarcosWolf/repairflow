@@ -1,6 +1,7 @@
-package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento;
+package com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.mapper;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.dto.TipoEquipamentoFormData;
 import com.marcoswolf.crm.reparos.ui.mappers.TipoEquipamentoFormMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

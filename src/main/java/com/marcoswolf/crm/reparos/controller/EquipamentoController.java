@@ -15,28 +15,18 @@ import java.util.List;
 public class EquipamentoController {
     private final EquipamentoService service;
 
-    // Create
     @PostMapping
     public ResponseEntity<Equipamento> salvar(@RequestBody Equipamento equipamento) {
         service.salvar(equipamento);
         return ResponseEntity.ok(equipamento);
     }
 
-    // Read
     @GetMapping
-    public ResponseEntity<List<Equipamento>> buscarPorNumeroSerie(@RequestParam String numeroSerie) {
-        List<Equipamento> equipamentos = service.buscarPorNumeroSerie(numeroSerie);
+    public ResponseEntity<List<Equipamento>> listarTodos() {
+        List<Equipamento> equipamentos = service.listarTodos();
         return ResponseEntity.ok(equipamentos);
     }
 
-    // Update
-    @PutMapping
-    public ResponseEntity<Equipamento> atualizar(@RequestParam Long id, @RequestBody Equipamento equipamento) {
-        Equipamento novoEquipamento = service.atualizar(id, equipamento);
-        return ResponseEntity.ok(novoEquipamento);
-    }
-
-    // Delete
     @DeleteMapping
     public ResponseEntity<String> deletar(@RequestParam Long id) {
         try {

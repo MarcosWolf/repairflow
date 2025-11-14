@@ -4,6 +4,6 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 
 import java.util.List;
 
-public interface IEstadoConsultaService {
+public interface EstadoConsultaService {
     List<Estado> listarTodos();
 }

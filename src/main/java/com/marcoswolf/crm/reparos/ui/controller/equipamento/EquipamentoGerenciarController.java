@@ -2,8 +2,9 @@ package com.marcoswolf.crm.reparos.ui.controller.equipamento;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import com.marcoswolf.crm.reparos.ui.controller.MainViewController;
-import com.marcoswolf.crm.reparos.ui.handler.equipamento.EquipamentoBuscarAction;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.action.EquipamentoBuscarAction;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
+import com.marcoswolf.crm.reparos.ui.tables.EquipamentoTableView;
 import com.marcoswolf.crm.reparos.ui.utils.TableUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -28,7 +29,6 @@ public class EquipamentoGerenciarController {
 
     @FXML
     private AnchorPane rootPane;
-    @FXML private VBox filtroPane;
     @FXML private TextField txtBuscar;
     @FXML private TableView<Equipamento> tabela;
     @FXML private TableColumn<Equipamento, String> colMarca;
@@ -40,32 +40,12 @@ public class EquipamentoGerenciarController {
 
     @FXML
     private void initialize() {
-        configurarTabela();
-    }
-
-    private void configurarTabela() {
-        instanciarTabela();
+        EquipamentoTableView.configurarTabela(tabela, colMarca, colModelo, this::editar);
         alimentarTabela();
-
-        TableUtils.setDoubleClickAction(tabela, itemSelecionado -> {
-            editar(itemSelecionado);
-        });
-
-        centralizarColunas();
-    }
-
-    private void instanciarTabela() {
-        colMarca.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMarca()));
-        colModelo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getModelo()));
     }
 
     private void alimentarTabela() {
-        var equipamentos = buscarAction.executar("");
-        tabela.setItems(FXCollections.observableList(equipamentos));
-    }
-
-    private void centralizarColunas() {
-        TableUtils.centralizarColuna(colModelo);
+        tabela.setItems(FXCollections.observableList(buscarAction.executar("")));
     }
 
     @FXML
@@ -75,9 +55,7 @@ public class EquipamentoGerenciarController {
 
     @FXML
     public void buscar() {
-        var nome = txtBuscar.getText();
-        var equipamentos = buscarAction.executar(nome);
-        tabela.setItems(FXCollections.observableList(equipamentos));
+        tabela.setItems(FXCollections.observableList(buscarAction.executar(txtBuscar.getText())));
     }
 
     @FXML
@@ -88,5 +66,4 @@ public class EquipamentoGerenciarController {
     private void editar(Equipamento equipamento) {
         navigator.openView(FORM_PATH, mainViewController.getContentArea(), equipamento);
     }
-
 }

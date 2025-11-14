@@ -1,9 +1,9 @@
 package com.marcoswolf.crm.reparos.ui.controller.tipoEquipamento;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
-import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoFormData;
-import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.TipoEquipamentoSalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.action.TipoEquipamentoExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.dto.TipoEquipamentoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.tipoEquipamento.action.TipoEquipamentoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
@@ -23,6 +23,7 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
     private final ViewNavigator navigator;
     private final TipoEquipamentoSalvarAction salvarAction;
     private final TipoEquipamentoExcluirAction excluirAction;
+
     private TipoEquipamento novoTipoEquipamento;
 
     @FXML private AnchorPane rootPane;
@@ -61,13 +62,13 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
         txtNome.setText(tipoEquipamento.getNome());
     }
 
+    private void limparCampos() {
+        txtNome.clear();
+    }
+
     @FXML
     private void salvar() {
-        var data = new TipoEquipamentoFormData(
-                txtNome.getText()
-        );
-
-        boolean sucesso = salvarAction.execute(novoTipoEquipamento, data);
+        boolean sucesso = salvarAction.execute(novoTipoEquipamento, criarFormData());
         if (sucesso) voltar();
     }
 
@@ -82,7 +83,9 @@ public class TipoEquipamentoFormController implements DataReceiver<TipoEquipamen
         navigator.openViewRootPane(GERENCIAR_PATH, rootPane, null);
     }
 
-    private void limparCampos() {
-        txtNome.clear();
+    private TipoEquipamentoFormData criarFormData() {
+        return new TipoEquipamentoFormData(
+                txtNome.getText()
+        );
     }
 }

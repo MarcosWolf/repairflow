@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente.action;
 
-import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.ui.utils.AlertService;
 import javafx.collections.FXCollections;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ClienteLimparFiltrosAction {
-    private final IClienteConsultaService clienteConsultaService;
+    private final ClienteConsultaService clienteConsultaService;
     private final AlertService alertService;
 
     public void executar(CheckBox chkPendentes,

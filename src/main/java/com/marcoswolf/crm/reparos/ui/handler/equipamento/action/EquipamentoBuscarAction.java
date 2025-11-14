@@ -1,4 +1,4 @@
-package com.marcoswolf.crm.reparos.ui.handler.equipamento;
+package com.marcoswolf.crm.reparos.ui.handler.equipamento.action;
 
 import com.marcoswolf.crm.reparos.business.equipamento.filtro.EquipamentoFiltro;
 import com.marcoswolf.crm.reparos.business.equipamento.filtro.EquipamentoFiltroService;

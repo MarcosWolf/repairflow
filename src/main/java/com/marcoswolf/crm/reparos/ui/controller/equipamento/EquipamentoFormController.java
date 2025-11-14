@@ -1,13 +1,13 @@
 package com.marcoswolf.crm.reparos.ui.controller.equipamento;
 
-import com.marcoswolf.crm.reparos.business.cliente.IClienteConsultaService;
-import com.marcoswolf.crm.reparos.business.tipoEquipamento.ITipoEquipamentoConsultaService;
+import com.marcoswolf.crm.reparos.business.cliente.ClienteConsultaService;
+import com.marcoswolf.crm.reparos.business.tipoEquipamento.TipoEquipamentoConsultaService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
-import com.marcoswolf.crm.reparos.ui.handler.equipamento.EquipamentoExcluirAction;
-import com.marcoswolf.crm.reparos.ui.handler.equipamento.EquipamentoFormData;
-import com.marcoswolf.crm.reparos.ui.handler.equipamento.EquipamentoSalvarAction;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.action.EquipamentoExcluirAction;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.dto.EquipamentoFormData;
+import com.marcoswolf.crm.reparos.ui.handler.equipamento.action.EquipamentoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
@@ -29,24 +29,26 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
     private final ViewNavigator navigator;
     private final EquipamentoSalvarAction salvarAction;
     private final EquipamentoExcluirAction excluirAction;
-    private Equipamento novoEquipamento;
 
-    private final IClienteConsultaService clienteConsultaService;
-    private final ITipoEquipamentoConsultaService tipoEquipamentoConsultaService;
+    private final ClienteConsultaService clienteConsultaService;
+    private final TipoEquipamentoConsultaService tipoEquipamentoConsultaService;
+
+    private Equipamento novoEquipamento;
 
     @FXML private AnchorPane rootPane;
     @FXML private Label lblTitulo;
     @FXML private TextField txtMarca, txtModelo, txtNumeroSerie;
-    @FXML private Button btnExcluir;
     @FXML private ComboBox<TipoEquipamento> comboTipoEquipamento;
     @FXML private ComboBox<Cliente> comboCliente;
+    @FXML private Button btnExcluir;
 
     private static final String GERENCIAR_PATH = "/fxml/equipamento/equipamento-gerenciar.fxml";
 
     @FXML
     public void initialize() {
         configurarCampos();
-        alimentarComboBox();
+        carregarClientes();
+        carregarTipoEquipamento();
     }
 
     private void configurarCampos() {
@@ -55,7 +57,7 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
         TextFieldUtils.aplicarLimite(txtNumeroSerie, 150);
     }
 
-    private void alimentarComboBox() {
+    private void carregarClientes() {
         ComboBoxUtils.carregarCombo(
                 comboCliente,
                 clienteConsultaService.listarTodos(),
@@ -67,7 +69,9 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
                     return c;
                 }
         );
+    }
 
+    private void carregarTipoEquipamento() {
         ComboBoxUtils.carregarCombo(
                 comboTipoEquipamento,
                 tipoEquipamentoConsultaService.listarTodos(),
@@ -105,14 +109,17 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
         comboCliente.setValue(equipamento.getCliente());
     }
 
+    private void limparCampos() {
+        comboTipoEquipamento.getSelectionModel().selectFirst();
+        txtMarca.clear();
+        txtModelo.clear();
+        txtNumeroSerie.clear();
+        comboCliente.getSelectionModel().selectFirst();
+    }
+
     @FXML
     private void salvar() {
-        var data = new EquipamentoFormData(
-                comboTipoEquipamento.getValue(), txtMarca.getText(), txtModelo.getText(),
-                txtNumeroSerie.getText(), comboCliente.getValue()
-        );
-
-        boolean sucesso = salvarAction.execute(novoEquipamento, data);
+        boolean sucesso = salvarAction.execute(novoEquipamento, criarFormData());
         if (sucesso) voltar();
     }
 
@@ -127,12 +134,16 @@ public class EquipamentoFormController implements DataReceiver<Equipamento> {
         navigator.openViewRootPane(GERENCIAR_PATH , rootPane, null);
     }
 
-    private void limparCampos() {
-        comboTipoEquipamento.getSelectionModel().selectFirst();
-        txtMarca.clear();
-        txtModelo.clear();
-        txtNumeroSerie.clear();
-        comboCliente.getSelectionModel().selectFirst();
+    private EquipamentoFormData criarFormData() {
+        return new EquipamentoFormData(
+                comboTipoEquipamento.getValue(),
+                txtMarca.getText(),
+                txtModelo.getText(),
+                txtNumeroSerie.getText(),
+                comboCliente.getValue()
+        );
     }
+
+
 
 }

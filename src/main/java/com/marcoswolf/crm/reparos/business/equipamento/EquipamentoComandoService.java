@@ -4,6 +4,5 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 
 public interface EquipamentoComandoService {
     void salvar(Equipamento equipamento);
-    Equipamento atualizar(Long id, Equipamento equipamento);
     void deletar(Long id);
 }

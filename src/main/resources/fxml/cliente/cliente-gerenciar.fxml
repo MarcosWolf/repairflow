@@ -33,7 +33,7 @@
                     <Insets top="20" right="30" bottom="20" left="30" />
                 </padding>
 
-                <VBox spacing="15" style="-fx-background-color: #F0F0F0;" maxWidth="1400" HBox.hgrow="ALWAYS">
+                <VBox spacing="15" style="-fx-background-color: #F0F0F0;" maxWidth="1200" HBox.hgrow="ALWAYS">
 
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <Label fx:id="lblTitulo"

@@ -61,10 +61,9 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane fx:id="contentArea" maxHeight="-1.0" maxWidth="-1.0" prefHeight="261.0" prefWidth="535.0" style="-fx-background-color: #2b2b2b;" VBox.vgrow="ALWAYS">
-         <children>
-            <Pane style="-fx-background-color: #2b2b2b;" />
-         </children>
-    </AnchorPane>
+      <AnchorPane fx:id="contentArea"
+                  style="-fx-background-color: #2b2b2b;"
+                  VBox.vgrow="ALWAYS">
+      </AnchorPane>
   </children>
 </VBox>

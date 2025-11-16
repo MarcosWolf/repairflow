@@ -96,11 +96,27 @@ public class MaskUtils {
             StringBuilder formatado = new StringBuilder();
             int len = texto.length();
 
-            if (len > 0) formatado.append("(");
-            if (len >= 1) formatado.append(texto, 0, Math.min(2, len));
-            if (len >= 3) formatado.append(") ");
-            if (len >= 3) formatado.append(texto, 2, Math.min(7, len));
-            if (len >= 8) formatado.append("-").append(texto.substring(7));
+            if (len > 0) {
+                formatado.append("(");
+                formatado.append(texto.substring(0, Math.min(2, len)));
+            }
+
+            if (len >= 3) {
+                formatado.append(") ");
+
+                if (len == 11) {
+                    formatado.append(texto, 2, 7);
+                    if (len > 7) {
+                        formatado.append("-").append(texto.substring(7));
+                    }
+                }
+                else {
+                    formatado.append(texto, 2, Math.min(6, len));
+                    if (len > 6) {
+                        formatado.append("-").append(texto.substring(6));
+                    }
+                }
+            }
 
             change.setText(formatado.toString());
             change.setRange(0, change.getControlText().length());
@@ -111,9 +127,13 @@ public class MaskUtils {
     }
 
     public static void aplicarMascaraCEP(TextField campo) {
-        campo.textProperty().addListener((obs, oldText, newText) -> {
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
             String digits = newText.replaceAll("\\D", "");
-            if (digits.length() > 8) digits = digits.substring(0, 8);
+
+            if (digits.length() > 8) {
+                return null;
+            }
 
             StringBuilder formatted = new StringBuilder();
             if (digits.length() > 5) {
@@ -124,10 +144,19 @@ public class MaskUtils {
                 formatted.append(digits);
             }
 
-            if (!formatted.toString().equals(newText)) {
-                campo.setText(formatted.toString());
-                campo.positionCaret(formatted.length());
+            String formattedText = formatted.toString();
+
+            if (!formattedText.equals(newText)) {
+                change.setText(formattedText);
+                change.setRange(0, change.getControlText().length());
+                change.setCaretPosition(formattedText.length());
+                change.setAnchor(formattedText.length());
             }
-        });
+
+            return change;
+        };
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        campo.setTextFormatter(textFormatter);
     }
 }

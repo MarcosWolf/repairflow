@@ -1,105 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.Region?>
-<AnchorPane fx:id="rootPane" prefHeight="500" prefWidth="860.0" style="-fx-background-color: #F0F0F0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marcoswolf.crm.reparos.ui.controller.cliente.ClienteFormController">
-    <children>
-        <VBox layoutX="30" layoutY="20" prefWidth="800" spacing="15">
-            <HBox alignment="CENTER_LEFT">
-                <Label fx:id="lblTitulo"
-                       text="Cadastrar Cliente"
-                       styleClass="titulo-principal"
-                       HBox.hgrow="ALWAYS"/>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="btnVoltar"
-                        text="← Voltar"
-                        styleClass="btn-voltar"
-                        onAction="#voltar"
-                        minWidth="80"
-                        prefHeight="32"/>
+<AnchorPane fx:id="rootPane"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.marcoswolf.crm.reparos.ui.controller.cliente.ClienteFormController"
+            style="-fx-background-color: #F0F0F0;">
+
+    <ScrollPane fitToWidth="true"
+                fitToHeight="true"
+                style="-fx-background-color: #F0F0F0;"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0">
+        <content>
+            <HBox alignment="TOP_CENTER" style="-fx-background-color: #F0F0F0;">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30" />
+                </padding>
+
+                <VBox spacing="15" style="-fx-background-color: #F0F0F0;" maxWidth="1200" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets top="0" right="0" bottom="0" left="0" />
+                    </padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label fx:id="lblTitulo"
+                               text="Cadastrar Cliente"
+                               styleClass="titulo-principal"
+                               HBox.hgrow="ALWAYS"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnVoltar"
+                                text="← Voltar"
+                                styleClass="btn-voltar"
+                                onAction="#voltar"
+                                minWidth="80"
+                                prefHeight="32"/>
+                    </HBox>
+
+                    <Separator />
+
+                    <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
+                        <Label style="-fx-font-weight: bold;" text="Dados Pessoais" />
+
+                        <GridPane hgap="10" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="100" prefWidth="120" maxWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                                <ColumnConstraints minWidth="80" prefWidth="100" maxWidth="120" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+
+                            <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtNome"
+                                       GridPane.columnIndex="1"
+                                       GridPane.columnSpan="3"
+                                       GridPane.rowIndex="0"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Telefone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                            <TextField fx:id="txtTelefone"
+                                       GridPane.columnIndex="1"
+                                       GridPane.rowIndex="1"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Email:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <TextField fx:id="txtEmail"
+                                       GridPane.columnIndex="3"
+                                       GridPane.rowIndex="1"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+                        </GridPane>
+                    </VBox>
+
+                    <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
+                        <Label style="-fx-font-weight: bold;" text="Endereço" />
+
+                        <GridPane hgap="10" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="100" prefWidth="120" maxWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                                <ColumnConstraints minWidth="80" prefWidth="100" maxWidth="120" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+
+                            <Label text="Cidade:" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtCidade"
+                                       GridPane.columnIndex="1"
+                                       GridPane.rowIndex="0"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <ComboBox fx:id="comboEstado"
+                                      GridPane.columnIndex="3"
+                                      GridPane.rowIndex="0"
+                                      prefWidth="200"
+                                      minWidth="200"
+                                      maxWidth="Infinity"
+                                      GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Bairro:" GridPane.rowIndex="1" />
+                            <TextField fx:id="txtBairro"
+                                       GridPane.columnIndex="1"
+                                       GridPane.rowIndex="1"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="CEP:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                            <TextField fx:id="txtCep"
+                                       GridPane.columnIndex="3"
+                                       GridPane.rowIndex="1"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Logradouro:" GridPane.rowIndex="2" />
+                            <TextField fx:id="txtLogradouro"
+                                       GridPane.columnIndex="1"
+                                       GridPane.rowIndex="2"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Número:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <TextField fx:id="txtNumero"
+                                       GridPane.columnIndex="3"
+                                       GridPane.rowIndex="2"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+                        </GridPane>
+                    </VBox>
+
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <Button fx:id="btnExcluir"
+                                text="Excluir"
+                                onAction="#excluir"
+                                styleClass="excluir"
+                                visible="false"
+                                minWidth="100"/>
+                        <Button fx:id="btnSalvar"
+                                text="Salvar"
+                                onAction="#salvar"
+                                styleClass="salvar"
+                                minWidth="100"/>
+                    </HBox>
+                </VBox>
             </HBox>
-            <Separator />
-
-            <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
-                <Label style="-fx-font-weight: bold;" text="Dados Pessoais" />
-
-                <GridPane hgap="10" vgap="10">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35" />
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35" />
-                    </columnConstraints>
-
-                    <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
-
-                    <Label text="Telefone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtTelefone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                    <Label text="Email:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtEmail" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
-                </GridPane>
-            </VBox>
-
-            <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
-                <Label style="-fx-font-weight: bold;" text="Endereço" />
-
-                <GridPane hgap="10" vgap="10">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35" />
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35.0" />
-                    </columnConstraints>
-
-                    <Label text="Cidade:" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtCidade" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                    <Label text="Estado:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <ComboBox fx:id="comboEstado" prefHeight="24.0" prefWidth="260.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-
-                    <Label text="Bairro:" GridPane.rowIndex="2" />
-                    <TextField fx:id="txtBairro" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                    <Label text="CEP:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                    <TextField fx:id="txtCep" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-
-                    <Label text="Logradouro:" GridPane.rowIndex="3" />
-                    <TextField fx:id="txtLogradouro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-                    <Label text="Número:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                    <TextField fx:id="txtNumero" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
-                </GridPane>
-            </VBox>
-
-            <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnExcluir" text="Excluir" onAction="#excluir" styleClass="excluir" visible="false"/>
-                <Button fx:id="btnSalvar" text="Salvar" onAction="#salvar" styleClass="salvar"/>
-            </HBox>
-
-        </VBox>
-    </children>
+        </content>
+    </ScrollPane>
 </AnchorPane>

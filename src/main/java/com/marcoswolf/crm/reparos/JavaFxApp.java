@@ -23,7 +23,7 @@ public class JavaFxApp extends Application {
         FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("/fxml/main-view.fxml"));
         fxmLoader.setControllerFactory(springContext::getBean);
 
-        Scene scene = new Scene(fxmLoader.load(), 860, 600);
+        Scene scene = new Scene(fxmLoader.load());
 
         URL cssUrl = getClass().getResource("/css/light-theme.css");
         if (cssUrl != null) {
@@ -33,6 +33,12 @@ public class JavaFxApp extends Application {
         }
         stage.setScene(scene);
         stage.setTitle("crm-reparos");
+
+        stage.setMinWidth(1024);
+        stage.setMinHeight(800);
+        stage.setWidth(1360);
+        stage.setHeight(800);
+
         stage.show();
     }
 

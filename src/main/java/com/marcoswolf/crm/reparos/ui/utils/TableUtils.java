@@ -12,17 +12,31 @@ public class TableUtils {
     private TableUtils() {}
 
     public static <S, T> void centralizarColuna(TableColumn<S, T> coluna) {
-        coluna.setCellFactory(tc -> new TableCell<S, T>() {
-            @Override
-            protected void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.toString());
-                    setAlignment(Pos.CENTER);
-                }
+        var cellFactoryOriginal = coluna.getCellFactory();
+
+        coluna.setCellFactory(tc -> {
+            TableCell<S, T> cell;
+
+            if (cellFactoryOriginal != null) {
+                cell = cellFactoryOriginal.call(tc);
+            } else {
+                cell = new TableCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            setText(item.toString());
+                        }
+                    }
+                };
             }
+
+            cell.setAlignment(Pos.CENTER);
+
+            return cell;
         });
     }
 

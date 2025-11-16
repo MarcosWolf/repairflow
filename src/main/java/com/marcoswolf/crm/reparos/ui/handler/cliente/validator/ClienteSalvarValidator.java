@@ -19,12 +19,25 @@ public class ClienteSalvarValidator implements ClienteValidator {
 
     @Override
     public void validar(ClienteFormData data, Cliente novoCliente) {
+        String cep = data.cep().replaceAll("\\D", "");
+        String telefone = data.telefone().replaceAll("\\D", "");
+
         if (isEmpty(data.nome())) {
             throw new IllegalArgumentException("O campo Nome é obrigatório.");
         }
 
-        if (isEmpty(data.telefone())) {
+        if (isEmpty(telefone)) {
             throw new IllegalArgumentException("O campo Telefone é obrigatório.");
+        }
+
+        if (!isEmpty(telefone) && telefone.length() != 10 && telefone.length() != 11) {
+            throw new IllegalArgumentException("O Telefone é inválido.");
+        }
+
+        if (data.email() != null && !data.email().trim().isEmpty()) {
+            if (!data.email().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+                throw new IllegalArgumentException("O email é inválido.");
+            }
         }
 
         Long id = novoCliente != null ? novoCliente.getId() : null;
@@ -44,6 +57,11 @@ public class ClienteSalvarValidator implements ClienteValidator {
         Estado estado = data.estadoSelecionado();
         if (estado == null || estado.getId() == 0) {
             throw new IllegalArgumentException("O campo Estado é obrigatório.");
+        }
+
+        // CEP precisa ter 8 caracteres
+        if (cep != null && cep.isEmpty() && cep.length() < 8) {
+            throw new IllegalArgumentException("O CEP é inválido.");
         }
     }
 }

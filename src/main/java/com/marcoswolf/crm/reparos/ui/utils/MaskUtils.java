@@ -83,8 +83,6 @@ public class MaskUtils {
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         textField.setTextFormatter(textFormatter);
-
-        textField.setText("0,00");
     }
 
     public static void aplicarMascaraTelefone(TextField campo) {

@@ -12,44 +12,85 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootPane" prefHeight="500" prefWidth="860.0" style="-fx-background-color: #F0F0F0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.marcoswolf.crm.reparos.ui.controller.statusReparo.StatusReparoFormController">
-    <children>
-        <VBox layoutX="30" layoutY="20" prefWidth="800" spacing="15">
-            <HBox alignment="CENTER_LEFT">
-                <Label fx:id="lblTitulo"
-                       text="Cadastrar Status de Reparo"
-                       styleClass="titulo-principal"
-                       HBox.hgrow="ALWAYS"/>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="btnVoltar" minWidth="80" onAction="#voltar" prefHeight="32" styleClass="btn-voltar" text="← Voltar" />
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.geometry.Insets?>
+<AnchorPane fx:id="rootPane"
+            xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.marcoswolf.crm.reparos.ui.controller.statusReparo.StatusReparoFormController"
+            style="-fx-background-color: #F0F0F0;">
+
+    <ScrollPane fitToWidth="true"
+                fitToHeight="true"
+                style="-fx-background-color: #F0F0F0;"
+                AnchorPane.topAnchor="0.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0">
+        <content>
+            <HBox alignment="TOP_CENTER" style="-fx-background-color: #F0F0F0;">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30" />
+            </padding>
+
+                <VBox spacing="15" style="-fx-background-color: #F0F0F0;" maxWidth="1200" HBox.hgrow="ALWAYS">
+
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label fx:id="lblTitulo"
+                               text="Cadastrar Status de Reparo"
+                               styleClass="titulo-principal"
+                               HBox.hgrow="ALWAYS"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnVoltar"
+                                minWidth="80"
+                                onAction="#voltar"
+                                prefHeight="32"
+                                styleClass="btn-voltar"
+                                text="← Voltar" />
+                    </HBox>
+
+                    <Separator />
+
+                    <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
+                        <Label style="-fx-font-weight: bold;" text="Informações do Status" />
+
+                        <GridPane hgap="10" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="100" prefWidth="120" maxWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                                <ColumnConstraints minWidth="100" prefWidth="120" maxWidth="150" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200" prefWidth="300" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                            </rowConstraints>
+
+                            <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtNome"
+                                       GridPane.columnIndex="1"
+                                       GridPane.columnSpan="3"
+                                       GridPane.rowIndex="0"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+                        </GridPane>
+                    </VBox>
+
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <Button fx:id="btnExcluir"
+                                styleClass="excluir"
+                                onAction="#excluir"
+                                text="Excluir"
+                                visible="false"
+                                minWidth="100" />
+                        <Button fx:id="btnSalvar"
+                                styleClass="salvar"
+                                onAction="#salvar"
+                                text="Salvar"
+                                minWidth="100" />
+                    </HBox>
+
+                </VBox>
             </HBox>
-            <Separator />
-
-            <VBox spacing="10" style="-fx-background-color: #FFFFFF; -fx-padding: 15; -fx-background-radius: 8;">
-                <Label style="-fx-font-weight: bold;" text="Informações do Status" />
-
-                <GridPane hgap="10" vgap="10">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35" />
-                        <ColumnConstraints percentWidth="15" />
-                        <ColumnConstraints percentWidth="35" />
-                    </columnConstraints>
-
-                    <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
-                </GridPane>
-            </VBox>
-
-            <HBox alignment="CENTER_RIGHT" spacing="10">
-                <Button fx:id="btnExcluir" styleClass="excluir" onAction="#excluir" text="Excluir" visible="false" />
-                <Button fx:id="btnSalvar" styleClass="salvar" onAction="#salvar" text="Salvar" />
-            </HBox>
-
-        </VBox>
-    </children>
+        </content>
+    </ScrollPane>
 </AnchorPane>

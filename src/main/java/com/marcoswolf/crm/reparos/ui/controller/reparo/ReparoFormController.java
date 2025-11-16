@@ -11,10 +11,8 @@ import com.marcoswolf.crm.reparos.ui.handler.reparo.action.ReparoSalvarAction;
 import com.marcoswolf.crm.reparos.ui.interfaces.DataReceiver;
 import com.marcoswolf.crm.reparos.ui.navigation.ViewNavigator;
 import com.marcoswolf.crm.reparos.ui.tables.PecaPagamentoTableView;
-import com.marcoswolf.crm.reparos.ui.utils.ComboBoxUtils;
-import com.marcoswolf.crm.reparos.ui.utils.MaskUtils;
-import com.marcoswolf.crm.reparos.ui.utils.ParseUtils;
-import com.marcoswolf.crm.reparos.ui.utils.TextFieldUtils;
+import com.marcoswolf.crm.reparos.ui.tables.ReparoTableView;
+import com.marcoswolf.crm.reparos.ui.utils.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,16 +76,21 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         MaskUtils.aplicarMascaraData(datePagamento);
         MaskUtils.aplicarMascaraMonetaria(txtValorServico);
         MaskUtils.aplicarMascaraMonetaria(txtDesconto);
+        MaskUtils.aplicarMascaraMonetaria(txtPecaValorUnitario);
         txtValorTotal.setEditable(false);
     }
 
     private void configurarTabela() {
-        colDescricao.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
-        colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        colValorUnitario.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getValorFormatado()));
-        colValorTotalLinha.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTotalLinhaFormatado()));
-        colRemover.setCellFactory(PecaPagamentoTableView.criarBotaoRemover(pecas, p -> recalcularTotal()));
-        tabela.setItems(pecas);
+        PecaPagamentoTableView.configurarTabela(
+                tabela,             // TableView<PecaPagamento>
+                colDescricao,       // TableColumn<PecaPagamento, String>
+                colQuantidade,      // TableColumn<PecaPagamento, Integer>
+                colValorUnitario,   // TableColumn<PecaPagamento, String>
+                colValorTotalLinha, // TableColumn<PecaPagamento, String>
+                colRemover,         // TableColumn<PecaPagamento, Void>
+                pecas,              // ObservableList<PecaPagamento>
+                p -> recalcularTotal() // ação de remover
+        );
     }
 
     private void configurarRecalculo() {

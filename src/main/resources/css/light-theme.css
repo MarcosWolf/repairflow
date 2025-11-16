@@ -189,6 +189,10 @@
     -fx-text-fill: white;
 }
 
+.col-center .table-cell {
+    -fx-alignment: CENTER;
+}
+
 /* ---------- Scrollbars ---------- */
 .scroll-bar:vertical, .scroll-bar:horizontal {
     -fx-background-color: transparent;

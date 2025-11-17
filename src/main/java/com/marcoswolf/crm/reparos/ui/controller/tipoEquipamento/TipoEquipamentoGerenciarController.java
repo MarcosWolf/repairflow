@@ -44,7 +44,7 @@ public class TipoEquipamentoGerenciarController {
     }
 
     private void alimentarTabela() {
-        tabela.setItems(FXCollections.observableList(tipoEquipamentoService.listarTodos()));
+        tabela.setItems(FXCollections.observableList(tipoEquipamentoService.listarTodosTabela()));
     }
 
     @FXML

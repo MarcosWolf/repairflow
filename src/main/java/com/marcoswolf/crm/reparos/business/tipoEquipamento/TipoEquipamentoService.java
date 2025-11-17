@@ -26,6 +26,12 @@ public class TipoEquipamentoService implements TipoEquipamentoConsultaService, T
     public List<TipoEquipamento> listarTodos() {
         List<TipoEquipamento> tipos = tipoEquipamentoRepository.findAll();
 
+        return tipos;
+    }
+
+    public List<TipoEquipamento> listarTodosTabela() {
+        List<TipoEquipamento> tipos = tipoEquipamentoRepository.findAll();
+
         tipos.forEach(t -> {
             t.setTotalClientes(contarClientesPorTipo(t.getId()));
             t.setTotalEquipamentos(contarEquipamentosPorTipo(t.getId()));

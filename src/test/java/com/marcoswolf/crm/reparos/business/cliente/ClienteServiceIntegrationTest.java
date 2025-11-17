@@ -30,7 +30,6 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveListarTodosOsClientes() {
-
         Cliente cliente1 = criarCliente("Marcos", "13912345678", "viniciosramos.dev@gmail.com", "São Paulo", "São Paulo", "12345-678", "Belas Artes", "Rua do Pássaro", 19);
         Cliente cliente2 = criarCliente("Paulo", "11923456789", "paulo@gmail.com","Curitiba", "Paraná", "11234-567", "Martin Afonso", "Rua dos Imigrantes", 192);
 

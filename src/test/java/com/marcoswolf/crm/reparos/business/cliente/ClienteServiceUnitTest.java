@@ -21,18 +21,18 @@ public class ClienteServiceUnitTest {
     private ClienteRepository clienteRepository;
 
     @InjectMocks
-    private ClienteService clienteService;
+    private ClienteService service;
 
     @Test
     void deveListarTodosClientes() {
         var cliente1 = new Cliente();
-        cliente1.setNome("Marcos");
         var cliente2 = new Cliente();
+        cliente1.setNome("Marcos");
         cliente2.setNome("Alan");
 
         when(clienteRepository.findAll()).thenReturn(List.of(cliente1, cliente2));
 
-        var resultado = clienteService.listarTodos();
+        var resultado = service.listarTodos();
 
         assertEquals(2, resultado.size());
         assertEquals("Marcos", resultado.get(0).getNome());
@@ -47,7 +47,7 @@ public class ClienteServiceUnitTest {
 
         when(clienteRepository.saveAndFlush(cliente)).thenReturn(cliente);
 
-        clienteService.salvar(cliente);
+        service.salvar(cliente);
 
         verify(clienteRepository, times(1)).saveAndFlush(cliente);
     }
@@ -55,21 +55,20 @@ public class ClienteServiceUnitTest {
     @Test
     void deveDeletarUmCliente() {
         var cliente = new Cliente();
-        cliente.setId(1L);
         cliente.setNome("Pedro");
 
         when(clienteRepository.findById(1L)).thenReturn(java.util.Optional.of(cliente));
 
-        clienteService.deletar(1L);
+        service.deletar(1L);
 
         verify(clienteRepository, times(1)).delete(cliente);
     }
 
     @Test
-    void deveLancarExcecaoQuandoClienteNaoExistir() {
+    void deveLancarExcecaoAoExcluirUmClienteInexistente() {
         when(clienteRepository.findById(999L)).thenReturn(java.util.Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> clienteService.deletar(999L));
+        assertThrows(RuntimeException.class, () -> service.deletar(999L));
         verify(clienteRepository, never()).delete(any());
     }
 }

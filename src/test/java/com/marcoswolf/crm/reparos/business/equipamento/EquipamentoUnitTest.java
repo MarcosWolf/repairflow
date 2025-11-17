@@ -30,7 +30,7 @@ public class EquipamentoUnitTest {
         equipamento1.setMarca("Pioneer");
         equipamento2.setMarca("Behringer");
 
-        when(equipamentoRepository.findAll()).thenReturn(List.of(equipamento1, equipamento2));;
+        when(equipamentoRepository.findAll()).thenReturn(List.of(equipamento1, equipamento2));
 
         var resultado = service.listarTodos();
 

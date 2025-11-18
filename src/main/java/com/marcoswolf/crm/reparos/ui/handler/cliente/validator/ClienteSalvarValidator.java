@@ -23,20 +23,20 @@ public class ClienteSalvarValidator implements ClienteValidator {
         String telefone = data.telefone().replaceAll("\\D", "");
 
         if (isEmpty(data.nome())) {
-            throw new IllegalArgumentException("O campo Nome é obrigatório.");
+            throw new IllegalArgumentException("O campo nome é obrigatório.");
         }
 
         if (isEmpty(telefone)) {
-            throw new IllegalArgumentException("O campo Telefone é obrigatório.");
+            throw new IllegalArgumentException("O campo telefone é obrigatório.");
         }
 
         if (!isEmpty(telefone) && telefone.length() != 10 && telefone.length() != 11) {
-            throw new IllegalArgumentException("O Telefone é inválido.");
+            throw new IllegalArgumentException("O telefone é inválido.");
         }
 
         if (data.email() != null && !data.email().trim().isEmpty()) {
             if (!data.email().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
-                throw new IllegalArgumentException("O email é inválido.");
+                throw new IllegalArgumentException("O e-mail é inválido.");
             }
         }
 
@@ -51,16 +51,16 @@ public class ClienteSalvarValidator implements ClienteValidator {
         }
 
         if (isEmpty(data.cidade())) {
-            throw new IllegalArgumentException("O campo Cidade é obrigatório.");
+            throw new IllegalArgumentException("O campo cidade é obrigatório.");
         }
 
         Estado estado = data.estadoSelecionado();
         if (estado == null || estado.getId() == 0) {
-            throw new IllegalArgumentException("O campo Estado é obrigatório.");
+            throw new IllegalArgumentException("O campo estado é obrigatório.");
         }
 
         // CEP precisa ter 8 caracteres
-        if (cep != null && cep.isEmpty() && cep.length() < 8) {
+        if (cep != null && !cep.isEmpty() && cep.length() != 8) {
             throw new IllegalArgumentException("O CEP é inválido.");
         }
     }

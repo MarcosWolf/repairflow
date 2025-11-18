@@ -1,11 +1,8 @@
 package com.marcoswolf.crm.reparos.ui.handler.cliente.validator;
 
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
-import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
-import com.marcoswolf.crm.reparos.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
-import com.marcoswolf.crm.reparos.ui.handler.cliente.dto.ClienteFormData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

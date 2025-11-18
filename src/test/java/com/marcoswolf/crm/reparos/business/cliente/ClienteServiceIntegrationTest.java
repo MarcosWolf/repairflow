@@ -30,8 +30,14 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveListarTodosOsClientes() {
-        Cliente cliente1 = criarCliente("Marcos", "13912345678", "viniciosramos.dev@gmail.com", "São Paulo", "São Paulo", "12345-678", "Belas Artes", "Rua do Pássaro", 19);
-        Cliente cliente2 = criarCliente("Paulo", "11923456789", "paulo@gmail.com","Curitiba", "Paraná", "11234-567", "Martin Afonso", "Rua dos Imigrantes", 192);
+        Cliente cliente1 = criarCliente("Marcos", "13912345678", "viniciosramos.dev@gmail.com",
+                "São Paulo", "São Paulo", "12345-678",
+                "Belas Artes", "Rua do Pássaro", 19
+        );
+        Cliente cliente2 = criarCliente("Paulo", "11923456789", "paulo@gmail.com",
+                "Curitiba", "Paraná", "11234-567",
+                "Martin Afonso", "Rua dos Imigrantes", 192
+        );
 
         clienteRepository.save(cliente1);
         clienteRepository.save(cliente2);
@@ -55,18 +61,32 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveSalvarUmNovoCliente() {
-        Cliente cliente = criarCliente("Anderson", "13912345678", "anderson@gmail.com", "Manaus", "Amazonas", "13212-123", "Laranja", "Avenida Presidente Kennedy", 602);
+        Cliente cliente = criarCliente(
+                "Anderson", "13912345678", "anderson@gmail.com",
+                "Manaus", "Amazonas", "13212-123", "Laranja",
+                "Avenida Presidente Kennedy", 602
+        );
         clienteService.salvar(cliente);
 
         var clienteSalvo = clienteRepository.findAll().get(0);
         assertNotNull(clienteSalvo.getId());
         assertEquals("Anderson", clienteSalvo.getNome());
         assertEquals("13912345678", clienteSalvo.getTelefone());
+        assertEquals("anderson@gmail.com", clienteSalvo.getEmail());
+        assertEquals("Manaus", clienteSalvo.getEndereco().getCidade());
+        assertEquals("Amazonas", clienteSalvo.getEndereco().getEstado().getNome());
+        assertEquals("13212-123", clienteSalvo.getEndereco().getCep());
+        assertEquals("Laranja", clienteSalvo.getEndereco().getBairro());
+        assertEquals("Avenida Presidente Kennedy", clienteSalvo.getEndereco().getLogradouro());
+        assertEquals(602, clienteSalvo.getEndereco().getNumero());
     }
 
     @Test
     void deveAtualizarUmCliente() {
-        Cliente cliente = criarCliente("Alan", "13952345678", "alan@gmail.com", "Pedro de Toledo", "São Paulo", "11132-555", "", "", null);
+        Cliente cliente = criarCliente("Alan", "13952345678", "alan@gmail.com",
+                "Pedro de Toledo", "São Paulo", "11132-555",
+                "", "", null
+        );
         clienteService.salvar(cliente);
 
         Endereco endereco = cliente.getEndereco();
@@ -91,7 +111,10 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveDeletarUmCliente() {
-        Cliente cliente = criarCliente("Mariana", "13923456789", "", "Goiânia", "Goiás", "12312-532", "", "", null);
+        Cliente cliente = criarCliente("Mariana", "13923456789", "",
+                "Goiânia", "Goiás", "12312-532",
+                "", "", null
+        );
         clienteService.salvar(cliente);
 
         Long clienteId = cliente.getId();

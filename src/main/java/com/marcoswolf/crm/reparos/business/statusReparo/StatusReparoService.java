@@ -31,7 +31,7 @@ public class StatusReparoService implements StatusReparoConsultaService, StatusR
 
     public void deletar(Long id) {
         var statusReparo = statusReparoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Status de Reparo não encontrado."));
+                .orElseThrow(() -> new RuntimeException("Status de reparo não encontrado."));
 
         statusReparoRepository.delete(statusReparo);
     }

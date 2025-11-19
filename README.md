@@ -1,3 +1,5 @@
+# crm-reparos
+
 Sistema completo de gestão para oficinas de reparos eletrônicos, desenvolvido com Spring Boot e JavaFX. Gerencie clientes, equipamentos, ordens de serviço e pagamentos através de uma interface desktop moderna e intuitiva.
 
 ## Sobre

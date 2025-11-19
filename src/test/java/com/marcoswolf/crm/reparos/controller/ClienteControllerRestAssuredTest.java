@@ -35,7 +35,7 @@ public class ClienteControllerRestAssuredTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        RestAssured.basePath = "/api/v1/clientes";
+        RestAssured.basePath = "/api/v1/cliente";
 
         clienteRepository.deleteAll();
         estadoRepository.deleteAll();
@@ -57,7 +57,7 @@ public class ClienteControllerRestAssuredTest {
         .then()
                 .statusCode(201)
                 .header("Location", notNullValue())
-                .header("Location", matchesPattern(".*/clientes/\\d+"))
+                .header("Location", matchesPattern(".*/cliente/\\d+"))
                 .body("nome", equalTo("Marcos Vinícios"))
                 .body("telefone", equalTo("(13) 98131-4531"))
                 .body("email", equalTo("viniciosramos.dev@gmail.com"))
@@ -93,10 +93,10 @@ public class ClienteControllerRestAssuredTest {
     @Test
     void deveRetornarNotFoundAoBuscarInexistente() {
         given()
-                .when()
-                    .get("/999")
-                .then()
-                    .statusCode(404);
+        .when()
+                .get("/999")
+        .then()
+                .statusCode(404);
     }
 
     @Test
@@ -118,7 +118,6 @@ public class ClienteControllerRestAssuredTest {
         .then()
                 .statusCode(400);
     }
-
 
     private Cliente criarClienteCompleto() {
         Cliente cliente = new Cliente();

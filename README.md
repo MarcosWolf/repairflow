@@ -16,6 +16,11 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 
 ## Tecnologias Utilizadas
 
+### Core
+
+- <b>Java:<b> linguagem de programação principal
+- <b>Maven:</b> gerenciamento de dependências e build
+
 ### Backend
 
 - <b>Spring Boot:</b> framework principal para a API REST

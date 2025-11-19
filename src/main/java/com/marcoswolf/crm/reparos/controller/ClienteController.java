@@ -8,14 +8,15 @@ import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/v1/clientes")
 @RequiredArgsConstructor
 public class ClienteController {
-
     private final ClienteService clienteService;
     private final ClienteConsultaService clienteConsultaService;
     private final ClienteFiltroService clienteFiltroService;
@@ -23,7 +24,14 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
         clienteService.salvar(cliente);
-        return ResponseEntity.ok(cliente);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(cliente.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(cliente);
     }
 
     @GetMapping
@@ -32,19 +40,26 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+        return clienteService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/filtrar")
     public ResponseEntity<List<Cliente>> filtrarClientes(ClienteFiltro filtro) {
         List<Cliente> clientes = clienteFiltroService.aplicarFiltros(filtro);
         return ResponseEntity.ok(clientes);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deletar(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
             clienteService.deletar(id);
-            return ResponseEntity.ok("Cliente deletado com sucesso.");
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 }

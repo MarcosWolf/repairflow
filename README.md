@@ -33,9 +33,10 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 
 ### Testes
 
-- <b>JUnit:</b> testes unitários
+- <b>JUnit:</b> testes unitários e de integração
 - <b>Mockito:</b> framework de mocking para testes isolados
 - <b>REST Assured:</b> testes automatizados da API REST
+- <b>Validações:</b> validação de formulários e regras de negócio
 
 ## Estrutura do Projeto
 

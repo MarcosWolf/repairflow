@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
-import com.marcoswolf.crm.reparos.controller.dto.EquipamentoRequestTestDTO;
+import com.marcoswolf.crm.reparos.controller.dto.EquipamentoRequestDTO;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
@@ -59,9 +59,9 @@ public class EquipamentoControllerRestAssuredTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(requestDTO)
-                .when()
+        .when()
                 .post()
-                .then()
+        .then()
                 .statusCode(201)
                 .header("Location", notNullValue())
                 .header("Location", matchesPattern(".*/equipamento/\\d+"))
@@ -127,11 +127,11 @@ public class EquipamentoControllerRestAssuredTest {
                 .statusCode(400);
     }
 
-    private EquipamentoRequestTestDTO criarEquipamentoCompletoDTO() {
+    private EquipamentoRequestDTO criarEquipamentoCompletoDTO() {
         Long tipoId = tipoEquipamentoRepository.findAll().get(0).getId();
         Long clienteId = clienteRepository.findAll().get(0).getId();
 
-        return new EquipamentoRequestTestDTO(
+        return new EquipamentoRequestDTO(
                 tipoId,
                 "Pioneer",
                 "CDJ-231312",
@@ -140,7 +140,7 @@ public class EquipamentoControllerRestAssuredTest {
         );
     }
 
-    private Equipamento toEntity(EquipamentoRequestTestDTO dto) {
+    private Equipamento toEntity(EquipamentoRequestDTO dto) {
         Equipamento equipamento = new Equipamento();
         equipamento.setMarca(dto.marca());
         equipamento.setModelo(dto.modelo());

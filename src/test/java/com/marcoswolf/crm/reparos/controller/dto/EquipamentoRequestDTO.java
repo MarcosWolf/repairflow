@@ -1,6 +1,6 @@
 package com.marcoswolf.crm.reparos.controller.dto;
 
-public record EquipamentoRequestTestDTO(
+public record EquipamentoRequestDTO(
         Long tipoEquipamentoId,
         String marca,
         String modelo,

@@ -1,5 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
+import com.marcoswolf.crm.reparos.controller.dto.ClienteRequestDTO;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
@@ -44,11 +45,11 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveCriarNovoCliente() {
-        Cliente cliente = criarClienteCompleto();
+        var requestDTO = criarClienteCompletoDTO();
 
         given()
                 .contentType(ContentType.JSON)
-                .body(cliente)
+                .body(requestDTO)
         .when()
                 .post()
         .then()
@@ -63,7 +64,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        clienteRepository.saveAndFlush(criarClienteCompleto());
+        clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -76,7 +77,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(criarClienteCompleto());
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -98,7 +99,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveDeletarCliente() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(criarClienteCompleto());
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -116,22 +117,45 @@ public class ClienteControllerRestAssuredTest {
                 .statusCode(400);
     }
 
-    private Cliente criarClienteCompleto() {
-        Cliente cliente = new Cliente();
-        cliente.setNome("Marcos Vinícios");
-        cliente.setTelefone("(13) 98131-4531");
-        cliente.setEmail("viniciosramos.dev@gmail.com");
+    private ClienteRequestDTO criarClienteCompletoDTO() {
+        Long estadoId = estadoRepository.findAll().get(0).getId();
 
-        Endereco endereco = new Endereco();
-        endereco.setLogradouro("Rua Teste");
-        endereco.setNumero(123);
-        endereco.setBairro("Centro");
-        endereco.setCidade("São Paulo");
-        endereco.setCep("01234-567");
-        endereco.setEstado(estadoRepository.findAll().get(0));
+        ClienteRequestDTO.EnderecoDTO enderecoDTO = new ClienteRequestDTO.EnderecoDTO(
+                "Rua Teste",
+                123,
+                "Centro",
+                "São Paulo",
+                "01234-567",
+                estadoId
+        );
 
-        cliente.setEndereco(endereco);
-        return cliente;
+        return new ClienteRequestDTO(
+                "Marcos Vinícios",
+                "(13) 98131-4531",
+                "viniciosramos.dev@gmail.com",
+                enderecoDTO
+        );
     }
 
+    private Cliente toEntity(ClienteRequestDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.nome());
+        cliente.setTelefone(dto.telefone());
+        cliente.setEmail(dto.email());
+
+        Endereco endereco = new Endereco();
+        endereco.setCidade(dto.endereco().cidade());
+        endereco.setBairro(dto.endereco().bairro());
+        endereco.setCep(dto.endereco().cep());
+        endereco.setLogradouro(dto.endereco().logradouro());
+        endereco.setNumero(dto.endereco().numero());
+
+        Estado estado = estadoRepository.findById(dto.endereco().estadoId())
+                .orElseThrow();
+
+        endereco.setEstado(estado);
+        cliente.setEndereco(endereco);
+
+        return cliente;
+    }
 }

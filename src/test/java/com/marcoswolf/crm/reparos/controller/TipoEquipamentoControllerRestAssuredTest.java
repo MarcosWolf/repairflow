@@ -1,5 +1,6 @@
 package com.marcoswolf.crm.reparos.controller;
 
+import com.marcoswolf.crm.reparos.controller.dto.TipoEquipamentoRequestDTO;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import io.restassured.RestAssured;
@@ -33,11 +34,11 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveCriarNovoTipoEquipamento() {
-        TipoEquipamento tipoEquipamento = criarTipoEquipamentoCompleto();
+        var requestDTO = criarTipoEquipamentoCompletoDTO();
 
         given()
                 .contentType(ContentType.JSON)
-                .body(tipoEquipamento)
+                .body(requestDTO)
         .when()
                 .post()
         .then()
@@ -50,7 +51,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        tipoEquipamentoRepository.saveAndFlush(criarTipoEquipamentoCompleto());
+        tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -63,7 +64,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(criarTipoEquipamentoCompleto());
+        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -85,7 +86,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveDeletarTipoEquipamento() {
-        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(criarTipoEquipamentoCompleto());
+        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -103,9 +104,15 @@ public class TipoEquipamentoControllerRestAssuredTest {
                 .statusCode(400);
     }
 
-    private TipoEquipamento criarTipoEquipamentoCompleto() {
+    private TipoEquipamentoRequestDTO criarTipoEquipamentoCompletoDTO() {
+        return new TipoEquipamentoRequestDTO(
+                "Amplificador"
+        );
+    }
+
+    private TipoEquipamento toEntity(TipoEquipamentoRequestDTO dto) {
         TipoEquipamento tipoEquipamento = new TipoEquipamento();
-        tipoEquipamento.setNome("Amplificador");
+        tipoEquipamento.setNome(dto.nome());
 
         return tipoEquipamento;
     }

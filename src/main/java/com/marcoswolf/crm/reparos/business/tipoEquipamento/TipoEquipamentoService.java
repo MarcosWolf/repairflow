@@ -8,6 +8,7 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRep
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TipoEquipamentoService implements TipoEquipamentoConsultaService, TipoEquipamentoComandoService {
@@ -39,6 +40,10 @@ public class TipoEquipamentoService implements TipoEquipamentoConsultaService, T
         });
 
         return tipos;
+    }
+
+    public Optional<TipoEquipamento> buscarPorId(Long id) {
+        return tipoEquipamentoRepository.findById(id);
     }
 
     public Long contarClientesPorTipo(Long tipoId) {

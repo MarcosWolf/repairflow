@@ -38,6 +38,28 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>REST Assured:</b> testes automatizados da API REST
 - <b>Validações:</b> validação de formulários e regras de negócio
 
+## Passos para Execução
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/crm-reparos.git
+cd crm-reparos
+```
+
+2. Compile o projeto:
+```bash
+mvn clean install
+```
+   
+3. Execute a aplicação:
+```bash
+mvn spring-boot:run
+```
+
+A aplicação iniciará tanto o servidor Spring Boot quanto a interface JavaFX automaticamente.
+
+
 ## Estrutura do Projeto
 
 ```text

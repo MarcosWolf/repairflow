@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReparoService implements ReparoConsultaService, ReparoComandoService {
@@ -25,6 +26,11 @@ public class ReparoService implements ReparoConsultaService, ReparoComandoServic
     @Transactional
     public void salvar(Reparo reparo) {
         reparoRepository.saveAndFlush(reparo);
+    }
+
+    @Transactional
+    public Optional<Reparo> buscarPorId(Long id) {
+        return reparoRepository.findById(id);
     }
 
     @Transactional

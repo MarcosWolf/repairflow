@@ -6,6 +6,7 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.StatusReparoReposi
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StatusReparoService implements StatusReparoConsultaService, StatusReparoComandoService {
@@ -19,6 +20,10 @@ public class StatusReparoService implements StatusReparoConsultaService, StatusR
 
     public List<StatusReparo> listarTodos() {
         return statusReparoRepository.findAll();
+    }
+
+    public Optional<StatusReparo> buscarPorId(Long id) {
+        return statusReparoRepository.findById(id);
     }
 
     public Long contarReparosPorStatusReparo(Long tipoId) {

@@ -2,10 +2,12 @@ package com.marcoswolf.crm.reparos.loader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("!test")
 public class EstadoLoader implements CommandLineRunner {
 
     @Autowired

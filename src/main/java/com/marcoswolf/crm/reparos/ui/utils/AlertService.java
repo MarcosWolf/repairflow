@@ -8,6 +8,26 @@ import java.util.Optional;
 
 @Component
 public class AlertService {
+    private boolean testMode = false;
+    private Alert lastAlert = null;
+    private ButtonType mockConfirmResponse = ButtonType.OK;
+
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
+    }
+
+    public Alert getLastAlert() {
+        return lastAlert;
+    }
+
+    public void setMockConfirmResponse(ButtonType response) {
+        this.mockConfirmResponse = response;
+    }
+
+    public void setMockConfirmResponse(boolean confirmed) {
+        this.mockConfirmResponse = confirmed ? ButtonType.OK : ButtonType.CANCEL;
+    }
+
     public void info(String title, String message) {
         show(Alert.AlertType.INFORMATION, title, message);
     }
@@ -26,8 +46,15 @@ public class AlertService {
         alert.setHeaderText(message);
         alert.setContentText("Esta ação não poderá ser desfeita.");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
+        lastAlert = alert;
+
+        if (testMode) {
+            alert.show();
+            return mockConfirmResponse == ButtonType.OK;
+        } else {
+            Optional<ButtonType> result = alert.showAndWait();
+            return result.isPresent() && result.get() == ButtonType.OK;
+        }
     }
 
     private void show(Alert.AlertType type, String title, String message) {
@@ -35,6 +62,13 @@ public class AlertService {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
+
+        lastAlert = alert;
+
+        if (testMode) {
+            alert.show();
+        } else {
+            alert.showAndWait();
+        }
     }
 }

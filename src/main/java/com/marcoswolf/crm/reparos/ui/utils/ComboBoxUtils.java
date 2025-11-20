@@ -11,13 +11,14 @@ import java.util.function.Supplier;
 public class ComboBoxUtils {
 
     /**
-     * Método genérico para carregar qualquer ComboBox com um item "Selecione" no topo.
+     * Método genérico para carregar qualquer ComboBox com um item "Selecione" no topo,
+     * evitando duplicação.
      *
-     * @param combo        O ComboBox a ser carregado
-     * @param itens        Lista de itens vinda do serviço
-     * @param getNomeFunc  Função que retorna o nome/descrição do item
-     * @param criarVazio   Função que cria um item vazio ("Selecione")
-     * @param <T>          Tipo da entidade (Cliente, Estado, TipoEquipamento, etc.)
+     * @param combo       O ComboBox a ser carregado
+     * @param itens       Lista de itens vinda do serviço
+     * @param getNomeFunc Função que retorna o nome/descrição do item
+     * @param criarVazio  Função que cria um item vazio ("Selecione")
+     * @param <T>         Tipo da entidade
      */
     public static <T> void carregarCombo(
             ComboBox<T> combo,
@@ -27,12 +28,15 @@ public class ComboBoxUtils {
     ) {
         if (itens == null) {
             itens = new ArrayList<>();
+        } else {
+            itens = new ArrayList<>(itens);
         }
 
         T selecione = criarVazio.get();
         itens.add(0, selecione);
 
         combo.getItems().setAll(itens);
+
         combo.getSelectionModel().selectFirst();
 
         combo.setConverter(new StringConverter<>() {

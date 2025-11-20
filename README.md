@@ -87,6 +87,7 @@ crm-reparos/
 │   │   │       ├── infrastructure/  # Entities e repositories
 │   │   │       │   ├── entities/    # Classes de domínio (Cliente, Reparo, Equipamento, etc.)
 │   │   │       │   └── repositories/ # Interfaces de acesso a dados
+│   │   │       ├── loader/           # Componentes de inicialização
 │   │   │       └── ui/              # Interface JavaFX
 │   │   │           ├── controller/  # Controladores das views
 │   │   │           ├── handler/     # Validações e actions

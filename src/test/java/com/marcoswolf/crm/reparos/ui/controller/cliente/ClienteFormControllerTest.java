@@ -1,7 +1,6 @@
 package com.marcoswolf.crm.reparos.ui.controller.cliente;
 
 
-import com.marcoswolf.crm.reparos.JavaFxApp;
 import com.marcoswolf.crm.reparos.business.estado.EstadoService;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
 import com.marcoswolf.crm.reparos.ui.BaseUITest;
@@ -10,9 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class ClienteFormControllerTest extends BaseUITest {
@@ -56,6 +52,8 @@ public class ClienteFormControllerTest extends BaseUITest {
 
     @Test
     void deveCarregarComponentesPrincipais() {
+        assertNodeExists("#btnVoltar");
+
         assertNodeExists("#txtNome");
         assertNodeExists("#txtTelefone");
         assertNodeExists("#txtEmail");

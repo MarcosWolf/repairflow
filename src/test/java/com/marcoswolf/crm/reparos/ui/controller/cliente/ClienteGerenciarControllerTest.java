@@ -96,19 +96,53 @@ public class ClienteGerenciarControllerTest extends BaseUITest {
     }
 
     @Test
+    void deveCarregarComponentesPrincipais() {
+        assertNodeExists("#btnVoltar");
+
+        assertNodeExists("#txtBuscar");
+        assertNodeExists("#btnBuscar");
+        assertNodeExists("#btnFiltros");
+        assertNodeExists("#btnNovo");
+
+        assertNodeExists("#filtroPane");
+        assertNodeExists("#chkPendentes");
+        assertNodeExists("#chkInativos");
+        assertNodeExists("#chkRecentes");
+
+        assertNodeExists("#tabela");
+        assertNodeExists("#colNome");
+        assertNodeExists("#colTelefone");
+        assertNodeExists("#colCidade");
+        assertNodeExists("#colEstado");
+    }
+
+    @Test
     void deveCadastrarBuscarEEditarCliente() {
         List<Cliente> clientesMock = new ArrayList<>();
         ObservableList<Cliente> clientesObs = FXCollections.observableArrayList(clientesMock);
 
         doAnswer(invocation -> {
             Cliente cli = invocation.getArgument(0);
-            cli.setId((long) (clientesMock.size() + 1));
-            clientesMock.add(cli);
-            clientesObs.setAll(clientesMock);
+
+            if (cli.getId() == null) {
+                cli.setId((long) (clientesMock.size() + 1));
+                clientesMock.add(cli);
+            } else {
+                for (Cliente existente : clientesMock) {
+                    if (existente.getId().equals(cli.getId())) {
+                        existente.setNome(cli.getNome());
+                        existente.setTelefone(cli.getTelefone());
+                        existente.setEndereco(cli.getEndereco());
+                        break;
+                    }
+                }
+            }
+
             return null;
         }).when(clienteService).salvar(any());
 
-        when(buscarAction.executar("")).thenAnswer(invocation -> FXCollections.observableArrayList(clientesMock));
+        when(buscarAction.executar(any())).thenAnswer(inv ->
+                FXCollections.observableArrayList(clientesMock));
 
         clickOn("#btnNovo");
         waitForFxEvents();
@@ -123,7 +157,7 @@ public class ClienteGerenciarControllerTest extends BaseUITest {
             txtTelefone.setText("11999999999");
             txtCidade.setText("São Paulo");
             if (!cmbEstado.getItems().isEmpty()) {
-                cmbEstado.getSelectionModel().select(1); // Seleciona o primeiro estado
+                cmbEstado.getSelectionModel().select(1);
             }
         });
 
@@ -139,10 +173,33 @@ public class ClienteGerenciarControllerTest extends BaseUITest {
         waitForFxEvents();
 
         var txtNomeEdicao = findNode("#txtNome", TextField.class);
-        assertThat(txtNomeEdicao.getText()).isEqualTo("João Teste");
-
+        var txtTelefoneEdicao = findNode("#txtTelefone", TextField.class);
+        var txtCidadeEdicao = findNode("#txtCidade", TextField.class);
         var cmbEstadoEdicao = findNode("#comboEstado", ComboBox.class);
+
+        assertThat(txtNomeEdicao.getText()).isEqualTo("João Teste");
         assertThat(cmbEstadoEdicao.getValue()).isNotNull();
         assertThat(((Estado) cmbEstadoEdicao.getValue()).getNome()).isEqualTo("São Paulo");
+
+        interact(() -> {
+            txtNomeEdicao.setText("Marcos Vinícios");
+            txtTelefoneEdicao.setText("(13) 98131-4531");
+            txtCidadeEdicao.setText("Guarulhos");
+            if (!cmbEstadoEdicao.getItems().isEmpty()) {
+                cmbEstadoEdicao.getSelectionModel().select(1);
+            }
+        });
+
+        clickOn("#btnSalvar");
+        waitForFxEvents();
+
+        assertThat(tabela.getItems()).hasSize(1);
+        assertThat(tabela.getItems().get(0).getNome()).isEqualTo("Marcos Vinícios");
+        assertThat(tabela.getItems().get(0).getTelefone()).isEqualTo("(13) 98131-4531");
+        assertThat(tabela.getItems().get(0).getEndereco().getCidade()).isEqualTo("Guarulhos");
+    }
+
+    void deveCadastrarBuscarClientePorNome() {
+
     }
 }

@@ -39,7 +39,7 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>Validações:</b> validação de formulários e regras de negócio
 - <b>TestFX:</b> framework para testes automatizados de interface gráfica JavaFX
 
-## Executando a Alicação
+## Executando a Aplicação
 
 1. Clone o repositório:
 

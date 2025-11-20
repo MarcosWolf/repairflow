@@ -126,6 +126,6 @@ A aplicação expõe uma API REST completa para integração com outros sistemas
 O projeto utiliza H2 Database em modo embedded. Para acessar o console H2:
 
 1. Acesse `http://localhost:8080/h2-console`
-2. JDBC URL: `jdbc:h2:mem:crm_reparos`
+2. JDBC URL: `jdbc:h2:file:./data/crm_reparos`
 3. User: `sa`
 4. Password: (deixe em branco)

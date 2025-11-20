@@ -60,6 +60,20 @@ mvn spring-boot:run
 A aplicação iniciará tanto o servidor Spring Boot quanto a interface JavaFX automaticamente.
 
 
+## Executando os testes
+
+Para rodar todos os testes:
+
+```bash
+mvn test
+```
+
+Para testes específicos:
+
+```bash
+mvn test -Dtest=NomeDaClasse
+```
+
 ## Estrutura do Projeto
 
 ```text
@@ -94,3 +108,24 @@ crm-reparos/
 ├── pom.xml
 └── README.md
 ```
+
+## API REST
+
+A aplicação expõe uma API REST completa para integração com outros sistemas:
+
+- `GET/POST/DELETE /api/v1/cliente` – Gerenciamento de clientes
+- `GET/POST/DELETE /api/v1/tipo-equipamento` – Controle de Tipos de equipamentos
+- `GET/POST/DELETE /api/v1/equipamento` – Controle de equipamentos
+- `GET/POST/DELETE /api/v1/status-reparo` – Controle de Status de reparos
+- `GET/POST/DELETE /api/reparo` – Ordens de serviço
+
+> **Nota:** O endpoint **POST** realiza tanto criação quanto atualização de registros (upsert pattern).
+
+## Banco de Dados
+
+O projeto utiliza H2 Database em modo embedded. Para acessar o console H2:
+
+1. Acesse `http://localhost:8080/h2-console`
+2. JDBC URL: `jdbc:h2:mem:crm_reparos`
+3. User: `sa`
+4. Password: (deixe em branco)

@@ -6,6 +6,7 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EquipamentoService implements EquipamentoConsultaService, EquipamentoComandoService {
@@ -24,6 +25,10 @@ public class EquipamentoService implements EquipamentoConsultaService, Equipamen
     public List<Equipamento> listarPorClienteId(Long clienteId) {
         if (clienteId == null) return List.of();
         return equipamentoRepository.findByCliente_Id(clienteId);
+    }
+
+    public Optional<Equipamento> buscarPorId(Long id) {
+        return equipamentoRepository.findById(id);
     }
 
     public void salvar(Equipamento equipamento) {

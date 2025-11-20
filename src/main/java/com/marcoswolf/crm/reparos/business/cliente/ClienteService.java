@@ -7,6 +7,7 @@ import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService implements ClienteConsultaService, ClienteComandoService {
@@ -22,6 +23,10 @@ public class ClienteService implements ClienteConsultaService, ClienteComandoSer
 
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
+    }
+
+    public Optional<Cliente> buscarPorId(Long id) {
+        return clienteRepository.findById(id);
     }
 
     public void salvar(Cliente cliente) {

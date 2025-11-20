@@ -98,8 +98,7 @@ crm-reparos/
 │   │   │           ├── tables/      # TableView helpers
 │   │   │           └── utils/       # Utilitários gerais
 │   │   └── resources/
-│   │       ├── application.properties
-│   │       ├── css/
+│   │       ├── css/                  # Estilização
 │   │       └── fxml/                 # Layouts JavaFX
 │   └── test/
 │       └── java/

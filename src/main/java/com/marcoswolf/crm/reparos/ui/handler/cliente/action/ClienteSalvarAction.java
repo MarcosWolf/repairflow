@@ -41,7 +41,7 @@ public class ClienteSalvarAction implements ClienteAction {
             Cliente cliente = mapper.map(normalized, novoCliente);
             clienteComandoService.salvar(cliente);
 
-            alertService.info("Sucesso", "Cliente salvo com sucesso!");
+            //alertService.info("Sucesso", "Cliente salvo com sucesso!");
             return true;
         } catch (IllegalArgumentException e) {
             alertService.warn("Campos obrigatórios", e.getMessage());

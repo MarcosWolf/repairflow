@@ -24,7 +24,7 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 ### Backend
 
 - <b>Spring Boot:</b> framework principal para a API REST
-- <b>H2 Database:</b> banco de dados em memória para desenvolvimento e testes
+- <b>H2 Database:</b> usado em memória apenas para testes; desenvolvimento usa banco persistido
 - <b>JPA/Hibernate:</b> persistência de dados com ORM
 
 ### Frontend
@@ -38,7 +38,7 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>REST Assured:</b> testes automatizados da API REST
 - <b>Validações:</b> validação de formulários e regras de negócio
 
-## Passos para Execução
+## Executando a Alicação
 
 1. Clone o repositório:
 
@@ -60,7 +60,7 @@ mvn spring-boot:run
 A aplicação iniciará tanto o servidor Spring Boot quanto a interface JavaFX automaticamente.
 
 
-## Executando os testes
+## Executando os Testes
 
 Para rodar todos os testes:
 

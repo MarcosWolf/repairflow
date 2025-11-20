@@ -117,7 +117,7 @@ A aplicação expõe uma API REST completa para integração com outros sistemas
 - `GET/POST/DELETE /api/v1/tipo-equipamento` – Controle de Tipos de equipamentos
 - `GET/POST/DELETE /api/v1/equipamento` – Controle de equipamentos
 - `GET/POST/DELETE /api/v1/status-reparo` – Controle de Status de reparos
-- `GET/POST/DELETE /api/reparo` – Ordens de serviço
+- `GET/POST/DELETE /api/v1/reparo` – Ordens de serviço
 
 > **Nota:** O endpoint **POST** realiza tanto criação quanto atualização de registros (upsert pattern).
 

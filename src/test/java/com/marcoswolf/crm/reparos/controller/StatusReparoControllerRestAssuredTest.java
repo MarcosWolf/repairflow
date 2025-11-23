@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.StatusReparoRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.StatusReparoRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.StatusReparo;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.StatusReparoRepository;
 import io.restassured.RestAssured;
@@ -23,6 +24,9 @@ public class StatusReparoControllerRestAssuredTest {
 
     @Autowired
     private StatusReparoRepository statusReparoRepository;
+
+    @Autowired
+    private StatusReparoRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -51,7 +55,7 @@ public class StatusReparoControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        statusReparoRepository.saveAndFlush(toEntity(criarStatusReparoCompletoDTO()));
+        statusReparoRepository.saveAndFlush(mapper.toEntity(criarStatusReparoCompletoDTO()));
 
         given()
         .when()
@@ -64,7 +68,7 @@ public class StatusReparoControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        StatusReparo statusReparoSalvo = statusReparoRepository.saveAndFlush(toEntity(criarStatusReparoCompletoDTO()));
+        StatusReparo statusReparoSalvo = statusReparoRepository.saveAndFlush(mapper.toEntity(criarStatusReparoCompletoDTO()));
 
         given()
         .when()
@@ -86,7 +90,7 @@ public class StatusReparoControllerRestAssuredTest {
 
     @Test
     void deveDeletarStatusReparo() {
-        StatusReparo statusReparoSalvo = statusReparoRepository.saveAndFlush(toEntity(criarStatusReparoCompletoDTO()));
+        StatusReparo statusReparoSalvo = statusReparoRepository.saveAndFlush(mapper.toEntity(criarStatusReparoCompletoDTO()));
 
         given()
         .when()
@@ -108,12 +112,5 @@ public class StatusReparoControllerRestAssuredTest {
         return new StatusReparoRequestDTO(
                 "Em andamento"
         );
-    }
-
-    private StatusReparo toEntity(StatusReparoRequestDTO dto) {
-        StatusReparo statusReparo = new StatusReparo();
-        statusReparo.setNome(dto.nome());
-
-        return statusReparo;
     }
 }

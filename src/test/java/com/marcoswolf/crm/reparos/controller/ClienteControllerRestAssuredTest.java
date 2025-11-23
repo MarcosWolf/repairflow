@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.ClienteRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.ClienteRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
@@ -29,6 +30,9 @@ public class ClienteControllerRestAssuredTest {
 
     @Autowired
     private EstadoRepository estadoRepository;
+
+    @Autowired
+    private ClienteRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -64,7 +68,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -77,7 +81,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -99,7 +103,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveDeletarCliente() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()

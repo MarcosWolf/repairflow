@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.TipoEquipamentoRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.TipoEquipamentoRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.TipoEquipamentoRepository;
 import io.restassured.RestAssured;
@@ -23,6 +24,9 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Autowired
     private TipoEquipamentoRepository tipoEquipamentoRepository;
+
+    @Autowired
+    private TipoEquipamentoRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -51,7 +55,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
+        tipoEquipamentoRepository.saveAndFlush(mapper.toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -64,7 +68,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
+        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(mapper.toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -86,7 +90,7 @@ public class TipoEquipamentoControllerRestAssuredTest {
 
     @Test
     void deveDeletarTipoEquipamento() {
-        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(toEntity(criarTipoEquipamentoCompletoDTO()));
+        TipoEquipamento tipoEquipamentoSalvo = tipoEquipamentoRepository.saveAndFlush(mapper.toEntity(criarTipoEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -108,12 +112,5 @@ public class TipoEquipamentoControllerRestAssuredTest {
         return new TipoEquipamentoRequestDTO(
                 "Amplificador"
         );
-    }
-
-    private TipoEquipamento toEntity(TipoEquipamentoRequestDTO dto) {
-        TipoEquipamento tipoEquipamento = new TipoEquipamento();
-        tipoEquipamento.setNome(dto.nome());
-
-        return tipoEquipamento;
     }
 }

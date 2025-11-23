@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.EquipamentoRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.EquipamentoRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Equipamento;
 import com.marcoswolf.crm.reparos.infrastructure.entities.TipoEquipamento;
@@ -33,6 +34,9 @@ public class EquipamentoControllerRestAssuredTest {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EquipamentoRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -73,7 +77,7 @@ public class EquipamentoControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        equipamentoRepository.saveAndFlush(toEntity(criarEquipamentoCompletoDTO()));
+        equipamentoRepository.saveAndFlush(mapper.toEntity(criarEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -86,7 +90,7 @@ public class EquipamentoControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        Equipamento equipamentoSalvo = equipamentoRepository.saveAndFlush(toEntity(criarEquipamentoCompletoDTO()));
+        Equipamento equipamentoSalvo = equipamentoRepository.saveAndFlush(mapper.toEntity(criarEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -109,7 +113,7 @@ public class EquipamentoControllerRestAssuredTest {
 
     @Test
     void deveDeletarEquipamento() {
-        Equipamento equipamentoSalvo = equipamentoRepository.saveAndFlush(toEntity(criarEquipamentoCompletoDTO()));
+        Equipamento equipamentoSalvo = equipamentoRepository.saveAndFlush(mapper.toEntity(criarEquipamentoCompletoDTO()));
 
         given()
         .when()
@@ -138,21 +142,5 @@ public class EquipamentoControllerRestAssuredTest {
                 "C123112312",
                 clienteId
         );
-    }
-
-    private Equipamento toEntity(EquipamentoRequestDTO dto) {
-        Equipamento equipamento = new Equipamento();
-        equipamento.setMarca(dto.marca());
-        equipamento.setModelo(dto.modelo());
-        equipamento.setNumeroSerie(dto.numeroSerie());
-
-        equipamento.setTipoEquipamento(
-                tipoEquipamentoRepository.findById(dto.tipoEquipamentoId()).get()
-        );
-        equipamento.setCliente(
-                clienteRepository.findById(dto.clienteId()).get()
-        );
-
-        return equipamento;
     }
 }

@@ -140,26 +140,4 @@ public class ClienteControllerRestAssuredTest {
                 enderecoDTO
         );
     }
-
-    private Cliente toEntity(ClienteRequestDTO dto) {
-        Cliente cliente = new Cliente();
-        cliente.setNome(dto.nome());
-        cliente.setTelefone(dto.telefone());
-        cliente.setEmail(dto.email());
-
-        Endereco endereco = new Endereco();
-        endereco.setCidade(dto.endereco().cidade());
-        endereco.setBairro(dto.endereco().bairro());
-        endereco.setCep(dto.endereco().cep());
-        endereco.setLogradouro(dto.endereco().logradouro());
-        endereco.setNumero(dto.endereco().numero());
-
-        Estado estado = estadoRepository.findById(dto.endereco().estadoId())
-                .orElseThrow();
-
-        endereco.setEstado(estado);
-        cliente.setEndereco(endereco);
-
-        return cliente;
-    }
 }

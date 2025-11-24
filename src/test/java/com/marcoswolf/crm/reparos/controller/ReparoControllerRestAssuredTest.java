@@ -2,6 +2,7 @@ package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.PecaPagamentoRequestDTO;
 import com.marcoswolf.crm.reparos.controller.dto.ReparoRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.ReparoRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.*;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.EquipamentoRepository;
 import com.marcoswolf.crm.reparos.infrastructure.repositories.ReparoRepository;
@@ -36,6 +37,9 @@ public class ReparoControllerRestAssuredTest {
 
     @Autowired
     private StatusReparoRepository statusReparoRepository;
+
+    @Autowired
+    private ReparoRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -76,7 +80,7 @@ public class ReparoControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        reparoRepository.saveAndFlush(toEntity(criarReparoCompletoDTO()));
+        reparoRepository.saveAndFlush(mapper.toEntity(criarReparoCompletoDTO()));
 
         given()
         .when()
@@ -89,7 +93,7 @@ public class ReparoControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        Reparo reparoSalvo = reparoRepository.saveAndFlush(toEntity(criarReparoCompletoDTO()));
+        Reparo reparoSalvo = reparoRepository.saveAndFlush(mapper.toEntity(criarReparoCompletoDTO()));
 
         given()
         .when()
@@ -111,7 +115,7 @@ public class ReparoControllerRestAssuredTest {
 
     @Test
     void deveDeletarReparo() {
-        Reparo reparoSalvo = reparoRepository.saveAndFlush(toEntity(criarReparoCompletoDTO()));
+        Reparo reparoSalvo = reparoRepository.saveAndFlush(mapper.toEntity(criarReparoCompletoDTO()));
 
         given()
         .when()
@@ -136,6 +140,7 @@ public class ReparoControllerRestAssuredTest {
         List<PecaPagamentoRequestDTO> pecas = List.of(
                 new PecaPagamentoRequestDTO(
                         1L,
+                        "Placa",
                         2,
                         new BigDecimal("50.00")
                 )
@@ -153,40 +158,5 @@ public class ReparoControllerRestAssuredTest {
                 LocalDate.now(),
                 pecas
         );
-    }
-
-    private Reparo toEntity(ReparoRequestDTO dto) {
-        Equipamento equipamento = equipamentoRepository.findById(dto.equipamentoId())
-                .orElseThrow();
-
-        StatusReparo status = statusReparoRepository.findById(dto.statusReparoId())
-                .orElseThrow();
-
-        List<PecaPagamento> pecas = dto.pecas().stream()
-                .map(p -> {
-                    PecaPagamento pp = new PecaPagamento();
-                    pp.setQuantidade(p.quantidade());
-                    pp.setValor(p.valorUnitario());
-                    return pp; // <<< IMPORTANTE: sem ID
-                })
-                .toList();
-
-        Reparo reparo = new Reparo();
-        reparo.setEquipamento(equipamento);
-        reparo.setDataEntrada(dto.dataEntrada());
-        reparo.setDataSaida(dto.dataSaida());
-        reparo.setDescricaoProblema(dto.descricaoProblema());
-        reparo.setServicoExecutado(dto.servicoExecutado());
-        reparo.setStatus(status);
-
-        Pagamento pagamento = new Pagamento();
-        pagamento.setValorServico(dto.valorServico());
-        pagamento.setDesconto(dto.desconto());
-        pagamento.setDataPagamento(dto.dataPagamento());
-        pagamento.setPecas(pecas);
-
-        reparo.setPagamento(pagamento);
-
-        return reparo;
     }
 }

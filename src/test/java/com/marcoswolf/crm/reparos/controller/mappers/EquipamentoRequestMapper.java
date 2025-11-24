@@ -17,12 +17,10 @@ public class EquipamentoRequestMapper {
         equipamento.setModelo(dto.modelo());
         equipamento.setNumeroSerie(dto.numeroSerie());
 
-        var tipoEquipamentoDTO = dto.tipoEquipamentoId();
         TipoEquipamento tipoEquipamento = new TipoEquipamento();
         tipoEquipamento.setId(dto.tipoEquipamentoId());
         equipamento.setTipoEquipamento(tipoEquipamento);
 
-        var clienteDTO = dto.clienteId();
         Cliente cliente = new Cliente();
         cliente.setId(dto.clienteId());
         equipamento.setCliente(cliente);

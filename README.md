@@ -111,33 +111,34 @@ crm-reparos/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/marcoswolf/crm/reparos/
-│   │   │       ├── business/        # Lógica de negócio
-│   │   │       ├── controller/      # Controladores REST
-│   │   │       ├── infrastructure/  # Entities e repositories
-│   │   │       │   ├── entities/    # Classes de domínio (Cliente, Reparo, Equipamento, etc.)
+│   │   │       ├── business/         # Lógica de negócio
+│   │   │       ├── config/           # Arquivos de configurações
+│   │   │       ├── controller/       # Controladores REST
+│   │   │       ├── infrastructure/   # Entities e repositories
+│   │   │       │   ├── entities/     # Classes de domínio (Cliente, Reparo, Equipamento, etc.)
 │   │   │       │   └── repositories/ # Interfaces de acesso a dados
 │   │   │       ├── loader/           # Componentes de inicialização
-│   │   │       └── ui/              # Interface JavaFX
-│   │   │           ├── controller/  # Controladores das views
-│   │   │           ├── handler/     # Validações e actions
-│   │   │           ├── shared/      # Classes compartilhadas entre controllers
-│   │   │           ├── mappers/     # Form mappers
-│   │   │           ├── navigation/  # Navegação entre views
-│   │   │           ├── tables/      # TableView helpers
-│   │   │           └── utils/       # Utilitários gerais
+│   │   │       └── ui/               # Interface JavaFX
+│   │   │           ├── controller/   # Controladores das views
+│   │   │           ├── handler/      # Validações e actions
+│   │   │           ├── shared/       # Classes compartilhadas entre controllers
+│   │   │           ├── mappers/      # Form mappers
+│   │   │           ├── navigation/   # Navegação entre views
+│   │   │           ├── tables/       # TableView helpers
+│   │   │           └── utils/        # Utilitários gerais
 │   │   └── resources/
-│   │       ├── css/                  # Estilização
-│   │       └── fxml/                 # Layouts JavaFX
+│   │       ├── css/                   # Estilização
+│   │       └── fxml/                  # Layouts JavaFX
 │   └── test/
 │       └── java/
 │           └── com/marcoswolf/crm/reparos/
-│               ├── business/        # Testes unitários e de integração do business
-│               ├── controller/      # Testes REST com RestAssured
-│                   ├── dto/         # Objetos DTO usados apenas nos testes
-│                   └── mappers/     # Test mappers
+│               ├── business/          # Testes unitários e de integração do business
+│               ├── controller/        # Testes REST com RestAssured
+│                   ├── dto/           # Objetos DTO usados apenas nos testes
+│                   └── mappers/       # Test mappers
 │               └── ui/              
-│                   ├── controller/  # Testes de interface gráfica TestFX
-│                   └── handler/     # Testes de Validators
+│                   ├── controller/    # Testes de interface gráfica TestFX
+│                   └── handler/       # Testes de Validators
 │── docker-compose.yml
 ├── pom.xml
 └── README.md

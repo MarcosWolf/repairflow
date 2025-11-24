@@ -37,8 +37,9 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>Mockito:</b> framework de mocking para testes isolados
 - <b>REST Assured:</b> testes automatizados da API REST
 - <b>Validações:</b> validação de formulários e regras de negócio
+- <b>TestFX:</b> framework para testes automatizados de interface gráfica JavaFX
 
-## Executando a Alicação
+## Executando a Aplicação
 
 1. Clone o repositório:
 
@@ -97,15 +98,16 @@ crm-reparos/
 │   │   │           ├── tables/      # TableView helpers
 │   │   │           └── utils/       # Utilitários gerais
 │   │   └── resources/
-│   │       ├── application.properties
-│   │       ├── css/
+│   │       ├── css/                  # Estilização
 │   │       └── fxml/                 # Layouts JavaFX
 │   └── test/
 │       └── java/
 │           └── com/marcoswolf/crm/reparos/
 │               ├── business/        # Testes unitários e de integração do business
 │               ├── controller/      # Testes REST com RestAssured
-│               └── ui/              # Testes de validators e handlers
+│               └── ui/              
+│                   ├── controller/  # Testes de interface gráfica TestFX
+│                   └── handler/     # Testes de Validators
 ├── pom.xml
 └── README.md
 ```

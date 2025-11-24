@@ -1,6 +1,7 @@
 package com.marcoswolf.crm.reparos.controller;
 
 import com.marcoswolf.crm.reparos.controller.dto.ClienteRequestDTO;
+import com.marcoswolf.crm.reparos.controller.mappers.ClienteRequestMapper;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Cliente;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Endereco;
 import com.marcoswolf.crm.reparos.infrastructure.entities.Estado;
@@ -29,6 +30,9 @@ public class ClienteControllerRestAssuredTest {
 
     @Autowired
     private EstadoRepository estadoRepository;
+
+    @Autowired
+    private ClienteRequestMapper mapper;
 
     @BeforeEach
     void setUp() {
@@ -64,7 +68,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveListarTodos() {
-        clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -77,7 +81,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveBuscarPorId() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -99,7 +103,7 @@ public class ClienteControllerRestAssuredTest {
 
     @Test
     void deveDeletarCliente() {
-        Cliente clienteSalvo = clienteRepository.saveAndFlush(toEntity(criarClienteCompletoDTO()));
+        Cliente clienteSalvo = clienteRepository.saveAndFlush(mapper.toEntity(criarClienteCompletoDTO()));
 
         given()
         .when()
@@ -135,27 +139,5 @@ public class ClienteControllerRestAssuredTest {
                 "viniciosramos.dev@gmail.com",
                 enderecoDTO
         );
-    }
-
-    private Cliente toEntity(ClienteRequestDTO dto) {
-        Cliente cliente = new Cliente();
-        cliente.setNome(dto.nome());
-        cliente.setTelefone(dto.telefone());
-        cliente.setEmail(dto.email());
-
-        Endereco endereco = new Endereco();
-        endereco.setCidade(dto.endereco().cidade());
-        endereco.setBairro(dto.endereco().bairro());
-        endereco.setCep(dto.endereco().cep());
-        endereco.setLogradouro(dto.endereco().logradouro());
-        endereco.setNumero(dto.endereco().numero());
-
-        Estado estado = estadoRepository.findById(dto.endereco().estadoId())
-                .orElseThrow();
-
-        endereco.setEstado(estado);
-        cliente.setEndereco(endereco);
-
-        return cliente;
     }
 }

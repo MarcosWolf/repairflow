@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: crm_postgres
+    environment:
+      POSTGRES_DB: crm_reparos
+      POSTGRES_USER: crm_user
+      POSTGRES_PASSWORD: wolf
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

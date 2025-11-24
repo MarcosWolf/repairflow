@@ -41,8 +41,12 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>Validações:</b> validação de formulários e regras de negócio
 - <b>TestFX:</b> framework para testes automatizados de interface gráfica JavaFX
 
-### Containeres e Ambiente
+### Containers e Ambiente
 - <b>Docker:</b> orquestração de containers para banco de dados e ambiente isolado
+
+### Documentação da API
+
+- **Swagger / Springdoc OpenAPI:** documentação automática e interativa da API REST
 
 ## Executando a Aplicação
 
@@ -155,6 +159,14 @@ A aplicação expõe uma API REST completa para integração com outros sistemas
 - `GET/POST/DELETE /api/v1/reparo` – Ordens de serviço
 
 > **Nota:** O endpoint **POST** realiza tanto criação quanto atualização de registros (upsert pattern).
+
+### Documentação da API (Swagger)
+
+Para acessar a documentação interativa da API:
+
+1. Certifique-se que a aplicação está rodando.
+2. Abra o navegador em: `http://localhost:8080/swagger-ui.html`
+3. Explore os endpoints, veja modelos de request/response e teste chamadas diretamente pelo Swagger.
 
 ## Banco de Dados
 

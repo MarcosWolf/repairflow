@@ -138,6 +138,7 @@ crm-reparos/
 │               └── ui/              
 │                   ├── controller/  # Testes de interface gráfica TestFX
 │                   └── handler/     # Testes de Validators
+│── docker-compose.yml
 ├── pom.xml
 └── README.md
 ```

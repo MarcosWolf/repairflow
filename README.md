@@ -20,7 +20,7 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 
 - <b>Java:</b> linguagem de programação principal
 - <b>Maven:</b> gerenciamento de dependências e build
-- <b>Jacoco:</b> cobertura de testes automatizados
+- <b>JaCoCo:</b> cobertura de testes automatizados
 
 ### Backend
 

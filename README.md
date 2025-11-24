@@ -20,11 +20,13 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 
 - <b>Java:</b> linguagem de programação principal
 - <b>Maven:</b> gerenciamento de dependências e build
+- <b>Jacoco:</b> cobertura de testes automatizados
 
 ### Backend
 
 - <b>Spring Boot:</b> framework principal para a API REST
 - <b>H2 Database:</b> usado em memória apenas para testes; desenvolvimento usa banco persistido
+- <b>PostgreSQL + Docker:</b> banco de dados persistido via container Docker
 - <b>JPA/Hibernate:</b> persistência de dados com ORM
 
 ### Frontend
@@ -39,26 +41,52 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 - <b>Validações:</b> validação de formulários e regras de negócio
 - <b>TestFX:</b> framework para testes automatizados de interface gráfica JavaFX
 
+### Containeres e Ambiente
+- <b>Docker:</b> orquestração de containers para banco de dados e ambiente isolado
+
 ## Executando a Aplicação
 
-1. Clone o repositório:
+Clone o repositório:
 
 ```bash
 git clone https://github.com/seu-usuario/crm-reparos.git
 cd crm-reparos
 ```
 
-2. Compile o projeto:
+### Com Docker (PostgreSQL)
+
+1. Certifique-se de que o Docker está rodando.
+   
+2. Suba o banco de dados via Docker Compose:
+```bash
+docker-compose up -d
+```
+
+3. Compile o projeto:
+```bash
+mvn clean install
+```
+
+2. Execute a aplicação com o profile PostgreSQL:
+```bash
+mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Dspring.profiles.active=postgres"
+```
+
+### Sem Docker (H2 Database)
+
+1. Compile o projeto:
 ```bash
 mvn clean install
 ```
    
-3. Execute a aplicação:
+2. Execute a aplicação:
 ```bash
 mvn spring-boot:run
 ```
 
 A aplicação iniciará tanto o servidor Spring Boot quanto a interface JavaFX automaticamente.
+
+
 
 
 ## Executando os Testes
@@ -105,6 +133,8 @@ crm-reparos/
 │           └── com/marcoswolf/crm/reparos/
 │               ├── business/        # Testes unitários e de integração do business
 │               ├── controller/      # Testes REST com RestAssured
+│                   ├── dto/         # Objetos DTO usados apenas nos testes
+│                   └── mappers/     # Test mappers
 │               └── ui/              
 │                   ├── controller/  # Testes de interface gráfica TestFX
 │                   └── handler/     # Testes de Validators
@@ -126,9 +156,28 @@ A aplicação expõe uma API REST completa para integração com outros sistemas
 
 ## Banco de Dados
 
-O projeto utiliza H2 Database em modo embedded. Para acessar o console H2:
+O projeto utiliza dois bancos de dados, dependendo do perfil ativo:
 
-1. Acesse `http://localhost:8080/h2-console`
+### PostgreSQL (via Docker)
+
+Usado para desenvolvimento com banco persistido, recomendado para simular o ambiente de produção.
+
+1. Acesse o Docker via terminal: `docker exec -it crm_postgres bash`
+2. Acesse o PostgreSQL: `psql -h localhost -p 5432 -U crm_user -d crm_reparos`
+
+- **Container:** crm_postgres
+- **Porta:** 5432
+- **Banco:** crm_reparos
+- **Usuário:** crm_user
+- **Senha:** wolf
+
+### H2 Database
+
+Usado para testes rápidos e desenvolvimento local sem Docker.
+
+1. Acesse o console H2: `http://localhost:8080/h2-console`
 2. JDBC URL: `jdbc:h2:file:./data/crm_reparos`
 3. User: `sa`
 4. Password: (deixe em branco)
+
+> Observação: o H2 é um banco em arquivo local; os dados persistem enquanto o arquivo ./data/crm_reparos existir.

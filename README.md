@@ -53,7 +53,7 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/crm-reparos.git
+git clone https://github.com/MarcosWolf/crm-reparos.git
 cd crm-reparos
 ```
 

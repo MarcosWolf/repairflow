@@ -1,10 +1,10 @@
-# crm-reparos
+# repairflow
 
 Sistema completo de gestão para oficinas de reparos eletrônicos, desenvolvido com Spring Boot e JavaFX. Gerencie clientes, equipamentos, ordens de serviço e pagamentos através de uma interface desktop moderna e intuitiva.
 
 ## Sobre
 
-O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de eletrônica que precisam organizar e acompanhar reparos de forma profissional. A aplicação integra uma API REST construída com Spring Boot a uma interface gráfica JavaFX, oferecendo uma experiência completa e centralizada.
+O RepairFlow é uma solução desktop robusta para oficinas e técnicos de eletrônica que precisam organizar e acompanhar reparos de forma profissional. A aplicação integra uma API REST construída com Spring Boot a uma interface gráfica JavaFX, oferecendo uma experiência completa e centralizada.
 
 ### Principais Funcionalidades
 
@@ -53,8 +53,8 @@ O CRM Reparos é uma solução desktop robusta para oficinas e técnicos de elet
 Clone o repositório:
 
 ```bash
-git clone https://github.com/MarcosWolf/crm-reparos.git
-cd crm-reparos
+git clone https://github.com/MarcosWolf/repairflow.git
+cd repairflow
 ```
 
 ### Com Docker (PostgreSQL)
@@ -110,11 +110,11 @@ mvn test -Dtest=NomeDaClasse
 ## Estrutura do Projeto
 
 ```text
-crm-reparos/
+repairflow/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/marcoswolf/crm/reparos/
+│   │   │   └── com/marcoswolf/repairflow/
 │   │   │       ├── business/         # Lógica de negócio
 │   │   │       ├── config/           # Arquivos de configurações
 │   │   │       ├── controller/       # Controladores REST
@@ -135,7 +135,7 @@ crm-reparos/
 │   │       └── fxml/                  # Layouts JavaFX
 │   └── test/
 │       └── java/
-│           └── com/marcoswolf/crm/reparos/
+│           └── com/marcoswolf/repairflow/
 │               ├── business/          # Testes unitários e de integração do business
 │               ├── controller/        # Testes REST com RestAssured
 │                   ├── dto/           # Objetos DTO usados apenas nos testes
@@ -176,13 +176,13 @@ O projeto utiliza dois bancos de dados, dependendo do perfil ativo:
 
 Usado para desenvolvimento com banco persistido, recomendado para simular o ambiente de produção.
 
-1. Acesse o Docker via terminal: `docker exec -it crm_postgres bash`
-2. Acesse o PostgreSQL: `psql -h localhost -p 5432 -U crm_user -d crm_reparos`
+1. Acesse o Docker via terminal: `docker exec -it repairflow_postgres bash`
+2. Acesse o PostgreSQL: `psql -h localhost -p 5432 -U repair_user -d repairflow`
 
-- **Container:** crm_postgres
+- **Container:** repairflow_postgres
 - **Porta:** 5432
-- **Banco:** crm_reparos
-- **Usuário:** crm_user
+- **Banco:** repairflow
+- **Usuário:** repair_user
 - **Senha:** wolf
 
 ### H2 Database
@@ -190,8 +190,8 @@ Usado para desenvolvimento com banco persistido, recomendado para simular o ambi
 Usado para testes rápidos e desenvolvimento local sem Docker.
 
 1. Acesse o console H2: `http://localhost:8080/h2-console`
-2. JDBC URL: `jdbc:h2:file:./data/crm_reparos`
+2. JDBC URL: `jdbc:h2:file:./data/repairflow`
 3. User: `sa`
 4. Password: (deixe em branco)
 
-> Observação: o H2 é um banco em arquivo local; os dados persistem enquanto o arquivo ./data/crm_reparos existir.
+> Observação: o H2 é um banco em arquivo local; os dados persistem enquanto o arquivo ./data/repairflow existir.

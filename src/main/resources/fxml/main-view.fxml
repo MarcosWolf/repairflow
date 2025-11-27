@@ -10,7 +10,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/24.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.marcoswolf.crm.reparos.ui.controller.MainViewController">
+      fx:controller="com.marcoswolf.repairflow.ui.controller.MainViewController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>

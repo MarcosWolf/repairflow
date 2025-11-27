@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.marcoswolf</groupId>
-	<artifactId>crm-reparos</artifactId>
+	<artifactId>repairflow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>crm-reparos</name>
+	<name>repairflow</name>
 	<description></description>
 	<url/>
 	<licenses>
@@ -152,9 +152,9 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>com/marcoswolf/crm/reparos/ui/**</include>
-                                <include>com/marcoswolf/crm/reparos/business/**</include>
-                                <include>com/marcoswolf/crm/reparos/service/**</include>
+                                <include>com/marcoswolf/repairflow/ui/**</include>
+                                <include>com/marcoswolf/repairflow/business/**</include>
+                                <include>com/marcoswolf/repairflow/service/**</include>
                             </includes>
                             <excludes>
                                 <exclude>**/utils/**</exclude>
@@ -197,7 +197,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.marcoswolf.crm.reparos.CrmReparosApplication</mainClass>
+                    <mainClass>com.marcoswolf.repairflow.RepairFlowApplication</mainClass>
                     <options>
                         <option>--enable-native-access=javafx.graphics</option>
                     </options>

@@ -31,7 +31,7 @@ public class JavaFxApp extends Application {
             System.err.println("CSS não encontrado");
         }
         stage.setScene(scene);
-        stage.setTitle("crm-reparos");
+        stage.setTitle("RepairFlow");
 
         stage.setMinWidth(1024);
         stage.setMinHeight(800);

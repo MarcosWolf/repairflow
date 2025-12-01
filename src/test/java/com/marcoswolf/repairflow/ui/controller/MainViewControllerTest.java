@@ -41,7 +41,6 @@ public class MainViewControllerTest extends BaseUITest {
         verifyThat("Clientes", hasText("Clientes"));
         verifyThat("Equipamentos", hasText("Equipamentos"));
         verifyThat("Reparos", hasText("Reparos"));
-        verifyThat("Financeiro", hasText("Financeiro"));
         verifyThat("Ajuda", hasText("Ajuda"));
     }
 

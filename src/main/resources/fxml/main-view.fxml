@@ -5,7 +5,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/24.0.1"
@@ -16,12 +15,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="Arquivo">
           <items>
-            <MenuItem mnemonicParsing="false" text="Importar banco de dados" />
-            <MenuItem mnemonicParsing="false" text="Exportar banco de dados" />
+            <MenuItem mnemonicParsing="false" text="Preferências" disable="true" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferências" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Fechar" />
+            <MenuItem fx:id="menuFechar" mnemonicParsing="false" text="Fechar" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Clientes">
@@ -48,15 +44,9 @@
                   <MenuItem fx:id="menuGerenciarStatusReparo" mnemonicParsing="false" text="Gerenciar Status de Reparo" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Financeiro">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Pagamentos" />
-                  <MenuItem mnemonicParsing="false" text="Exportar Relatórios" />
-               </items>
-            </Menu>
         <Menu mnemonicParsing="false" text="Ajuda">
           <items>
-            <MenuItem mnemonicParsing="false" text="Sobre" />
+            <MenuItem mnemonicParsing="false" text="Sobre" disable="true" />
           </items>
         </Menu>
       </menus>

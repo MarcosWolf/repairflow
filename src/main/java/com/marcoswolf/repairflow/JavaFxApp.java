@@ -19,6 +19,7 @@ public class JavaFxApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        String version = "v0.7";
         FXMLLoader fxmLoader = new FXMLLoader(getClass().getResource("/fxml/main-view.fxml"));
         fxmLoader.setControllerFactory(springContext::getBean);
 
@@ -31,7 +32,7 @@ public class JavaFxApp extends Application {
             System.err.println("CSS não encontrado");
         }
         stage.setScene(scene);
-        stage.setTitle("RepairFlow");
+        stage.setTitle("RepairFlow " + version);
 
         stage.setMinWidth(1024);
         stage.setMinHeight(800);

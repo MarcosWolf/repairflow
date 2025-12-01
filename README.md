@@ -176,8 +176,9 @@ O projeto utiliza dois bancos de dados, dependendo do perfil ativo:
 
 Usado para desenvolvimento com banco persistido, recomendado para simular o ambiente de produção.
 
-1. Acesse o Docker via terminal: `docker exec -it repairflow_postgres bash`
-2. Acesse o PostgreSQL: `psql -h localhost -p 5432 -U repair_user -d repairflow`
+1. Certifique-se de que o Docker está rodando.
+2. Acesse o Docker via terminal: `docker exec -it repairflow_postgres bash`
+3. Acesse o PostgreSQL: `psql -h localhost -p 5432 -U repair_user -d repairflow`
 
 - **Container:** repairflow_postgres
 - **Porta:** 5432

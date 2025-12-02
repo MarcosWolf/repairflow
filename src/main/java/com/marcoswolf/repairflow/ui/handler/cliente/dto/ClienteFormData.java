@@ -7,6 +7,7 @@ public record ClienteFormData (
     String nome,
     String telefone,
     String email,
+    String documento,
     String cidade,
     String bairro,
     String cep,

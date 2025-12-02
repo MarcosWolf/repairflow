@@ -13,7 +13,7 @@ public class ClienteFormToEntityMapper {
 
     public Cliente map(ClienteFormData data, Cliente novoCliente) {
         Cliente cliente = delegate.toEntity(
-                data.nome(), data.telefone(), data.email(),
+                data.nome(), data.telefone(), data.email(), data.documento(),
                 data.cidade(), data.bairro(), data.cep(),
                 data.logradouro(), data.numero(), data.estadoSelecionado()
         );

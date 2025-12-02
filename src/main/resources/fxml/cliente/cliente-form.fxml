@@ -73,7 +73,13 @@
                             <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <TextField fx:id="txtNome"
                                        GridPane.columnIndex="1"
-                                       GridPane.columnSpan="3"
+                                       GridPane.rowIndex="0"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="CPF/CNPJ:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtDocumento"
+                                       GridPane.columnIndex="3"
                                        GridPane.rowIndex="0"
                                        maxWidth="Infinity"
                                        GridPane.hgrow="ALWAYS" />

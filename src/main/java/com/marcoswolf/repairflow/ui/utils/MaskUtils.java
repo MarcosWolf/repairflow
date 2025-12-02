@@ -159,4 +159,52 @@ public class MaskUtils {
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         campo.setTextFormatter(textFormatter);
     }
+
+    public static void aplicarMascaraDocumento(TextField campo) {
+        campo.setTextFormatter(new TextFormatter<>(change -> {
+            String texto = change.getControlNewText().replaceAll("[^0-9]", "");
+
+            if (texto.length() > 14) {
+                return null;
+            }
+
+            StringBuilder formatado = new StringBuilder();
+            int len = texto.length();
+
+            if (len == 0) {
+                return change;
+            }
+
+            if (len <= 11) {
+                for (int i = 0; i < len; i++) {
+                    formatado.append(texto.charAt(i));
+                    if ((i == 2 || i == 5) && i < len - 1) {
+                        formatado.append(".");
+                    } else if (i == 8 && i < len - 1) {
+                        formatado.append("-");
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < len; i++) {
+                    formatado.append(texto.charAt(i));
+                    if ((i == 1 || i == 4) && i < len - 1) {
+                        formatado.append(".");
+                    } else if (i == 7 && i < len - 1) {
+                        formatado.append("/");
+                    } else if (i == 11 && i < len - 1) {
+                        formatado.append("-");
+                    }
+                }
+            }
+
+            String formattedText = formatado.toString();
+            change.setText(formattedText);
+            change.setRange(0, change.getControlText().length());
+            change.setCaretPosition(formattedText.length());
+            change.setAnchor(formattedText.length());
+
+            return change;
+        }));
+    }
 }

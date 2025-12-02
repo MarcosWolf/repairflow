@@ -1,6 +1,7 @@
 package com.marcoswolf.repairflow.ui.controller;
 
 import com.marcoswolf.repairflow.ui.navigation.ViewNavigator;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +16,9 @@ public class MainViewController {
 
     @FXML private VBox rootVbox;
     @FXML private AnchorPane contentArea;
+
+    // Arquivo
+    @FXML private MenuItem menuFechar;
 
     // Cliente
     @FXML private MenuItem menuCadastrarCliente;
@@ -34,6 +38,8 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
+        menuFechar.setOnAction(e -> Platform.exit());
+
         menuCadastrarCliente.setOnAction(e -> open("/fxml/cliente/cliente-form.fxml"));
         menuGerenciarCliente.setOnAction(e -> open("/fxml/cliente/cliente-gerenciar.fxml"));
 

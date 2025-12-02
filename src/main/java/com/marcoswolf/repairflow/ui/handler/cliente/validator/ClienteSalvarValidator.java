@@ -6,6 +6,7 @@ import static com.marcoswolf.repairflow.ui.utils.ValidationUtils.isEmpty;
 
 import com.marcoswolf.repairflow.infrastructure.repositories.ClienteRepository;
 import com.marcoswolf.repairflow.ui.handler.cliente.dto.ClienteFormData;
+import com.marcoswolf.repairflow.ui.utils.DocumentoUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,6 +38,17 @@ public class ClienteSalvarValidator implements ClienteValidator {
         if (data.email() != null && !data.email().trim().isEmpty()) {
             if (!data.email().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
                 throw new IllegalArgumentException("O e-mail é inválido.");
+            }
+        }
+
+        String documento = data.documento();
+        if (documento != null) {
+            documento = documento.replaceAll("\\D", "");
+        }
+
+        if (!isEmpty(documento)) {
+            if (!DocumentoUtils.isValidCpfOrCnpj(documento)) {
+                throw new IllegalArgumentException("O CPF/CNPJ é inválido.");
             }
         }
 

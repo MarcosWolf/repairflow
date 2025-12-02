@@ -41,7 +41,7 @@ public class EquipamentoSalvarAction implements EquipamentoAction {
             Equipamento equipamento = mapper.map(normalized, novoEquipamento);
             equipamentoComandoService.salvar(equipamento);
 
-            alertService.info("Sucesso", "Equipamento salvo com sucesso!");
+            //alertService.info("Sucesso", "Equipamento salvo com sucesso!");
             return true;
         } catch (IllegalArgumentException e) {
             alertService.warn("Campos obrigatórios", e.getMessage());

@@ -37,7 +37,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
 
     @FXML private AnchorPane rootPane;
     @FXML private Label lblTitulo;
-    @FXML private TextField txtNome, txtTelefone, txtEmail, txtCidade, txtBairro, txtCep, txtLogradouro, txtNumero;
+    @FXML private TextField txtNome, txtTelefone, txtEmail, txtDocumento, txtCidade, txtBairro, txtCep, txtLogradouro, txtNumero;
     @FXML private ComboBox<Estado> comboEstado;
     @FXML private Button btnExcluir;
 
@@ -52,6 +52,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
     private void configurarCampos() {
         TextFieldUtils.aplicarLimite(txtNome, 50);
         TextFieldUtils.aplicarLimite(txtEmail, 80);
+        TextFieldUtils.aplicarLimite(txtDocumento, 14);
         TextFieldUtils.aplicarLimite(txtCidade, 50);
         TextFieldUtils.aplicarLimite(txtBairro, 50);
         TextFieldUtils.aplicarLimite(txtLogradouro, 80);
@@ -59,6 +60,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
 
         MaskUtils.aplicarMascaraCEP(txtCep);
         MaskUtils.aplicarMascaraTelefone(txtTelefone);
+        MaskUtils.aplicarMascaraDocumento(txtDocumento);
     }
 
     private void carregarEstados() {
@@ -95,6 +97,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         txtNome.setText(cliente.getNome());
         txtTelefone.setText(cliente.getTelefone());
         txtEmail.setText(cliente.getEmail());
+        txtDocumento.setText(cliente.getDocumento());
 
         if (cliente.getEndereco() != null) {
             setEndereco(cliente);
@@ -119,6 +122,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
         txtNome.clear();
         txtTelefone.clear();
         txtEmail.clear();
+        txtDocumento.clear();
         limparCamposEndereco();
         comboEstado.getSelectionModel().selectFirst();
     }
@@ -153,6 +157,7 @@ public class ClienteFormController implements DataReceiver<Cliente> {
                 txtNome.getText(),
                 txtTelefone.getText(),
                 txtEmail.getText(),
+                txtDocumento.getText(),
                 txtCidade.getText(),
                 txtBairro.getText(),
                 txtCep.getText(),

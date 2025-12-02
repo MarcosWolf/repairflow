@@ -25,6 +25,9 @@ public class Cliente {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "documento")
+    private String documento;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "cidade", column = @Column(name = "endereco_cidade")),

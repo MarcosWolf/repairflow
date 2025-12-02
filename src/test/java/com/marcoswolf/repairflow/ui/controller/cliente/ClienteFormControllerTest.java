@@ -57,6 +57,7 @@ public class ClienteFormControllerTest extends BaseUITest {
         assertNodeExists("#txtNome");
         assertNodeExists("#txtTelefone");
         assertNodeExists("#txtEmail");
+        assertNodeExists("#txtDocumento");
 
         assertNodeExists("#txtCidade");
         assertNodeExists("#txtBairro");
@@ -91,10 +92,12 @@ public class ClienteFormControllerTest extends BaseUITest {
     void devePreencherCamposDoFormulario() {
         var txtNome = findNode("#txtNome", javafx.scene.control.TextField.class);
         var txtEmail = findNode("#txtEmail", javafx.scene.control.TextField.class);
+        var txtDocumento = findNode("#txtDocumento", javafx.scene.control.TextField.class);
 
         interact(() -> {
             txtNome.setText("João Silva");
             txtEmail.setText("joao@email.com");
+            txtDocumento.setText("20.182.807/0004-42");
         });
 
         assertThat(txtNome.getText()).isEqualTo("João Silva");
@@ -184,6 +187,30 @@ public class ClienteFormControllerTest extends BaseUITest {
 
         Alert lastAlert = alertService.getLastAlert();
         assertThat(lastAlert.getContentText()).isEqualTo("O e-mail é inválido.");
+
+        Platform.runLater(() -> lastAlert.close());
+        waitForFxEvents();
+    }
+
+    @Test
+    void deveExibirErroComDocumentoInvalido() {
+        var txtNome = findNode("#txtNome", javafx.scene.control.TextField.class);
+        var txtTelefone = findNode("#txtTelefone", javafx.scene.control.TextField.class);
+        var txtEmail = findNode("#txtEmail", javafx.scene.control.TextField.class);
+        var txtDocumento = findNode("#txtDocumento", javafx.scene.control.TextField.class);
+
+        interact(() -> {
+            txtNome.setText("João Silva");
+            txtTelefone.setText("11987654321");
+            txtEmail.setText("joao@gmail.com");
+            txtDocumento.setText("12345678901");
+        });
+
+        clickOn("#btnSalvar");
+        waitForFxEvents();
+
+        Alert lastAlert = alertService.getLastAlert();
+        assertThat(lastAlert.getContentText()).isEqualTo("O CPF/CNPJ é inválido.");
 
         Platform.runLater(() -> lastAlert.close());
         waitForFxEvents();

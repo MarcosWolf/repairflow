@@ -32,6 +32,7 @@ public class ClienteSalvarValidatorTest {
             "",
                 "(13) 91234-5678",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -57,6 +58,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -82,6 +84,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-12",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -107,6 +110,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos.gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -123,6 +127,32 @@ public class ClienteSalvarValidatorTest {
     }
 
     @Test
+    void deveLancarExcecaoQuandoDocumentoInvalido() {
+        var estado = new Estado();
+        estado.setId(1L);
+        estado.setNome("São Paulo");
+
+        var data = new ClienteFormData(
+                "Marcos",
+                "(13) 3421-1212",
+                "marcos@gmail.com",
+                "123.456.789-01",
+                "São Paulo",
+                "Liberdade",
+                "11111-234",
+                "Rua das Flores",
+                123,
+                estado
+        );
+
+        var exception = assertThrows(IllegalArgumentException.class,
+                () -> validator.validar(data, null)
+        );
+
+        assertEquals("O CPF/CNPJ é inválido.", exception.getMessage());
+    }
+
+    @Test
     void deveLancarExcecaoQuandoTelefoneJaExiste() {
         var estado = new Estado();
         estado.setId(1L);
@@ -132,6 +162,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -163,6 +194,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -194,6 +226,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "",
                 "Liberdade",
                 "11111-234",
@@ -219,6 +252,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111-234",
@@ -244,6 +278,7 @@ public class ClienteSalvarValidatorTest {
                 "Marcos",
                 "(13) 3421-1212",
                 "marcos@gmail.com",
+                "20.182.807/0004-42",
                 "São Paulo",
                 "Liberdade",
                 "11111",

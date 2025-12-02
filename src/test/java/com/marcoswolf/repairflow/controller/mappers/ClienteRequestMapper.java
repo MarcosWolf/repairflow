@@ -18,6 +18,7 @@ public class ClienteRequestMapper {
         cliente.setNome(dto.nome());
         cliente.setTelefone(dto.telefone());
         cliente.setEmail(dto.email());
+        cliente.setDocumento(dto.documento());
 
         var enderecoDTO = dto.endereco();
         Endereco endereco = new Endereco();

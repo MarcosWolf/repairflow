@@ -41,7 +41,7 @@ public class ReparoSalvarAction implements ReparoAction {
             Reparo reparo = mapper.map(normalized, novoReparo);
             reparoComandoService.salvar(reparo);
 
-            alertService.info("Sucesso", "Reparo salvo com sucesso!");
+            //alertService.info("Sucesso", "Reparo salvo com sucesso!");
             return true;
         } catch (IllegalArgumentException e) {
             alertService.warn("Campos obrigatórios", e.getMessage());

@@ -41,7 +41,7 @@ public class StatusReparoSalvarAction implements StatusReparoAction {
             StatusReparo statusReparo = mapper.map(normalized, novoStatusReparo);
             statusReparoComandoServicer.salvar(statusReparo);
 
-            alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");
+            //alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");
             return true;
         } catch (IllegalArgumentException e) {
             alertService.warn("Campos obrigatórios", e.getMessage());

@@ -42,7 +42,7 @@ public class TipoEquipamentoSalvarAction implements TipoEquipamentoAction {
             TipoEquipamento tipoEquipamento = mapper.map(normalized, novoTipoEquipamento);
             tipoEquipamentoComandoService.salvar(tipoEquipamento);
 
-            alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");
+            //alertService.info("Sucesso", "Tipo de equipamento salvo com sucesso!");
             return true;
         } catch (IllegalArgumentException e) {
             alertService.warn("Campos obrigatórios", e.getMessage());

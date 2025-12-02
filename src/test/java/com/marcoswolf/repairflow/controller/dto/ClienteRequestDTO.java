@@ -4,6 +4,7 @@ public record ClienteRequestDTO(
         String nome,
         String telefone,
         String email,
+        String documento,
         EnderecoDTO endereco
 ) {
     public record EnderecoDTO(

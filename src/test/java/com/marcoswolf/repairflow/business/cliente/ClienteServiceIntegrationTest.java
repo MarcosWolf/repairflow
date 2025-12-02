@@ -30,11 +30,11 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveListarTodosOsClientes() {
-        Cliente cliente1 = criarCliente("Marcos", "13912345678", "viniciosramos.dev@gmail.com",
+        Cliente cliente1 = criarCliente("Marcos", "13912345678", "viniciosramos.dev@gmail.com", "20.182.807/0004-42",
                 "São Paulo", "São Paulo", "12345-678",
                 "Belas Artes", "Rua do Pássaro", 19
         );
-        Cliente cliente2 = criarCliente("Paulo", "11923456789", "paulo@gmail.com",
+        Cliente cliente2 = criarCliente("Paulo", "11923456789", "paulo@gmail.com", "20.182.807/0004-42",
                 "Curitiba", "Paraná", "11234-567",
                 "Martin Afonso", "Rua dos Imigrantes", 192
         );
@@ -62,7 +62,7 @@ public class ClienteServiceIntegrationTest {
     @Test
     void deveSalvarUmNovoCliente() {
         Cliente cliente = criarCliente(
-                "Anderson", "13912345678", "anderson@gmail.com",
+                "Anderson", "13912345678", "anderson@gmail.com", "20.182.807/0004-42",
                 "Manaus", "Amazonas", "13212-123", "Laranja",
                 "Avenida Presidente Kennedy", 602
         );
@@ -83,7 +83,7 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveAtualizarUmCliente() {
-        Cliente cliente = criarCliente("Alan", "13952345678", "alan@gmail.com",
+        Cliente cliente = criarCliente("Alan", "13952345678", "alan@gmail.com", "20.182.807/0004-42",
                 "Pedro de Toledo", "São Paulo", "11132-555",
                 "", "", null
         );
@@ -111,7 +111,7 @@ public class ClienteServiceIntegrationTest {
 
     @Test
     void deveDeletarUmCliente() {
-        Cliente cliente = criarCliente("Mariana", "13923456789", "",
+        Cliente cliente = criarCliente("Mariana", "13923456789", "", "20.182.807/0004-42",
                 "Goiânia", "Goiás", "12312-532",
                 "", "", null
         );
@@ -134,7 +134,7 @@ public class ClienteServiceIntegrationTest {
     }
 
     private Cliente criarCliente(
-            String nome, String telefone, String email,
+            String nome, String telefone, String email, String documento,
             String cidade, String estado, String cep,
             String bairro, String logradouro, Integer numero
     ) {

@@ -136,6 +136,7 @@ public class ClienteControllerRestAssuredTest {
                 "Marcos Vinícios",
                 "(13) 98131-4531",
                 "viniciosramos.dev@gmail.com",
+                "20.182.807/0004-42",
                 enderecoDTO
         );
     }

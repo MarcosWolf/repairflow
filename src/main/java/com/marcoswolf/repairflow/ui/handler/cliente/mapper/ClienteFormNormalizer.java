@@ -15,6 +15,7 @@ public class ClienteFormNormalizer implements IFormNormalizer<ClienteFormData> {
         String nome = data.nome() == null ? null : data.nome().trim();
         String telefone = data.telefone() == null ? null : data.telefone().trim();
         String email = data.email() == null ? null : data.email().trim();
+        String documento = data.documento() == null ? null : data.documento().trim();
         String cidade = data.cidade() == null ? null : data.cidade().trim();
         String bairro = data.bairro() == null ? null : data.bairro().trim();
         String cep = data.bairro() == null ? null : data.cep().trim();
@@ -22,6 +23,6 @@ public class ClienteFormNormalizer implements IFormNormalizer<ClienteFormData> {
         Integer numero = data.numero();
         Estado estado = data.estadoSelecionado();
 
-        return new ClienteFormData(nome, telefone, email, cidade, bairro, cep, logradouro, numero, estado);
+        return new ClienteFormData(nome, telefone, email, documento, cidade, bairro, cep, logradouro, numero, estado);
     }
 }

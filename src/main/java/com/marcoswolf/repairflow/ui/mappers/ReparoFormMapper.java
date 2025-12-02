@@ -10,11 +10,12 @@ import java.util.List;
 
 @Component
 public class ReparoFormMapper {
-    public Reparo toEntity(Equipamento equipamento, LocalDate dataEntrada, LocalDate dataSaida,
+    public Reparo toEntity(String ordemServico, Equipamento equipamento, LocalDate dataEntrada, LocalDate dataSaida,
                            String descricaoProblema, String servicoExecutado, StatusReparo status,
                            BigDecimal valorServico, BigDecimal desconto, LocalDate dataPagamento, List<PecaPagamento> pecas) {
 
         Reparo reparo = new Reparo();
+        reparo.setOrdemServico(ordemServico);
         reparo.setEquipamento(equipamento);
         reparo.setDataEntrada(dataEntrada);
         reparo.setDataSaida(dataSaida);

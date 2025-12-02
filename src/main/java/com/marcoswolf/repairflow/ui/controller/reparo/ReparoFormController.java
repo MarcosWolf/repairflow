@@ -51,7 +51,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     @FXML private ComboBox<StatusReparo> comboStatus;
     @FXML private DatePicker dateEntrada, dateSaida, datePagamento;
     @FXML private TextArea txtDescricaoProblema, txtServicoExecutado;
-    @FXML private TextField txtNumeroSerie, txtValorServico, txtDesconto, txtValorTotal;
+    @FXML private TextField txtOrdemServico, txtTipo, txtNumeroSerie, txtValorServico, txtDesconto, txtValorTotal;
     @FXML private TextField txtPecaDescricao, txtPecaQuantidade, txtPecaValorUnitario;
     @FXML private TableView<PecaPagamento> tabela;
     @FXML private TableColumn<PecaPagamento, String> colDescricao;
@@ -72,6 +72,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void configurarCampos() {
+        TextFieldUtils.aplicarLimite(txtOrdemServico, 12);
         MaskUtils.aplicarMascaraData(dateEntrada);
         MaskUtils.aplicarMascaraData(dateSaida);
         MaskUtils.aplicarMascaraData(datePagamento);
@@ -130,6 +131,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     private void configurarListeners() {
         comboCliente.valueProperty().addListener((obs, old, novo) -> atualizarComboEquipamento(novo));
         comboEquipamento.valueProperty().addListener((obs, old, novo) -> txtNumeroSerie.setText(novo != null ? novo.getNumeroSerie() : ""));
+        comboEquipamento.valueProperty().addListener((obs, old, novo) -> txtTipo.setText(novo != null ? novo.getTipoEquipamento().getNome() : ""));
     }
 
     private void atualizarComboEquipamento(Cliente cliente) {
@@ -201,6 +203,8 @@ public class ReparoFormController implements DataReceiver<Reparo> {
         lblTitulo.setText("Editar Reparo");
         btnExcluir.setVisible(true);
 
+        txtOrdemServico.setText(reparo.getOrdemServico());
+
         var cliente = reparo.getEquipamento().getCliente();
         comboCliente.setValue(cliente);
 
@@ -225,12 +229,14 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     }
 
     private void limparFormulario() {
+        txtOrdemServico.clear();;
         comboCliente.getSelectionModel().clearSelection();
         comboEquipamento.getItems().clear();
         comboStatus.getSelectionModel().selectFirst();
         dateEntrada.setValue(LocalDate.now());
         dateSaida.setValue(null);
         datePagamento.setValue(null);
+        txtTipo.clear();
         txtNumeroSerie.clear();
         txtDescricaoProblema.clear();
         txtServicoExecutado.clear();
@@ -243,6 +249,7 @@ public class ReparoFormController implements DataReceiver<Reparo> {
     @FXML
     private void salvar() {
         var data = new ReparoFormData(
+                txtOrdemServico.getText(),
                 comboEquipamento.getValue(),
                 dateEntrada.getValue(),
                 dateSaida.getValue(),

@@ -19,6 +19,8 @@ public class Reparo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String ordemServico;
+
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
     private String descricaoProblema;

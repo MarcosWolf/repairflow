@@ -13,6 +13,7 @@ public class ReparoFormToEntityMapper {
 
     public Reparo map(ReparoFormData data, Reparo novoReparo) {
         Reparo reparo = delegate.toEntity(
+                data.ordemServico(),
                 data.equipamento(),
                 data.dataEntrada(),
                 data.dataSaida(),

@@ -13,6 +13,7 @@ public class ReparoFormNormalizer implements IFormNormalizer<ReparoFormData> {
         if (data == null) return null;
 
         return new ReparoFormData(
+                data.ordemServico(),
                 data.equipamento(),
                 data.dataEntrada(),
                 data.dataSaida(),

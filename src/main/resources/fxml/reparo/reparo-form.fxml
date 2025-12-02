@@ -74,8 +74,8 @@
                                 <RowConstraints />
                             </rowConstraints>
 
-                            <Label text="Cliente:" GridPane.rowIndex="0" />
-                            <ComboBox fx:id="comboCliente"
+                            <Label text="Ordem Serviço:" GridPane.rowIndex="0" />
+                            <TextField fx:id="txtOrdemServico"
                                       GridPane.columnIndex="1"
                                       GridPane.rowIndex="0"
                                       prefWidth="200"
@@ -83,8 +83,8 @@
                                       maxWidth="Infinity"
                                       GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Equipamento:" GridPane.rowIndex="0" GridPane.columnIndex="2" />
-                            <ComboBox fx:id="comboEquipamento"
+                            <Label text="Cliente:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <ComboBox fx:id="comboCliente"
                                       GridPane.columnIndex="3"
                                       GridPane.rowIndex="0"
                                       prefWidth="200"
@@ -92,8 +92,8 @@
                                       maxWidth="Infinity"
                                       GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Status:" GridPane.rowIndex="1" />
-                            <ComboBox fx:id="comboStatus"
+                            <Label text="Equipamento:" GridPane.rowIndex="1" />
+                            <ComboBox fx:id="comboEquipamento"
                                       GridPane.columnIndex="1"
                                       GridPane.rowIndex="1"
                                       prefWidth="200"
@@ -101,43 +101,60 @@
                                       maxWidth="Infinity"
                                       GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Número Série:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-                            <TextField fx:id="txtNumeroSerie"
+                            <Label text="Status:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                            <ComboBox fx:id="comboStatus"
+                                      GridPane.columnIndex="3"
+                                      GridPane.rowIndex="1"
+                                      prefWidth="200"
+                                      minWidth="200"
+                                      maxWidth="Infinity"
+                                      GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Tipo:" GridPane.rowIndex="3" />
+                            <TextField fx:id="txtTipo"
                                        editable="false"
-                                       GridPane.columnIndex="3"
-                                       GridPane.rowIndex="1"
+                                       GridPane.columnIndex="1"
+                                       GridPane.rowIndex="3"
                                        maxWidth="Infinity"
                                        GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Data Entrada:" GridPane.rowIndex="2" />
+                            <Label text="Número Série:" GridPane.rowIndex="3" GridPane.columnIndex="2" />
+                            <TextField fx:id="txtNumeroSerie"
+                                       editable="false"
+                                       GridPane.columnIndex="3"
+                                       GridPane.rowIndex="3"
+                                       maxWidth="Infinity"
+                                       GridPane.hgrow="ALWAYS" />
+
+                            <Label text="Data Entrada:" GridPane.rowIndex="4" />
                             <DatePicker fx:id="dateEntrada"
                                         GridPane.columnIndex="1"
-                                        GridPane.rowIndex="2"
+                                        GridPane.rowIndex="4"
                                         maxWidth="Infinity"
                                         GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Data Saída:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <Label text="Data Saída:" GridPane.rowIndex="4" GridPane.columnIndex="2" />
                             <DatePicker fx:id="dateSaida"
                                         GridPane.columnIndex="3"
-                                        GridPane.rowIndex="2"
+                                        GridPane.rowIndex="4"
                                         maxWidth="Infinity"
                                         GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Defeito:" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+                            <Label text="Defeito:" GridPane.rowIndex="5" GridPane.valignment="TOP" />
                             <TextArea fx:id="txtDescricaoProblema"
                                       prefRowCount="3"
                                       GridPane.columnIndex="1"
                                       GridPane.columnSpan="3"
-                                      GridPane.rowIndex="3"
+                                      GridPane.rowIndex="5"
                                       maxWidth="Infinity"
                                       GridPane.hgrow="ALWAYS" />
 
-                            <Label text="Reparo:" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                            <Label text="Reparo:" GridPane.rowIndex="6" GridPane.valignment="TOP" />
                             <TextArea fx:id="txtServicoExecutado"
                                       prefRowCount="3"
                                       GridPane.columnIndex="1"
                                       GridPane.columnSpan="3"
-                                      GridPane.rowIndex="4"
+                                      GridPane.rowIndex="6"
                                       maxWidth="Infinity"
                                       GridPane.hgrow="ALWAYS" />
                         </GridPane>

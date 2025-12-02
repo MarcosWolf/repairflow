@@ -38,6 +38,7 @@ public class ReparoSalvarValidatorTest {
         pecas.add(p1);
 
         var data = new ReparoFormData(
+                "0123456789012",
                 equipamento,
                 LocalDate.parse("2025-11-18"),
                 LocalDate.parse("2025-11-20"),
@@ -75,6 +76,7 @@ public class ReparoSalvarValidatorTest {
         pecas.add(p1);
 
         var data = new ReparoFormData(
+                "0123456789012",
                 equipamento,
                 LocalDate.parse("2025-11-18"),
                 LocalDate.parse("2025-11-20"),
@@ -114,6 +116,7 @@ public class ReparoSalvarValidatorTest {
         pecas.add(p1);
 
         var data = new ReparoFormData(
+                "0123456789012",
                 equipamento,
                 null,
                 LocalDate.parse("2025-11-20"),
@@ -153,6 +156,7 @@ public class ReparoSalvarValidatorTest {
         pecas.add(p1);
 
         var data = new ReparoFormData(
+                "0123456789012",
                 equipamento,
                 LocalDate.parse("2025-11-18"),
                 LocalDate.parse("2025-11-20"),
@@ -187,6 +191,7 @@ public class ReparoSalvarValidatorTest {
         List <PecaPagamento> pecas = new ArrayList<>();
 
         var data = new ReparoFormData(
+                "0123456789012",
                 equipamento,
                 LocalDate.parse("2025-11-18"),
                 LocalDate.parse("2025-11-20"),

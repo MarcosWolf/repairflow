@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ReparoFormData(
+        String ordemServico,
         Equipamento equipamento,
         LocalDate dataEntrada,
         LocalDate dataSaida,
